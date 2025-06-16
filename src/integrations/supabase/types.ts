@@ -9,7 +9,100 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      comments: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          id: string
+          idea_id: string
+        }
+        Insert: {
+          author: string
+          content: string
+          created_at?: string
+          id?: string
+          idea_id: string
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          id?: string
+          idea_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_idea_id_fkey"
+            columns: ["idea_id"]
+            isOneToOne: false
+            referencedRelation: "ideas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ideas: {
+        Row: {
+          author: string
+          created_at: string
+          description: string
+          id: string
+          title: string
+          updated_at: string
+          votes: number
+        }
+        Insert: {
+          author: string
+          created_at?: string
+          description: string
+          id?: string
+          title: string
+          updated_at?: string
+          votes?: number
+        }
+        Update: {
+          author?: string
+          created_at?: string
+          description?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          votes?: number
+        }
+        Relationships: []
+      }
+      votes: {
+        Row: {
+          created_at: string
+          id: string
+          idea_id: string
+          user_identifier: string
+          vote_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          idea_id: string
+          user_identifier: string
+          vote_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          idea_id?: string
+          user_identifier?: string
+          vote_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_idea_id_fkey"
+            columns: ["idea_id"]
+            isOneToOne: false
+            referencedRelation: "ideas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

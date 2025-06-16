@@ -31,14 +31,14 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
   };
 
   return (
-    <Card className="p-6 bg-white shadow-sm border border-gray-200">
+    <Card className="p-6 bg-gray-800 shadow-sm border border-gray-700">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Share Your Startup Idea</h2>
+        <h2 className="text-xl font-semibold text-white">Share Your Startup Idea</h2>
         <Button
           variant="ghost"
           size="sm"
           onClick={onCancel}
-          className="text-gray-500 hover:text-gray-700"
+          className="text-gray-400 hover:text-gray-300"
         >
           <X className="w-5 h-5" />
         </Button>
@@ -46,7 +46,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="author" className="block text-sm font-medium text-gray-300 mb-1">
             Your Name
           </label>
           <Input
@@ -55,13 +55,13 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             placeholder="Enter your name"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="w-full"
+            className="w-full bg-gray-700 border-gray-600 text-white"
             required
           />
         </div>
         
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1">
             Idea Title
           </label>
           <Input
@@ -70,13 +70,13 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             placeholder="What's your startup idea?"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full"
+            className="w-full bg-gray-700 border-gray-600 text-white"
             required
           />
         </div>
         
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-1">
             Description
           </label>
           <Textarea
@@ -84,7 +84,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             placeholder="Describe your idea in detail. What problem does it solve? How would it work?"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full min-h-[120px]"
+            className="w-full min-h-[120px] bg-gray-700 border-gray-600 text-white"
             required
           />
         </div>
@@ -101,7 +101,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             type="button"
             variant="outline"
             onClick={onCancel}
-            className="px-6"
+            className="px-6 border-gray-600 text-gray-300 hover:bg-gray-700"
           >
             Cancel
           </Button>
