@@ -112,11 +112,9 @@ export const useSupabaseData = () => {
   };
 
   const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {
-    // For now, we'll use a simple user identifier (could be IP-based in production)
     const userIdentifier = 'anonymous_user';
     
     try {
-      // Check if user has already voted
       const { data: existingVote } = await supabase
         .from('votes')
         .select('*')
@@ -129,7 +127,6 @@ export const useSupabaseData = () => {
 
       if (existingVote) {
         if (existingVote.vote_type === voteType) {
-          // Remove vote
           await supabase
             .from('votes')
             .delete()
@@ -138,7 +135,6 @@ export const useSupabaseData = () => {
           voteChange = voteType === 'up' ? -1 : 1;
           newUserVote = null;
         } else {
-          // Change vote
           await supabase
             .from('votes')
             .update({ vote_type: voteType })
@@ -147,7 +143,6 @@ export const useSupabaseData = () => {
           voteChange = voteType === 'up' ? 2 : -2;
         }
       } else {
-        // New vote
         await supabase
           .from('votes')
           .insert([{ idea_id: ideaId, user_identifier: userIdentifier, vote_type: voteType }]);
@@ -155,27 +150,64 @@ export const useSupabaseData = () => {
         voteChange = voteType === 'up' ? 1 : -1;
       }
 
-      // Update idea votes count
-      const { error: updateError } = await supabase
-        .from('ideas')
-        .update({ votes: supabase.sql`votes + ${voteChange}` })
-        .eq('id', ideaId);
+      // Update idea votes count using RPC or direct update
+      const currentIdea = ideas.find(idea => idea.id === ideaId);
+      if (currentIdea) {
+        const { error: updateError } = await supabase
+          .from('ideas')
+          .update({ votes: currentIdea.votes + voteChange })
+          .eq('id', ideaId);
 
-      if (updateError) throw updateError;
+        if (updateError) throw updateError;
 
-      // Update local state
-      setIdeas(prev => prev.map(idea => 
-        idea.id === ideaId 
-          ? { ...idea, votes: idea.votes + voteChange, userVote: newUserVote }
-          : idea
-      ));
+        // Update local state
+        setIdeas(prev => prev.map(idea => 
+          idea.id === ideaId 
+            ? { ...idea, votes: idea.votes + voteChange, userVote: newUserVote }
+            : idea
+        ));
+      }
     } catch (error) {
       console.error('Error handling vote:', error);
     }
   };
 
+  // Set up real-time subscription for ideas
   useEffect(() => {
     fetchIdeas();
+
+    // Subscribe to real-time changes
+    const channel = supabase
+      .channel('ideas-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'ideas'
+        },
+        () => {
+          console.log('Ideas table changed, refetching...');
+          fetchIdeas();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'votes'
+        },
+        () => {
+          console.log('Votes table changed, refetching...');
+          fetchIdeas();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return {

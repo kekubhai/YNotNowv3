@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* YNotNow design system with green and gray theme */
+/* YNotNow design system with YC-inspired dark theme */
 
 @layer base {
   :root {
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 142 76% 36%;
+    --primary: 24 100% 50%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 142 76% 36%;
+    --accent: 24 100% 50%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,18 +33,18 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142 76% 36%;
+    --ring: 24 100% 50%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary: 24 100% 50%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-ring: 24 100% 50%;
   }
 
   .dark {
@@ -57,7 +57,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 76% 36%;
+    --primary: 24 100% 50%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -66,7 +66,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 142 76% 36%;
+    --accent: 24 100% 50%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -74,15 +74,15 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 76% 36%;
+    --ring: 24 100% 50%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary: 24 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-ring: 24 100% 50%;
   }
 }
 
@@ -107,7 +107,7 @@
   }
 }
 
-/* Starfield animation */
+/* Enhanced Starfield animation with more dynamic stars */
 .stars {
   width: 1px;
   height: 1px;
@@ -122,8 +122,13 @@
     1629px 1676px #fff, 1273px 1222px #fff, 1670px 1745px #fff,
     518px 1039px #fff, 1043px 1646px #fff, 985px 1217px #fff,
     1571px 1036px #fff, 1802px 1153px #fff, 1544px 1867px #fff,
-    1445px 1424px #fff, 1039px 1301px #fff, 1592px 1932px #fff;
-  animation: animStar 50s linear infinite;
+    1445px 1424px #fff, 1039px 1301px #fff, 1592px 1932px #fff,
+    180px 518px #fff, 240px 154px #fff, 78px 647px #fff,
+    441px 461px #fff, 738px 265px #fff, 698px 33px #fff,
+    104px 717px #fff, 155px 252px #fff, 54px 693px #fff,
+    212px 785px #fff, 355px 522px #fff, 90px 165px #fff,
+    761px 149px #fff, 365px 710px #fff, 651px 820px #fff;
+  animation: animStar 60s linear infinite;
 }
 
 .stars:after {
@@ -143,7 +148,12 @@
     1629px 1676px #fff, 1273px 1222px #fff, 1670px 1745px #fff,
     518px 1039px #fff, 1043px 1646px #fff, 985px 1217px #fff,
     1571px 1036px #fff, 1802px 1153px #fff, 1544px 1867px #fff,
-    1445px 1424px #fff, 1039px 1301px #fff, 1592px 1932px #fff;
+    1445px 1424px #fff, 1039px 1301px #fff, 1592px 1932px #fff,
+    180px 518px #fff, 240px 154px #fff, 78px 647px #fff,
+    441px 461px #fff, 738px 265px #fff, 698px 33px #fff,
+    104px 717px #fff, 155px 252px #fff, 54px 693px #fff,
+    212px 785px #fff, 355px 522px #fff, 90px 165px #fff,
+    761px 149px #fff, 365px 710px #fff, 651px 820px #fff;
 }
 
 .stars2 {
@@ -160,8 +170,10 @@
     1511px 1721px #fff, 1031px 1203px #fff, 1723px 1067px #fff,
     618px 1674px #fff, 1043px 1646px #fff, 1205px 1217px #fff,
     1356px 1036px #fff, 1102px 1153px #fff, 1544px 1867px #fff,
-    1445px 1424px #fff, 1239px 1301px #fff, 1392px 1932px #fff;
-  animation: animStar 100s linear infinite;
+    1445px 1424px #fff, 1239px 1301px #fff, 1392px 1932px #fff,
+    78px 304px #ffd700, 270px 89px #ffd700, 573px 132px #ffd700,
+    25px 465px #ffd700, 306px 638px #ffd700, 405px 869px #ffd700;
+  animation: animStar 120s linear infinite;
 }
 
 .stars2:after {
@@ -181,7 +193,9 @@
     1511px 1721px #fff, 1031px 1203px #fff, 1723px 1067px #fff,
     618px 1674px #fff, 1043px 1646px #fff, 1205px 1217px #fff,
     1356px 1036px #fff, 1102px 1153px #fff, 1544px 1867px #fff,
-    1445px 1424px #fff, 1239px 1301px #fff, 1392px 1932px #fff;
+    1445px 1424px #fff, 1239px 1301px #fff, 1392px 1932px #fff,
+    78px 304px #ffd700, 270px 89px #ffd700, 573px 132px #ffd700,
+    25px 465px #ffd700, 306px 638px #ffd700, 405px 869px #ffd700;
 }
 
 .stars3 {
@@ -198,8 +212,10 @@
     1311px 1521px #fff, 831px 1003px #fff, 1523px 867px #fff,
     418px 1474px #fff, 843px 1446px #fff, 1005px 1017px #fff,
     1156px 836px #fff, 902px 953px #fff, 1344px 767px #fff,
-    1245px 1224px #fff, 1039px 1001px #fff, 1192px 1732px #fff;
-  animation: animStar 150s linear infinite;
+    1245px 1224px #fff, 1039px 1001px #fff, 1192px 1732px #fff,
+    78px 104px #ff6b35, 370px 89px #ff6b35, 773px 32px #ff6b35,
+    125px 265px #ff6b35, 206px 438px #ff6b35, 505px 669px #ff6b35;
+  animation: animStar 180s linear infinite;
 }
 
 .stars3:after {
@@ -219,7 +235,9 @@
     1311px 1521px #fff, 831px 1003px #fff, 1523px 867px #fff,
     418px 1474px #fff, 843px 1446px #fff, 1005px 1017px #fff,
     1156px 836px #fff, 902px 953px #fff, 1344px 767px #fff,
-    1245px 1224px #fff, 1039px 1001px #fff, 1192px 1732px #fff;
+    1245px 1224px #fff, 1039px 1001px #fff, 1192px 1732px #fff,
+    78px 104px #ff6b35, 370px 89px #ff6b35, 773px 32px #ff6b35,
+    125px 265px #ff6b35, 206px 438px #ff6b35, 505px 669px #ff6b35;
 }
 
 @keyframes animStar {
@@ -228,5 +246,56 @@
   }
   to {
     transform: translateY(-2000px);
+  }
+}
+
+/* Shooting stars */
+.shooting-star {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
+  border-radius: 999px;
+  filter: drop-shadow(0 0 6px #699bff);
+  animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+}
+
+.shooting-star:nth-child(1) {
+  top: calc(50% - 250px);
+  animation-delay: 1000ms;
+}
+
+.shooting-star:nth-child(2) {
+  top: calc(50% - 150px);
+  animation-delay: 1300ms;
+}
+
+.shooting-star:nth-child(3) {
+  top: calc(50% - 50px);
+  animation-delay: 1600ms;
+}
+
+@keyframes tail {
+  0% {
+    width: 0;
+  }
+  
+  30% {
+    width: 100px;
+  }
+  
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes shooting {
+  0% {
+    transform: translateX(0);
+  }
+  
+  100% {
+    transform: translateX(300px);
   }
 }

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { X } from 'lucide-react';
+import { X, Lightbulb, Rocket } from 'lucide-react';
 
 interface PostIdeaFormProps {
   onSubmit: (idea: { title: string; description: string; author: string }) => void;
@@ -31,22 +31,30 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
   };
 
   return (
-    <Card className="p-6 bg-gray-800 shadow-sm border border-gray-700">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-white">Share Your Startup Idea</h2>
+    <Card className="p-8 bg-slate-900/80 backdrop-blur-sm shadow-2xl border border-slate-700">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+            <Lightbulb className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white">Share Your Startup Idea</h2>
+            <p className="text-slate-400">Tell the community about your next big thing</p>
+          </div>
+        </div>
         <Button
           variant="ghost"
           size="sm"
           onClick={onCancel}
-          className="text-gray-400 hover:text-gray-300"
+          className="text-slate-400 hover:text-slate-300 hover:bg-slate-700 rounded-full p-2"
         >
           <X className="w-5 h-5" />
         </Button>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="author" className="block text-sm font-medium text-gray-300 mb-1">
+          <label htmlFor="author" className="block text-sm font-semibold text-slate-300 mb-2">
             Your Name
           </label>
           <Input
@@ -55,13 +63,13 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             placeholder="Enter your name"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="w-full bg-gray-700 border-gray-600 text-white"
+            className="w-full bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
             required
           />
         </div>
         
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1">
+          <label htmlFor="title" className="block text-sm font-semibold text-slate-300 mb-2">
             Idea Title
           </label>
           <Input
@@ -70,38 +78,39 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             placeholder="What's your startup idea?"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-gray-700 border-gray-600 text-white"
+            className="w-full bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
             required
           />
         </div>
         
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-1">
+          <label htmlFor="description" className="block text-sm font-semibold text-slate-300 mb-2">
             Description
           </label>
           <Textarea
             id="description"
-            placeholder="Describe your idea in detail. What problem does it solve? How would it work?"
+            placeholder="Describe your idea in detail. What problem does it solve? How would it work? What makes it unique?"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full min-h-[120px] bg-gray-700 border-gray-600 text-white"
+            className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
             required
           />
         </div>
         
-        <div className="flex gap-3 pt-2">
+        <div className="flex gap-4 pt-4">
           <Button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-6"
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-8 py-3 rounded-lg flex items-center gap-2"
             disabled={!title.trim() || !description.trim() || !author.trim()}
           >
-            Post Idea
+            <Rocket className="w-4 h-4" />
+            Launch Idea
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
-            className="px-6 border-gray-600 text-gray-300 hover:bg-gray-700"
+            className="px-8 py-3 border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg"
           >
             Cancel
           </Button>
