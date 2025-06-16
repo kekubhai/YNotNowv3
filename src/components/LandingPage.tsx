@@ -2,7 +2,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Rocket, Sparkles, TrendingUp, Users, Lightbulb } from 'lucide-react';
-import { StarBackground } from './StarBackground';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -10,9 +9,16 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   return (
-    <div className="min-h-screen bg-slate-950 relative overflow-hidden flex items-center">
-      <StarBackground />
-      
+    <div className="min-h-screen relative overflow-hidden flex items-center">      {/* Background image with overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/Ynn1.png" 
+          alt="YNotNow Background" 
+          className="w-full h-full object-cover"
+          style={{ objectPosition: 'center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 to-slate-950/60"></div>
+      </div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -52,11 +58,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 </div>
               </div>
             </div>
-            
-            {/* Right column - Features */}
+              {/* Right column - Features */}
             <div className="relative">
-              <div className="absolute -top-16 -right-16 w-64 h-64 bg-orange-500/10 rounded-full filter blur-3xl"></div>
-              <div className="relative bg-slate-900/50 backdrop-blur-md border border-slate-800 rounded-2xl p-8 overflow-hidden">
+              <div className="absolute -top-16 -right-16 w-64 h-64 bg-orange-500/20 rounded-full filter blur-3xl"></div>
+              <div className="relative bg-slate-900/80 backdrop-blur-xl shadow-xl border border-slate-700/50 rounded-2xl p-8 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-md flex items-center justify-center">
@@ -65,39 +70,36 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   <h2 className="text-xl font-semibold text-white">Why YNotNow?</h2>
                 </div>
                 
-                <div className="space-y-6">
-                  <div className="flex gap-4 items-start">
-                    <div className="mt-1 w-8 h-8 bg-blue-500/20 rounded-md flex items-center justify-center">
-                      <Lightbulb className="w-4 h-4 text-blue-400" />
+                <div className="space-y-6">                  <div className="flex gap-4 items-start">
+                    <div className="mt-1 w-8 h-8 bg-blue-500/30 rounded-md flex items-center justify-center shadow-inner">
+                      <Lightbulb className="w-4 h-4 text-blue-300" />
                     </div>
                     <div>
                       <h3 className="text-white font-medium mb-1">Validate Ideas</h3>
-                      <p className="text-slate-400 text-sm">Test concepts with real feedback before investing time and resources</p>
+                      <p className="text-slate-300 text-sm">Test concepts with real feedback before investing time and resources</p>
                     </div>
                   </div>
-                  
-                  <div className="flex gap-4 items-start">
-                    <div className="mt-1 w-8 h-8 bg-green-500/20 rounded-md flex items-center justify-center">
-                      <Users className="w-4 h-4 text-green-400" />
+                    <div className="flex gap-4 items-start">
+                    <div className="mt-1 w-8 h-8 bg-green-500/30 rounded-md flex items-center justify-center shadow-inner">
+                      <Users className="w-4 h-4 text-green-300" />
                     </div>
                     <div>
                       <h3 className="text-white font-medium mb-1">Community Driven</h3>
-                      <p className="text-slate-400 text-sm">Connect with like-minded entrepreneurs and innovators</p>
+                      <p className="text-slate-300 text-sm">Connect with like-minded entrepreneurs and innovators</p>
                     </div>
                   </div>
-                  
-                  <div className="flex gap-4 items-start">
-                    <div className="mt-1 w-8 h-8 bg-purple-500/20 rounded-md flex items-center justify-center">
-                      <TrendingUp className="w-4 h-4 text-purple-400" />
+                    <div className="flex gap-4 items-start">
+                    <div className="mt-1 w-8 h-8 bg-purple-500/30 rounded-md flex items-center justify-center shadow-inner">
+                      <TrendingUp className="w-4 h-4 text-purple-300" />
                     </div>
                     <div>
                       <h3 className="text-white font-medium mb-1">Track Progress</h3>
-                      <p className="text-slate-400 text-sm">See which ideas resonate and gain traction over time</p>
+                      <p className="text-slate-300 text-sm">See which ideas resonate and gain traction over time</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mt-8 pt-6 border-t border-slate-800">
+                <div className="mt-8 pt-6 border-t border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-slate-400">
                       <span className="text-white font-semibold">500+</span> ideas validated
