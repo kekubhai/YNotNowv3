@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ChevronUp, ChevronDown, MessageCircle, User, Clock, Fire, Heart } from 'lucide-react';
+import { ChevronUp, ChevronDown, MessageCircle, User, Clock, Flame, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -49,7 +49,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
   };
 
   const getVoteIcon = (votes: number) => {
-    if (votes > 15) return <Fire className="w-4 h-4 text-yellow-400" />;
+    if (votes > 15) return <Flame className="w-4 h-4 text-yellow-400" />;
     if (votes > 10) return <Heart className="w-4 h-4 text-green-400" />;
     return null;
   };
