@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { TextAnimate } from './magicui/text-animate';
 
+
 interface LandingPageProps {
   onGetStarted: () => void;
 }
@@ -148,7 +149,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               <div className="inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-300 shadow-lg">
                 <Bot className="mr-3 h-4 w-4" />
                 <TextAnimate className="mr-2"> AI-Powered Idea Validation Platform</TextAnimate>
-               
                 <span className="ml-2">✨</span>
               </div>
             </div>
@@ -225,6 +225,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Use Cases Section */}
+
+
+      
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
