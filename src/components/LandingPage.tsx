@@ -25,6 +25,7 @@ import {
   BarChart3,
   Bot
 } from 'lucide-react';
+import { TextAnimate } from './magicui/text-animate';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -146,8 +147,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             <div className={`flex justify-center mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <div className="inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-300 shadow-lg">
                 <Bot className="mr-3 h-4 w-4" />
-                <span className="mr-2">🤖</span>
-                AI-Powered Idea Validation Platform
+                <TextAnimate className="mr-2"> AI-Powered Idea Validation Platform</TextAnimate>
+               
                 <span className="ml-2">✨</span>
               </div>
             </div>
@@ -242,14 +243,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               {useCases.map((useCase, index) => (
                 <div 
                   key={index}
-                  className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10"
+                  className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700  p-8 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10"
                 >
                   <div className="absolute top-4 right-4">
                     <span className="inline-block bg-purple-500/20 text-purple-400 rounded-full px-3 py-1 text-xs font-medium">
                       {useCase.badge}
                     </span>
                   </div>
-                  <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500  flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <useCase.icon className="h-7 w-7 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-4">{useCase.title}</h3>
