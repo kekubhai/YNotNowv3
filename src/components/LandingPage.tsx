@@ -26,6 +26,8 @@ import {
   Bot
 } from 'lucide-react';
 import { TextAnimate } from './magicui/text-animate';
+import { TweetGrid } from './eldoraui/tweetgrid';
+import { TweetGridDemo } from './Tweetdemo';
 
 
 interface LandingPageProps {
@@ -227,7 +229,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* Use Cases Section */}
 
 
-      
+      {/* <TweetGridDemo/> */}
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
