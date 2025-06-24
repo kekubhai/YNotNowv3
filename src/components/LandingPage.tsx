@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { MainMenusGradientCard } from './eldoraui/animatedcard';
 import { 
   ArrowRight, 
   Brain,
@@ -28,6 +29,7 @@ import {
 import { TextAnimate } from './magicui/text-animate';
 import { TweetGrid } from './eldoraui/tweetgrid';
 import { TweetGridDemo } from './Tweetdemo';
+import DynamicSquareBackground from './eldoraui/dynamicsquare';
 
 
 interface LandingPageProps {
@@ -270,33 +272,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* Features Section */}
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-800 to-slate-900">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
                 AI + Community
                 <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"> Intelligence</span>
               </h2>
-              <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+              <p className="text-base text-slate-600 max-w-2xl mx-auto">
                 Combine the power of artificial intelligence with human insights to validate your ideas 
                 faster and more accurately than ever before.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-6">
               {features.map((feature, index) => (
-                <div 
+                <MainMenusGradientCard
                   key={index}
-                  className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:border-slate-600 transition-all duration-300 hover:shadow-2xl hover:shadow-slate-900/50"
+                  className="group relativee p-6  shadow hover:shadow-lg transition-all duration-300 flex flex-row items-center gap-4"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-slate-700/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    <div className={`w-14 h-14 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <feature.icon className="h-7 w-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-4">{feature.title}</h3>
-                    <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
+                    <feature.icon className="h-6 w-6 text-black" />
                   </div>
-                </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-black mb-1">{feature.title}</h3>
+                    <p className="text-slate-700 text-sm leading-relaxed">{feature.description}</p>
+                  </div>
+                </MainMenusGradientCard>
               ))}
             </div>
           </div>
@@ -304,39 +305,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Community Section */}
-      <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+      <section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-gradient-to-r from-slate-800/80 to-purple-900/20 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-12 shadow-2xl">
-              <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
-                <Users className="h-10 w-10 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Join the Innovation Community
-              </h2>
-              <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
-                Connect with developers, designers, entrepreneurs, and AI enthusiasts. 
-                Vote on ideas, share feedback, and help build the next big thing.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button
-                  onClick={onGetStarted}
-                  size="lg"
-                  className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
-                >
-                  Start Validating
-                  <ArrowUpRight className="ml-3 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300"
-                >
-                  Browse Ideas
-                  <Eye className="ml-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-                </Button>
-              </div>
-            </div>
+          <div className="relative flex justify-center items-center text-yellow-600">
+            <DynamicSquareBackground
+              title="Join the Innovation Community"
+              tag="Community"
+              description="Connect with developers, designers, entrepreneurs, and AI enthusiasts. Vote on ideas, share feedback, and help build the next big thing."
+              buttonText="Start Validating"
+              buttonHref="#"
+            />
           </div>
         </div>
       </section>
