@@ -30,6 +30,9 @@ import { TextAnimate } from './magicui/text-animate';
 import { TweetGrid } from './eldoraui/tweetgrid';
 import { TweetGridDemo } from './Tweetdemo';
 import DynamicSquareBackground from './eldoraui/dynamicsquare';
+import { SpotlightButton } from './eldoraui/spotlightbutton';
+import { GitStarButton } from './eldoraui/gitstarbutton';
+import { LetterPullUp } from './eldoraui/letterpullup';
 
 
 interface LandingPageProps {
@@ -160,10 +163,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             {/* Main Hero Content */}
             <div className="text-center space-y-8 mb-16">
               <h1 className={`text-6xl md:text-8xl font-bold tracking-tight transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
-                  Validate Ideas with
-                </span>
-                <br />
+                <LetterPullUp 
+                  text='Validate your Ideas'
+                  className='bg-gradient-to-r from-purple-600 to-purple-900 bg-clip-text text-clip'
+                />
+                
                 <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-500 bg-clip-text text-transparent">
                   AI & Community
                 </span>
@@ -176,23 +180,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
               {/* CTA Buttons */}
               <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <Button
-                  onClick={onGetStarted}
-                  size="lg"
+                <SpotlightButton
+              
+                  text="Start Validating Now"
                   className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
-                >
-                  Start Validating Now
-                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300 backdrop-blur-sm"
-                >
-                  <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-                  Watch Demo
-                </Button>
+                />
+                <GitStarButton
+                />
               </div>
 
               {/* Trust badges */}
@@ -284,18 +278,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               </p>
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <MainMenusGradientCard
                   key={index}
-                  className="group relativee p-6  shadow hover:shadow-lg transition-all duration-300 flex flex-row items-center gap-4"
+                  className="group relative p-6 shadow hover:shadow-lg transition-all duration-300 flex flex-row items-center gap-4"
                 >
                   <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
                     <feature.icon className="h-6 w-6 text-black" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-black mb-1">{feature.title}</h3>
-                    <p className="text-slate-700 text-sm leading-relaxed">{feature.description}</p>
+                    <h3 className="text-lg font-bold text-black mb-1">{feature.title}</h3>
+                    <p className="text-slate-700 text-semibold leading-relaxed">{feature.description}</p>
                   </div>
                 </MainMenusGradientCard>
               ))}

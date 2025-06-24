@@ -48,11 +48,11 @@ export const MainMenusGradientCard = ({
             "linear-gradient(135deg, #3BC4F2, #7A69F9,#F26378,#F5833F)",
         }}
       />
-      <div className="absolute inset-px rounded-[19px] bg-neutral-100/80 dark:bg-neutral-900/80" />
+      <div className="absolute inset-px  bg-neutral-100/80 dark:bg-neutral-900/80" />
       {children && (
         <div
           className={cn(
-            "gird relative h-40 place-content-center overflow-hidden    dark:border-neutral-950 dark:bg-black/50",
+            "gird relative h-40 place-content-center overflow-hidden     dark:bg-black/50",
             className,
           )}
         >
