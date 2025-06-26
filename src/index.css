@@ -95,6 +95,10 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  .theme {
+    --animate-aurora: aurora 8s ease-in-out infinite alternate;
+    --animate-gradient: gradient 8s linear infinite;
+  }
 }
 
 @layer base {
@@ -112,7 +116,7 @@
   .vote-button {
     @apply transition-all duration-200 hover:scale-110 active:scale-95;
   }
-  
+
   .idea-card {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
   }
@@ -291,11 +295,11 @@
   0% {
     width: 0;
   }
-  
+
   30% {
     width: 100px;
   }
-  
+
   100% {
     width: 0;
   }
@@ -305,7 +309,7 @@
   0% {
     transform: translateX(0);
   }
-  
+
   100% {
     transform: translateX(300px);
   }
@@ -673,4 +677,34 @@ html {
 ::-moz-selection {
   background: rgba(249, 115, 22, 0.3);
   color: white;
+}
+
+@theme inline {
+  @keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+    }
+  25% {
+    background-position: 50% 100%;
+    transform: rotate(5deg) scale(1.1);
+    }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-3deg) scale(0.95);
+    }
+  75% {
+    background-position: 50% 0%;
+    transform: rotate(3deg) scale(1.05);
+    }
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+    }
+  }
+  @keyframes gradient {
+  to {
+    background-position: var(--bg-size, 300%) 0;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { MainMenusGradientCard } from './eldoraui/animatedcard';
+
 import { 
   ArrowRight, 
   Brain,
@@ -14,7 +14,7 @@ import {
   CheckCircle,
   Play,
   ArrowUpRight,
-  Globe,
+
   Shield,
   Award,
   MessageSquare,
@@ -29,10 +29,12 @@ import {
 import { TextAnimate } from './magicui/text-animate';
 import { TweetGrid } from './eldoraui/tweetgrid';
 import { TweetGridDemo } from './Tweetdemo';
-import DynamicSquareBackground from './eldoraui/dynamicsquare';
-import { SpotlightButton } from './eldoraui/spotlightbutton';
-import { GitStarButton } from './eldoraui/gitstarbutton';
-import { LetterPullUp } from './eldoraui/letterpullup';
+import { AuroraText } from './magicui/aurora-text';
+import { Globe } from "@/components/magicui/globe";
+import { NumberTicker } from './magicui/number-ticker';
+import { AnimatedGradientText } from './magicui/animated-gradient-text';
+import { GlowingEffectDemo } from './glowingdemo';
+
 
 
 interface LandingPageProps {
@@ -46,7 +48,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
   useEffect(() => {
     setIsVisible(true);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -56,10 +58,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   }, []);
 
   const stats = [
-    { number: '2,500+', label: 'Ideas Validated', icon: Target },
-    { number: '15K+', label: 'Community Votes', icon: ThumbsUp },
-    { number: '8K+', label: 'Comments & Feedback', icon: MessageSquare },
-    { number: '500+', label: 'Successful Launches', icon: Rocket },
+    { number: 2500, label: 'Ideas Validated', icon: Target },
+    { number: 15000, label: 'Community Votes', icon: ThumbsUp },
+    { number: 8000, label: 'Comments & Feedback', icon: MessageSquare },
+    { number: 500, label: 'Successful Launches', icon: Rocket },
   ];
 
   const features = [
@@ -153,26 +155,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           <div className="max-w-7xl mx-auto">
             {/* Header Badge */}
             <div className={`flex justify-center mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <div className="inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-300 shadow-lg">
+              <AnimatedGradientText className="inline-flex items-center rounded-full border border-neutral-300-500/30 bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-300 shadow-lg">
                 <Bot className="mr-3 h-4 w-4" />
                 <TextAnimate className="mr-2"> AI-Powered Idea Validation Platform</TextAnimate>
                 <span className="ml-2">✨</span>
-              </div>
+              </AnimatedGradientText>
             </div>
 
             {/* Main Hero Content */}
             <div className="text-center space-y-8 mb-16">
               <h1 className={`text-6xl md:text-8xl font-bold tracking-tight transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <LetterPullUp 
-                  text='Validate your Ideas'
-                  className='bg-gradient-to-r from-purple-600 to-purple-900 bg-clip-text text-clip'
-                />
-                
+                <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
+                  Validate Ideas with
+                </span>
+                <br />
                 <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-500 bg-clip-text text-transparent">
-                  AI & Community
+                  AI &
+                  <AuroraText className='pl-5'>Community</AuroraText>
                 </span>
               </h1>
-              
+
               <p className={`text-xl md:text-2xl text-slate-300 leading-relaxed max-w-4xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 The ultimate platform for hackathon teams and startups to validate ideas through AI analysis and community feedback. 
                 Get instant insights, gather votes, and build what people actually want.
@@ -180,20 +182,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
               {/* CTA Buttons */}
               <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <SpotlightButton
-              
-                  text="Start Validating Now"
+                <Button
+                  onClick={onGetStarted}
+                  size="lg"
                   className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
-                />
-                <GitStarButton
-                />
+                >
+                  Start Validating Now
+                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300 backdrop-blur-sm"
+                >
+                  <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+                  Watch Demo
+                </Button>
               </div>
 
               {/* Trust badges */}
               <div className={`flex flex-wrap justify-center items-center gap-6 mt-12 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="flex items-center gap-2 text-slate-400">
                   <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="text-sm">Free to use</span>
+                  <span className="text-sm">Free to use(for now)</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
                   <Shield className="h-5 w-5 text-blue-500" />
@@ -213,7 +225,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-800/50 to-pink-800/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <stat.icon className="h-8 w-8 text-purple-400" />
                   </div>
-                  <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
+                  <div className="text-3xl font-bold text-white mb-2">
+
+                    <NumberTicker value={stat.number}></NumberTicker>
+                  </div>
                   <div className="text-sm text-slate-400">{stat.label}</div>
                 </div>
               ))}
@@ -223,9 +238,45 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Use Cases Section */}
-
+<GlowingEffectDemo/>
 
       {/* <TweetGridDemo/> */}
+<section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+   <div className="container mx-auto px-4">
+     <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+       <div className="relative flex size-full max-w-md items-center justify-center overflow-hidden rounded-2xl border border-purple-900/30 bg-slate-900 px-20 pb-40 pt-8 md:pb-60 shadow-lg">
+         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-purple-200 to-purple-500/80 bg-clip-text text-center text-7xl font-bold leading-none text-transparent">
+           Ideas
+         </span>
+         <Globe className="top-28 text-purple-600" />
+         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(128,90,213,0.2),rgba(30,27,75,0.3))]" />
+       </div>
+       <div className="flex flex-col max-w-lg">
+         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+           <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">100+</span> Ideas Shipped
+         </h2>
+         <p className="text-xl text-silver mb-8">
+           From hackathon concepts to funded startups, our platform has helped creators validate and launch their best ideas.
+         </p>
+         <div className="flex flex-wrap gap-4">
+           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
+             <span className="font-semibold text-purple-300">85%</span> Success Rate
+           </div>
+           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
+             <span className="font-semibold text-purple-300">3.2M</span> in Funding
+           </div>
+           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
+             <span className="font-semibold text-purple-300">30+</span> Countries
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+</section>
+
+
+
+
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
@@ -266,32 +317,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* Features Section */}
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-800 to-slate-900">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 AI + Community
                 <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"> Intelligence</span>
               </h2>
-              <p className="text-base text-slate-600 max-w-2xl mx-auto">
+              <p className="text-xl text-slate-400 max-w-3xl mx-auto">
                 Combine the power of artificial intelligence with human insights to validate your ideas 
                 faster and more accurately than ever before.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {features.map((feature, index) => (
-                <MainMenusGradientCard
+                <div 
                   key={index}
-                  className="group relative p-6 shadow hover:shadow-lg transition-all duration-300 flex flex-row items-center gap-4"
+                  className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:border-slate-600 transition-all duration-300 hover:shadow-2xl hover:shadow-slate-900/50"
                 >
-                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
-                    <feature.icon className="h-6 w-6 text-black" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-slate-700/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10">
+                    <div className={`w-14 h-14 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <feature.icon className="h-7 w-7 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-4">{feature.title}</h3>
+                    <p className="text-slate-400 leading-relaxed">{feature.description}</p>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-black mb-1">{feature.title}</h3>
-                    <p className="text-slate-700 text-semibold leading-relaxed">{feature.description}</p>
-                  </div>
-                </MainMenusGradientCard>
+                </div>
+
+
+
+
               ))}
             </div>
           </div>
@@ -299,16 +355,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Community Section */}
-      <section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+      <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-950">
         <div className="container mx-auto px-4">
-          <div className="relative flex justify-center items-center text-yellow-600">
-            <DynamicSquareBackground
-              title="Join the Innovation Community"
-              tag="Community"
-              description="Connect with developers, designers, entrepreneurs, and AI enthusiasts. Vote on ideas, share feedback, and help build the next big thing."
-              buttonText="Start Validating"
-              buttonHref="#"
-            />
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-gradient-to-r from-slate-800/80 to-purple-900/20 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-12 shadow-2xl">
+              <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
+                <Users className="h-10 w-10 text-white" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Join the Innovation Community
+              </h2>
+              <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
+                Connect with developers, designers, entrepreneurs, and AI enthusiasts. 
+                Vote on ideas, share feedback, and help build the next big thing.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button
+                  onClick={onGetStarted}
+                  size="lg"
+                  className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
+                >
+                  Start Validating
+                  <ArrowUpRight className="ml-3 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300"
+                >
+                  Browse Ideas
+                  <Eye className="ml-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
