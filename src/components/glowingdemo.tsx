@@ -96,96 +96,89 @@ interface GridItemProps {
   title: string;
   description: React.ReactNode;
   bgPattern?: "neural" | "circles" | "trophy" | "messages" | "pen" | "coins";
+  image?: string; // Optional image prop for future use 
 }
 
 const GridItem = ({ area, icon, title, description, bgPattern }: GridItemProps) => {
-  const getBackgroundPattern = () => {
+  const getBackgroundImage = () => {
     switch (bgPattern) {
       case "neural":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="neural-net" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <circle cx="10" cy="10" r="1.5" fill="white" />
-                  <path d="M10 0 V20 M0 10 H20" stroke="white" strokeWidth="0.5" strokeOpacity="0.5" />
-                  <path d="M0 0 L20 20 M20 0 L0 20" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#neural-net)" />
-            </svg>
+          <div className="absolute inset-0">
+            <img 
+              src="./public/f1.jpg" 
+              className="absolute contrast-more:1 w-full h-full object-cover " 
+              style={{ 
+                mixBlendMode: 'soft-light'
+              }}
+              alt="AI Validation Background"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       case "circles":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="circles-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <circle cx="10" cy="10" r="4" fill="none" stroke="white" strokeWidth="0.5" />
-                  <circle cx="30" cy="10" r="2" fill="white" fillOpacity="0.3" />
-                  <circle cx="10" cy="30" r="2" fill="white" fillOpacity="0.3" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#circles-pattern)" />
-            </svg>
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20" 
+              style={{ 
+                backgroundImage: 'url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1000&auto=format&fit=crop")', 
+                mixBlendMode: 'soft-light' 
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       case "trophy":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="trophy-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M20,5 L30,5 L30,15 C30,22 25,25 20,25 C15,25 10,22 10,15 L10,5 L20,5 Z" stroke="white" fill="none" strokeWidth="0.5" />
-                  <rect x="15" y="25" width="10" height="5" stroke="white" fill="none" strokeWidth="0.5" />
-                  <rect x="17.5" y="30" width="5" height="10" stroke="white" fill="none" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#trophy-pattern)" />
-            </svg>
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20" 
+              style={{ 
+                backgroundImage: 'url("https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?q=80&w=1000&auto=format&fit=crop")', 
+                mixBlendMode: 'soft-light' 
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       case "messages":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="messages-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
-                  <path d="M5,5 L25,5 L25,20 L15,20 L10,25 L10,20 L5,20 Z" stroke="white" fill="none" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#messages-pattern)" />
-            </svg>
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20" 
+              style={{ 
+                backgroundImage: 'url("https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1000&auto=format&fit=crop")', 
+                mixBlendMode: 'soft-light' 
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       case "pen":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="pen-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M30,10 L10,30 L5,35 L10,40 L15,35 L35,15 Z" stroke="white" fill="none" strokeWidth="0.5" />
-                  <path d="M5,35 L10,30 M10,40 L15,35" stroke="white" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#pen-pattern)" />
-            </svg>
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20" 
+              style={{ 
+                backgroundImage: 'url("https://images.unsplash.com/photo-1599837487527-e009248aa71b?q=80&w=1000&auto=format&fit=crop")', 
+                mixBlendMode: 'soft-light' 
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       case "coins":
         return (
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="coins-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <circle cx="15" cy="15" r="7" stroke="white" fill="none" strokeWidth="0.5" />
-                  <circle cx="25" cy="25" r="7" stroke="white" fill="none" strokeWidth="0.5" />
-                  <path d="M13,15 L17,15 M15,13 L15,17" stroke="white" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100%" height="100%" fill="url(#coins-pattern)" />
-            </svg>
+          <div className="absolute inset-0">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20" 
+              style={{ 
+                backgroundImage: 'url("https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1000&auto=format&fit=crop")', 
+                mixBlendMode: 'soft-light' 
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
           </div>
         );
       default:
@@ -204,7 +197,7 @@ const GridItem = ({ area, icon, title, description, bgPattern }: GridItemProps) 
           inactiveZone={0.01}
         />
         <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 shadow-lg">
-          {getBackgroundPattern()}
+          {getBackgroundImage()}
           <div className="relative flex flex-1 flex-col justify-between gap-4 z-10">
             <div className="w-fit rounded-lg bg-gradient-to-br from-purple-900/80 to-slate-900/90 p-3 shadow-inner border border-purple-700/30">
               {icon}

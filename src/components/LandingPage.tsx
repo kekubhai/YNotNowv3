@@ -255,7 +255,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
            <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">100+</span> Ideas Shipped
          </h2>
-         <p className="text-xl text-silver mb-8">
+         <p className="text-xl text-neutral-300 mb-8">
            From hackathon concepts to funded startups, our platform has helped creators validate and launch their best ideas.
          </p>
          <div className="flex flex-wrap gap-4">
