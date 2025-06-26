@@ -43,7 +43,7 @@ export function GlowingEffectDemo() {
           icon={<Brain className="h-6 w-6 text-purple-400" />}
           title="AI-Powered Validation"
           description="Get instant market analysis, competition research, and feasibility scores for your ideas powered by advanced AI models."
-          bgPattern="neural"
+          imageUrl="/f1.jpg"
         />
 
         <GridItem
@@ -51,15 +51,15 @@ export function GlowingEffectDemo() {
           icon={<Users className="h-6 w-6 text-fuchsia-400" />}
           title="Community Intelligence"
           description="Tap into our engaged community of developers, designers and entrepreneurs for real feedback and votes on your ideas."
-          bgPattern="circles"
-        />
+          imageUrl="./public/ynn7.jpeg"
+       />
 
         <GridItem
           area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
           icon={<Award className="h-6 w-6 text-pink-400" />}
           title="Weekly Leaderboards"
           description="The best ideas rise to the top! Get featured on our weekly leaderboards for maximum exposure and validation from peers."
-          bgPattern="trophy"
+          imageUrl="./public/leaderboard.jpeg"
         />
 
         <GridItem
@@ -67,7 +67,7 @@ export function GlowingEffectDemo() {
           icon={<MessageSquare className="h-6 w-6 text-purple-400" />}
           title="Peer Review & Comments"
           description="Receive detailed feedback and suggestions to improve your idea from our community of hackers and founders."
-          bgPattern="messages"
+          imageUrl="./public/ynn6.jpeg"
         />
 
         <GridItem
@@ -75,7 +75,7 @@ export function GlowingEffectDemo() {
           icon={<PenTool className="h-6 w-6 text-fuchsia-400" />}
           title="AI Content Assistance"
           description="Struggling to explain your idea? Our AI helps draft compelling descriptions and pitch content for your innovations."
-          bgPattern="pen"
+          imageUrl="./public/ynn5.jpeg"
         />
         
         <GridItem
@@ -83,7 +83,7 @@ export function GlowingEffectDemo() {
           icon={<HandCoins className="h-6 w-6 text-pink-400" />}
           title="Catalyst (Coming Soon)"
           description="Connect directly with founders and fundraisers who can provide resources and support to turn your idea into reality."
-          bgPattern="coins"
+          imageUrl="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1000&auto=format&fit=crop"
         />
       </ul>
     </div>
@@ -95,97 +95,10 @@ interface GridItemProps {
   icon: React.ReactNode;
   title: string;
   description: React.ReactNode;
-  bgPattern?: "neural" | "circles" | "trophy" | "messages" | "pen" | "coins";
-  image?: string; // Optional image prop for future use 
+  imageUrl: string; // Replace bgPattern with direct imageUrl
 }
 
-const GridItem = ({ area, icon, title, description, bgPattern }: GridItemProps) => {
-  const getBackgroundImage = () => {
-    switch (bgPattern) {
-      case "neural":
-        return (
-          <div className="absolute inset-0">
-            <img 
-              src="./public/f1.jpg" 
-              className="absolute contrast-more:1 w-full h-full object-cover " 
-              style={{ 
-                mixBlendMode: 'soft-light'
-              }}
-              alt="AI Validation Background"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      case "circles":
-        return (
-          <div className="absolute inset-0">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20" 
-              style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1000&auto=format&fit=crop")', 
-                mixBlendMode: 'soft-light' 
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      case "trophy":
-        return (
-          <div className="absolute inset-0">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20" 
-              style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?q=80&w=1000&auto=format&fit=crop")', 
-                mixBlendMode: 'soft-light' 
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      case "messages":
-        return (
-          <div className="absolute inset-0">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20" 
-              style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1000&auto=format&fit=crop")', 
-                mixBlendMode: 'soft-light' 
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      case "pen":
-        return (
-          <div className="absolute inset-0">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20" 
-              style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1599837487527-e009248aa71b?q=80&w=1000&auto=format&fit=crop")', 
-                mixBlendMode: 'soft-light' 
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      case "coins":
-        return (
-          <div className="absolute inset-0">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20" 
-              style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1000&auto=format&fit=crop")', 
-                mixBlendMode: 'soft-light' 
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900/90" />
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
+const GridItem = ({ area, icon, title, description, imageUrl }: GridItemProps) => {
   return (
     <li className={`min-h-[16rem] list-none ${area}`}>
       <div className="relative h-full rounded-2xl border border-purple-800/40 p-2 md:rounded-3xl md:p-3 bg-slate-900/80 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-500">
@@ -197,7 +110,17 @@ const GridItem = ({ area, icon, title, description, bgPattern }: GridItemProps) 
           inactiveZone={0.01}
         />
         <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 shadow-lg">
-          {getBackgroundImage()}
+          {/* Background image - UPDATED FOR BETTER VISIBILITY */}
+          <div className="absolute inset-0">
+            <img 
+              src={imageUrl}
+              className="absolute w-full h-full object-cover " 
+              style={{ mixBlendMode: 'overlay' }}
+              alt={`${title} background`}
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-slate-900/70" />
+          </div>
+          
           <div className="relative flex flex-1 flex-col justify-between gap-4 z-10">
             <div className="w-fit rounded-lg bg-gradient-to-br from-purple-900/80 to-slate-900/90 p-3 shadow-inner border border-purple-700/30">
               {icon}
