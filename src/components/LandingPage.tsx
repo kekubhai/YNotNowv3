@@ -34,6 +34,7 @@ import { Globe } from "@/components/magicui/globe";
 import { NumberTicker } from './magicui/number-ticker';
 import { AnimatedGradientText } from './magicui/animated-gradient-text';
 import { GlowingEffectDemo } from './glowingdemo';
+import { BoxRevealDemo } from './boxrevealdemo';
 
 
 
@@ -251,31 +252,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
          <Globe className="top-28 text-purple-600" />
          <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(128,90,213,0.2),rgba(30,27,75,0.3))]" />
        </div>
-       <div className="flex flex-col max-w-lg">
-         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-           <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">100+</span> Ideas Shipped
-         </h2>
-         <p className="text-xl text-neutral-300 mb-8">
-           From hackathon concepts to funded startups, our platform has helped creators validate and launch their best ideas.
-         </p>
-         <div className="flex flex-wrap gap-4">
-           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
-             <span className="font-semibold text-purple-300">85%</span> Success Rate
-           </div>
-           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
-             <span className="font-semibold text-purple-300">3.2M</span> in Funding
-           </div>
-           <div className="bg-purple-900/20 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-2 text-silver">
-             <span className="font-semibold text-purple-300">30+</span> Countries
-           </div>
-         </div>
-       </div>
+      <BoxRevealDemo/>
      </div>
    </div>
 </section>
-
-
-
 
       <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="container mx-auto px-4">
