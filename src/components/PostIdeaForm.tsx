@@ -4,7 +4,12 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { X, Lightbulb, Rocket } from 'lucide-react';
+import { response } from 'express';
+import OpenAI from 'openai';
 
+const client = new OpenAI({
+  apiKey: process.env['VITE_OPENAI_API_KEY'], // This is the default and can be omitted
+});
 interface PostIdeaFormProps {
   onSubmit: (idea: { title: string; description: string; author: string, category: 'startup' | 'hackathon' | 'both' }) => void;
   onCancel: () => void;
@@ -32,26 +37,44 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
     }
   };
 const handleGenerateDescription = async () => {
-  if (!title.trim()) {
-    alert('Please enter an idea title before generating description.');
-    return;
-  }
-
   try {
-    const res = await fetch('http://localhost:3001/api/describe', {
+    const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY; // Store your key in .env as VITE_OPENAI_API_KEY
+    if (!OPENAI_API_KEY) {
+      alert('OpenAI API key not set');
+      return;
+    }
+
+    const prompt = `
+You are an AI startup assistant. Write a compelling, detailed description for the following idea.
+
+Title: ${title}
+Category: ${category}
+${description ? `User's initial description: ${description}` : ''}
+
+Description:
+`;
+
+      response= client{
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, category }),
+    
+      body: JSON.stringify({
+        model: 'text-davinci-003',
+        prompt,
+        max_tokens: 120,
+        temperature: 0.7,
+      }),
     });
 
     const data = await res.json();
-    setDescription(data.description);
+    const generated = data.choices?.[0]?.text?.trim() || '';
+    setDescription(generated);
   } catch (err) {
     console.error('Error generating description:', err);
     alert('Failed to generate description.');
   }
 };
 
+  
   return (
     <Card className="p-8 bg-slate-900/80 backdrop-blur-sm shadow-2xl border border-slate-700">
       <div className="flex items-center justify-between mb-6">

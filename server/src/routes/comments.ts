@@ -12,7 +12,7 @@ router.get('/idea/:ideaId', async (req: Request<{ ideaId: string }>, res: Respon
 });
 
 
-router.post('/idea/:ideaId', async (req: Request<{ ideaId: string }>, res: Response) => {
+router.post('/idea/:ideaId', async (req: Request<{ ideaId: string }>, res: Response):Promise<any> => {
   const { ideaId } = req.params;
   const { author, content } = req.body;
   if (!author || !content) return res.status(400).json({ error: 'Missing fields' });
