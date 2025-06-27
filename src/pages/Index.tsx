@@ -23,6 +23,7 @@ export interface Idea {
   title: string;
   description: string;
   author: string;
+  category: 'startup' | 'hackathon' | 'both';
   votes: number;
   comments: Comment[];
   createdAt: Date;

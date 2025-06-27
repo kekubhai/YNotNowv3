@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Trophy, Medal, Award, TrendingUp } from 'lucide-react';
 import type { Idea } from '../pages/Index';
@@ -8,9 +7,22 @@ interface LeaderboardProps {
   ideas: Idea[];
 }
 
+const categoryOptions = [
+  { label: 'Startup', value: 'startup' },
+  { label: 'Hackathon', value: 'hackathon' },
+  { label: 'Both', value: 'both' },
+];
+
 export const Leaderboard: React.FC<LeaderboardProps> = ({ ideas }) => {
+  const [selectedCategory, setSelectedCategory] = useState<'startup' | 'hackathon' | 'both'>('startup');
+
+  // Filter ideas by selected category
+  const filteredIdeas = ideas.filter(idea =>
+    selectedCategory === 'both' ? idea.category === 'both' : idea.category === selectedCategory
+  );
+
   // Sort ideas by votes (top 5)
-  const topIdeas = [...ideas]
+  const topIdeas = [...filteredIdeas]
     .sort((a, b) => b.votes - a.votes)
     .slice(0, 5);
 
@@ -52,10 +64,20 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ ideas }) => {
         </div>
         <div>
           <h2 className="text-xl font-bold text-white">🏆 Leaderboard</h2>
-          <p className="text-sm text-slate-400">Top voted startup ideas</p>
+          <p className="text-sm text-slate-400">Top voted ideas by category</p>
         </div>
       </div>
-      
+      <div className="flex gap-2 mb-4">
+        {categoryOptions.map(opt => (
+          <button
+            key={opt.value}
+            onClick={() => setSelectedCategory(opt.value as 'startup' | 'hackathon' | 'both')}
+            className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-200 ${selectedCategory === opt.value ? 'bg-purple-600 text-white border-purple-600' : 'bg-slate-800 text-purple-300 border-slate-700 hover:bg-purple-900/40'}`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
       <div className="space-y-3">
         {topIdeas.map((idea, index) => (
           <div
@@ -68,7 +90,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ ideas }) => {
               </span>
               {getRankIcon(index)}
             </div>
-            
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-white truncate">
                 {idea.title}
@@ -77,7 +98,6 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ ideas }) => {
                 by {idea.author}
               </p>
             </div>
-            
             <div className="flex items-center gap-1 bg-slate-800 px-3 py-1 rounded-full">
               <TrendingUp className="w-4 h-4 text-green-400" />
               <span className="font-bold text-green-400">

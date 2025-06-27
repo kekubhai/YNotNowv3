@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -7,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { X, Lightbulb, Rocket } from 'lucide-react';
 
 interface PostIdeaFormProps {
-  onSubmit: (idea: { title: string; description: string; author: string }) => void;
+  onSubmit: (idea: { title: string; description: string; author: string, category: 'startup' | 'hackathon' | 'both' }) => void;
   onCancel: () => void;
 }
 
@@ -15,6 +14,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState<'startup' | 'hackathon' | 'both'>('startup');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,11 +22,13 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       onSubmit({
         title: title.trim(),
         description: description.trim(),
-        author: author.trim()
+        author: author.trim(),
+        category,
       });
       setTitle('');
       setDescription('');
       setAuthor('');
+      setCategory('startup');
     }
   };
 
@@ -95,6 +97,23 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
             className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
             required
           />
+        </div>
+        
+        <div>
+          <label htmlFor="category" className="block text-sm font-semibold text-slate-300 mb-2">
+            Category
+          </label>
+          <select
+            id="category"
+            value={category}
+            onChange={e => setCategory(e.target.value as 'startup' | 'hackathon' | 'both')}
+            className="w-full bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20 rounded-md p-2"
+            required
+          >
+            <option value="startup">Startup</option>
+            <option value="hackathon">Hackathon</option>
+            <option value="both">Both</option>
+          </select>
         </div>
         
         <div className="flex gap-4 pt-4">

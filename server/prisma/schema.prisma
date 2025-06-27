@@ -1,0 +1,55 @@
+// Prisma schema for YNotNowv3
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  ideas     Idea[]
+}
+
+model Idea {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  author      String
+  category    Category
+  votes       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  user        User?     @relation(fields: [author], references: [email])
+  comments    Comment[]
+  votesList   Vote[]
+}
+
+enum Category {
+  startup
+  hackathon
+  both
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  author    String
+  content   String
+  createdAt DateTime @default(now())
+  idea      Idea     @relation(fields: [ideaId], references: [id])
+  ideaId    String
+}
+
+model Vote {
+  id             String   @id @default(uuid())
+  userIdentifier String
+  voteType       String
+  idea           Idea     @relation(fields: [ideaId], references: [id])
+  ideaId         String
+  createdAt      DateTime @default(now())
+}
