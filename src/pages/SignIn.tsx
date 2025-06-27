@@ -1,0 +1,59 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+
+const SignIn: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const res = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Sign in failed');
+      localStorage.setItem('ynn3_token', data.token);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <form onSubmit={handleSignIn} className="bg-slate-900 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-white">Sign In</h2>
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className="w-full mb-4 p-2 rounded bg-slate-800 text-white"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className="w-full mb-6 p-2 rounded bg-slate-800 text-white"
+          required
+        />
+        <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white">Sign In</Button>
+        <div className="mt-4 text-slate-400 text-sm text-center">
+          Don't have an account? <a href="/signup" className="text-orange-400 hover:underline">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default SignIn;

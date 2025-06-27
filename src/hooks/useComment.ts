@@ -1,4 +1,3 @@
-import { supabase } from '@/integrations/supabase/client';
 import type { Comment, Idea } from '../pages/Index';
 
 interface UseCommentsProps {
@@ -15,19 +14,18 @@ export const useComments = ({ ideas, setIdeas }: UseCommentsProps) => {
    */
   const addComment = async (ideaId: string, content: string, author: string): Promise<void> => {
     try {
-      const { data, error } = await supabase
-        .from('comments')
-        .insert([{ idea_id: ideaId, content, author }])
-        .select()
-        .single();
-
-      if (error) throw error;
-
+      const res = await fetch(`http://localhost:3000/comments/idea/${ideaId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ author, content }),
+      });
+      if (!res.ok) throw new Error('Failed to add comment');
+      const data = await res.json();
       const newComment: Comment = {
         id: data.id,
         author: data.author,
         content: data.content,
-        createdAt: new Date(data.created_at)
+        createdAt: new Date(data.createdAt)
       };
 
       setIdeas(ideas.map(idea =>

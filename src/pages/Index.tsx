@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
 import { IdeaCard } from '../components/IdeaCard';
 import { PostIdeaForm } from '../components/PostIdeaForm';
@@ -16,7 +16,6 @@ import {
   TrendingUp,
   Users 
 } from 'lucide-react';
-import { useSupabaseData } from '../hooks/useSupabaseData';
 
 export interface Idea {
   id: string;
@@ -40,7 +39,25 @@ export interface Comment {
 const Index = () => {
   const [showLanding, setShowLanding] = useState(true);
   const [showPostForm, setShowPostForm] = useState(false);
-  const { ideas, loading, addIdea, addComment, handleVote } = useSupabaseData();
+  const [ideas, setIdeas] = useState<Idea[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchIdeas();
+  }, []);
+
+  const fetchIdeas = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:3000/ideas');
+      const data = await res.json();
+      setIdeas(data.map((idea: any) => ({ ...idea, createdAt: new Date(idea.createdAt) })));
+    } catch (error) {
+      console.error('Failed to fetch ideas:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGetStarted = () => {
     setShowLanding(false);
@@ -48,7 +65,13 @@ const Index = () => {
 
   const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote'>) => {
     try {
-      await addIdea(newIdea);
+      const res = await fetch('http://localhost:3000/ideas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newIdea),
+      });
+      if (!res.ok) throw new Error('Failed to add idea');
+      await fetchIdeas();
       setShowPostForm(false);
     } catch (error) {
       console.error('Failed to add idea:', error);
@@ -57,9 +80,29 @@ const Index = () => {
 
   const handleAddComment = async (ideaId: string, content: string, author: string) => {
     try {
-      await addComment(ideaId, content, author);
+      const res = await fetch(`http://localhost:3000/comments/idea/${ideaId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ author, content }),
+      });
+      if (!res.ok) throw new Error('Failed to add comment');
+      await fetchIdeas();
     } catch (error) {
       console.error('Failed to add comment:', error);
+    }
+  };
+
+  const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {
+    try {
+      const res = await fetch(`http://localhost:3000/ideas/${ideaId}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userIdentifier: 'anonymous_user', voteType }),
+      });
+      if (!res.ok) throw new Error('Failed to vote');
+      await fetchIdeas();
+    } catch (error) {
+      console.error('Failed to vote:', error);
     }
   };
 
