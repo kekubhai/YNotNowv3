@@ -47,13 +47,25 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       setIsGenerating(true);
 
       const prompt = `
-You are an AI startup assistant. Write a compelling, detailed description for the following idea.
+You are a world-class startup pitch coach who has helped founders raise billions in funding.
 
-Title: ${title}
-Category: ${category}
-${description ? `User's initial description: ${description}` : ''}
+Create an exceptionally compelling, investor-ready description for this startup idea:
 
-Description (around 200-300 words, focus on the problem it solves, target audience, and unique value proposition):
+IDEA: ${title}
+CATEGORY: ${category}
+${description ? `INITIAL THOUGHTS: ${description}` : ''}
+
+Your description must follow this precise structure:
+1. PROBLEM (1-2 sentences): Start with a sharp, quantifiable problem statement that shows market pain.
+2. SOLUTION (2-3 sentences): Describe your solution clearly, focusing on its unique approach.
+3. MARKET SIZE (1-2 sentences): Provide specific TAM/SAM figures and growth trajectory.
+4. DIFFERENTIATION (1-2 sentences): Explain why existing alternatives fail and your unfair advantage.
+5. BUSINESS MODEL (1-2 sentences): How you'll make money, with unit economics if possible.
+6. TRACTION/VISION (1-2 sentences): Early validation or clear first steps to market.
+
+Write in a confident, concise voice (250-300 words max). Use specific metrics where possible. Focus on clarity over jargon. Make it compelling enough that an investor would immediately want to schedule a meeting.
+
+Format the output as a single cohesive paragraph without section headers.
 `;
 
       // Use Gemini API to generate content
