@@ -4,14 +4,14 @@ import { PrismaClient } from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
 
-// Get all comments for an idea
+
 router.get('/idea/:ideaId', async (req: Request<{ ideaId: string }>, res: Response) => {
   const { ideaId } = req.params;
   const comments = await prisma.comment.findMany({ where: { ideaId } });
   res.json(comments);
 });
 
-// Add a comment to an idea
+
 router.post('/idea/:ideaId', async (req: Request<{ ideaId: string }>, res: Response) => {
   const { ideaId } = req.params;
   const { author, content } = req.body;

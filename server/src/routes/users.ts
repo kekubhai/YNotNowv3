@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
   res.json(users);
 });
 
-// Get a user by id
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await prisma.user.findUnique({ where: { id } });
@@ -17,14 +17,14 @@ router.get('/:id', async (req, res) => {
   res.json(user);
 });
 
-// Create a new user
+
 router.post('/', async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await prisma.user.create({ data: { email, password } });
   res.status(201).json(user);
 });
 
-// Update a user
+
 router.put('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { email, password } = req.body;
