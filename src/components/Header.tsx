@@ -1,8 +1,13 @@
-
 import React from 'react';
 import { Rocket, Zap } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <header className="bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -18,18 +23,28 @@ export const Header = () => {
               <p className="text-sm text-slate-400">Validate your startup ideas</p>
             </div>
           </div>
-          
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-slate-400 hover:text-orange-400 transition-colors flex items-center gap-2">
+            <a href="/" className="text-slate-400 hover:text-orange-400 transition-colors flex items-center gap-2">
               <Zap className="w-4 h-4" />
               Ideas
             </a>
-            <a href="#" className="text-slate-400 hover:text-orange-400 transition-colors">
+            <a href="/leaderboard" className="text-slate-400 hover:text-orange-400 transition-colors">
               Top Rated
             </a>
-            <a href="#" className="text-slate-400 hover:text-orange-400 transition-colors">
+            <a href="/about" className="text-slate-400 hover:text-orange-400 transition-colors">
               About
             </a>
+            {!user ? (
+              <>
+                <Button variant="ghost" className="text-orange-400" onClick={() => navigate('/signin')}>Sign In</Button>
+                <Button variant="outline" className="text-orange-400 border-orange-400" onClick={() => navigate('/signup')}>Sign Up</Button>
+              </>
+            ) : (
+              <>
+                <span className="text-slate-300 mr-2">{user.email}</span>
+                <Button variant="ghost" className="text-orange-400" onClick={logout}>Sign Out</Button>
+              </>
+            )}
           </nav>
         </div>
       </div>
