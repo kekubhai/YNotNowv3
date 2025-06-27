@@ -4,12 +4,11 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { X, Lightbulb, Rocket } from 'lucide-react';
-import { response } from 'express';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const client = new OpenAI({
-  apiKey: process.env['VITE_OPENAI_API_KEY'], // This is the default and can be omitted
-});
+// Initialize Gemini API client
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+
 interface PostIdeaFormProps {
   onSubmit: (idea: { title: string; description: string; author: string, category: 'startup' | 'hackathon' | 'both' }) => void;
   onCancel: () => void;
@@ -20,6 +19,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
   const [description, setDescription] = useState('');
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState<'startup' | 'hackathon' | 'both'>('startup');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,44 +36,40 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       setCategory('startup');
     }
   };
-const handleGenerateDescription = async () => {
-  try {
-    const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY; // Store your key in .env as VITE_OPENAI_API_KEY
-    if (!OPENAI_API_KEY) {
-      alert('OpenAI API key not set');
-      return;
-    }
 
-    const prompt = `
+  const handleGenerateDescription = async () => {
+    try {
+      if (!import.meta.env.VITE_GEMINI_API_KEY) {
+        alert('Gemini API key not set');
+        return;
+      }
+
+      setIsGenerating(true);
+
+      const prompt = `
 You are an AI startup assistant. Write a compelling, detailed description for the following idea.
 
 Title: ${title}
 Category: ${category}
 ${description ? `User's initial description: ${description}` : ''}
 
-Description:
+Description (around 200-300 words, focus on the problem it solves, target audience, and unique value proposition):
 `;
 
-      response= client{
-      method: 'POST',
-    
-      body: JSON.stringify({
-        model: 'text-davinci-003',
-        prompt,
-        max_tokens: 120,
-        temperature: 0.7,
-      }),
-    });
+      // Use Gemini API to generate content
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const generatedText = response.text();
 
-    const data = await res.json();
-    const generated = data.choices?.[0]?.text?.trim() || '';
-    setDescription(generated);
-  } catch (err) {
-    console.error('Error generating description:', err);
-    alert('Failed to generate description.');
-  }
-};
-
+      setDescription(generatedText.trim());
+    } catch (err) {
+      console.error('Error generating description:', err);
+      alert('Failed to generate description. Please check your API key and try again.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
   
   return (
     <Card className="p-8 bg-slate-900/80 backdrop-blur-sm shadow-2xl border border-slate-700">
@@ -128,29 +124,29 @@ Description:
           />
         </div>
         
-      <div>
-  <div className="flex items-center justify-between mb-2">
-    <label htmlFor="description" className="block text-sm font-semibold text-slate-300">
-      Description
-    </label>
-    <button
-      type="button"
-      onClick={handleGenerateDescription}
-      className="text-sm text-orange-400 hover:underline"
-    >
-      🪄 Generate with AI
-    </button>
-  </div>
-  <Textarea
-    id="description"
-    placeholder="Describe your idea in detail. What problem does it solve? How would it work? What makes it unique?"
-    value={description}
-    onChange={(e) => setDescription(e.target.value)}
-    className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
-    required
-  />
-</div>
-
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label htmlFor="description" className="block text-sm font-semibold text-slate-300">
+              Description
+            </label>
+            <button
+              type="button"
+              onClick={handleGenerateDescription}
+              disabled={isGenerating}
+              className="text-sm text-orange-400 hover:underline flex items-center gap-1"
+            >
+              {isGenerating ? '⏳ Generating...' : '🪄 Generate with AI'}
+            </button>
+          </div>
+          <Textarea
+            id="description"
+            placeholder="Describe your idea in detail. What problem does it solve? How would it work? What makes it unique?"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
+            required
+          />
+        </div>
         
         <div>
           <label htmlFor="category" className="block text-sm font-semibold text-slate-300 mb-2">
