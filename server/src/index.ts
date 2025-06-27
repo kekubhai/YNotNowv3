@@ -7,7 +7,7 @@ import ideasRouter from './routes/ideas';
 import commentsRouter from './routes/comments';
 import votesRouter from './routes/votes';
 import router from './routes/users';
-
+import { mohakApi } from './routes/mohaksapi';
 dotenv.config();
 
 const app = express();
@@ -67,6 +67,7 @@ app.use('/ideas', ideasRouter);
 app.use('/comments', commentsRouter);
 app.use('/votes', votesRouter);
 app.use('/users', router);
+app.use(mohakApi());
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

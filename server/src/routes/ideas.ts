@@ -1,17 +1,17 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 
 const router = Router();
 const prisma = new PrismaClient();
 
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res):Promise<any> => {
   const ideas = await prisma.idea.findMany({ include: { comments: true, votesList: true } });
   res.json(ideas);
 });
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res):Promise<any> => {
   const { id } = req.params;
   const idea = await prisma.idea.findUnique({ where: { id }, include: { comments: true, votesList: true } });
   if (!idea) return res.status(404).json({ error: 'Idea not found' });
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
 });
 
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) :Promise<any>=> {
   const { title, description, author, category } = req.body;
   if (!title || !description || !author || !category) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-router.post('/:id/vote', async (req, res) => {
+router.post('/:id/vote', async (req, res):Promise<any> => {
   const { id } = req.params;
   const { userIdentifier, voteType } = req.body;
   if (!userIdentifier || !voteType) {
