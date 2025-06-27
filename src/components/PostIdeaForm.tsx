@@ -31,6 +31,26 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       setCategory('startup');
     }
   };
+const handleGenerateDescription = async () => {
+  if (!title.trim()) {
+    alert('Please enter an idea title before generating description.');
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:3001/api/describe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, category }),
+    });
+
+    const data = await res.json();
+    setDescription(data.description);
+  } catch (err) {
+    console.error('Error generating description:', err);
+    alert('Failed to generate description.');
+  }
+};
 
   return (
     <Card className="p-8 bg-slate-900/80 backdrop-blur-sm shadow-2xl border border-slate-700">
@@ -85,19 +105,29 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
           />
         </div>
         
-        <div>
-          <label htmlFor="description" className="block text-sm font-semibold text-slate-300 mb-2">
-            Description
-          </label>
-          <Textarea
-            id="description"
-            placeholder="Describe your idea in detail. What problem does it solve? How would it work? What makes it unique?"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
-            required
-          />
-        </div>
+      <div>
+  <div className="flex items-center justify-between mb-2">
+    <label htmlFor="description" className="block text-sm font-semibold text-slate-300">
+      Description
+    </label>
+    <button
+      type="button"
+      onClick={handleGenerateDescription}
+      className="text-sm text-orange-400 hover:underline"
+    >
+      🪄 Generate with AI
+    </button>
+  </div>
+  <Textarea
+    id="description"
+    placeholder="Describe your idea in detail. What problem does it solve? How would it work? What makes it unique?"
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    className="w-full min-h-[140px] bg-slate-800 border-slate-600 text-white focus:border-orange-400 focus:ring-orange-400/20"
+    required
+  />
+</div>
+
         
         <div>
           <label htmlFor="category" className="block text-sm font-semibold text-slate-300 mb-2">
