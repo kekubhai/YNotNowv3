@@ -7,6 +7,7 @@ import ideasRouter from './routes/ideas';
 import commentsRouter from './routes/comments';
 import votesRouter from './routes/votes';
 import router from './routes/users';
+import feedbackRouter from './routes/feedback';
 import { mohakApi } from './routes/mohaksapi';
 dotenv.config();
 
@@ -20,7 +21,7 @@ app.use(express.json());
 
 // Middleware: Only allow unauthenticated users to access landing page
 app.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.path === '/landing' || req.path === '/auth/login' || req.path === '/auth/register') {
+  if (req.path === '/landing' || req.path === '/auth/login' || req.path === '/auth/register' || req.path.startsWith('/api/feedback')) {
     return next();
   }
   const authHeader = req.headers.authorization;
@@ -67,7 +68,10 @@ app.use('/ideas', ideasRouter);
 app.use('/comments', commentsRouter);
 app.use('/votes', votesRouter);
 app.use('/users', router);
-app.use(mohakApi());
+
+app.use('/feedback', feedbackRouter);
+
+app.use('/mohakApi', mohakApi());
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

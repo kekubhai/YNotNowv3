@@ -53,3 +53,13 @@ model Vote {
   ideaId         String
   createdAt      DateTime @default(now())
 }
+
+model Feedback {
+  id        String   @id @default(uuid())
+  email     String
+  message   String
+  type      String   @default("general")
+  userAgent String?
+  referrer  String?
+  createdAt DateTime @default(now())
+}

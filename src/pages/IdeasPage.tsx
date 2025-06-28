@@ -3,7 +3,7 @@ import { Header } from '../components/Header';
 import { IdeaCard } from '../components/IdeaCard';
 import { PostIdeaForm } from '../components/PostIdeaForm';
 import { Leaderboard } from '../components/Leaderboard';
-import { FeedbackButton } from '../components/Feedbackform';
+import { FeedbackPopover } from '../components/FeedbackPopover';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowLeft, 
@@ -282,7 +282,7 @@ const IdeasPage = () => {
       </div>
       
       {/* Floating Feedback Button */}
-      <FeedbackButton />
+      <FeedbackPopover />
     </div>
   );
 };
