@@ -36,11 +36,12 @@ import { NumberTicker } from '../components/magicui/number-ticker';
 import { AnimatedGradientText } from '../components/magicui/animated-gradient-text';
 import { GlowingEffectDemo } from '../components/glowingdemo';
 import { BoxRevealDemo } from '../components/boxrevealdemo';
-
+import {Navbar } from '../components/ui/resizable-navbar'
+import { NavbarDemo } from '@/components/NavbarDemo';
 
 
 interface LandingPageProps {
-  onGetStarted: () => void;
+  
 }
 
 export const LandingPage: React.FC<LandingPageProps> = () => {
@@ -123,6 +124,8 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
       {/* Hero Section with Background Image */}
+
+      <NavbarDemo/>
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image with overlay - only for hero section */}
         <div className="absolute inset-0 z-0">

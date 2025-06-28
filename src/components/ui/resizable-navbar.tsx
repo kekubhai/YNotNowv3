@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+
 import {
   motion,
   AnimatePresence,
@@ -9,6 +9,8 @@ import {
 } from "motion/react";
 
 import React, { useRef, useState } from "react";
+import { Icon } from "lucide-react";
+import { IconLeft, IconRight } from "react-day-picker";
 
 
 interface NavbarProps {
@@ -224,9 +226,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <IconRight className="text-black dark:text-white" />
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <IconLeft className="text-black dark:text-white"  />
   );
 };
 
