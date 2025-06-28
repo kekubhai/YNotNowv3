@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 import { 
   ArrowRight, 
@@ -26,15 +27,15 @@ import {
   BarChart3,
   Bot
 } from 'lucide-react';
-import { TextAnimate } from './magicui/text-animate';
-import { TweetGrid } from './eldoraui/tweetgrid';
-import { TweetGridDemo } from './Tweetdemo';
-import { AuroraText } from './magicui/aurora-text';
+import { TextAnimate } from '../components/magicui/text-animate';
+import { TweetGrid } from '../components/eldoraui/tweetgrid';
+import { TweetGridDemo } from '../components/Tweetdemo';
+import { AuroraText } from '../components/magicui/aurora-text';
 import { Globe } from "@/components/magicui/globe";
-import { NumberTicker } from './magicui/number-ticker';
-import { AnimatedGradientText } from './magicui/animated-gradient-text';
-import { GlowingEffectDemo } from './glowingdemo';
-import { BoxRevealDemo } from './boxrevealdemo';
+import { NumberTicker } from '../components/magicui/number-ticker';
+import { AnimatedGradientText } from '../components/magicui/animated-gradient-text';
+import { GlowingEffectDemo } from '../components/glowingdemo';
+import { BoxRevealDemo } from '../components/boxrevealdemo';
 
 
 
@@ -42,7 +43,13 @@ interface LandingPageProps {
   onGetStarted: () => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
+export const LandingPage: React.FC<LandingPageProps> = () => {
+  const navigate = useNavigate();
+  
+  const handleGetStarted = () => {
+    navigate('/ideas');
+  };
+
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
@@ -184,7 +191,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               {/* CTA Buttons */}
               <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <Button
-                  onClick={onGetStarted}
+                  onClick={handleGetStarted}
                   size="lg"
                   className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
                 >
@@ -287,7 +294,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
-            onClick={onGetStarted}
+            
             size="lg"
             className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
           >

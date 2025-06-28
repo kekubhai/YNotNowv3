@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Trophy, Medal, Award, TrendingUp } from 'lucide-react';
-import type { Idea } from '../pages/Index';
+import type { Idea } from '../pages/IdeasPage';
 
 interface LeaderboardProps {
   ideas: Idea[];

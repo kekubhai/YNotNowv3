@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
 import { IdeaCard } from '../components/IdeaCard';
 import { PostIdeaForm } from '../components/PostIdeaForm';
-import { LandingPage } from '../components/LandingPage';
 import { Leaderboard } from '../components/Leaderboard';
 import { Button } from '@/components/ui/button';
 import { 
@@ -16,6 +15,8 @@ import {
   TrendingUp,
   Users 
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { PointerHighlight } from '@/components/ui/pointer-highlight';
 
 export interface Idea {
   id: string;
@@ -36,12 +37,12 @@ export interface Comment {
   createdAt: Date;
 }
 
-const Index = () => {
-  const [showLanding, setShowLanding] = useState(true);
+const IdeasPage = () => {
   const [showPostForm, setShowPostForm] = useState(false);
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     fetchIdeas();
   }, []);
@@ -57,10 +58,6 @@ const Index = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGetStarted = () => {
-    setShowLanding(false);
   };
 
   const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote'>) => {
@@ -106,10 +103,6 @@ const Index = () => {
     }
   };
 
-  if (showLanding) {
-    return <LandingPage onGetStarted={handleGetStarted} />;
-  }
-
   // Sort ideas by votes (highest first)
   const sortedIdeas = [...ideas].sort((a, b) => b.votes - a.votes);
   return (
@@ -128,7 +121,7 @@ const Index = () => {
         <Header />
         <main className="container mx-auto px-4 py-8 max-w-7xl">
           <Button 
-            onClick={() => setShowLanding(true)}
+            onClick={() => navigate('/')}
             variant="ghost" 
             className="mb-6 text-slate-400 hover:text-white"
             size="sm"
@@ -153,7 +146,11 @@ const Index = () => {
                 </div>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                Validate Your Next Big Idea
+                Validate 
+                
+                <PointerHighlight 
+                     rectangleClassName="border-white/20 border-2 rounded-md p-1 border-dashed"
+        pointerClassName="text-yellow-600"><span className=''>Your Next Big</span> Idea</PointerHighlight>
               </h1>
               <p className="text-slate-400 text-base">
                 Share your startup or hackathon concepts and get valuable feedback from the community
@@ -298,4 +295,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default IdeasPage;

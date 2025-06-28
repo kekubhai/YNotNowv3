@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Idea } from '../pages/Index';
+import type { Idea } from '../pages/IdeasPage';
 
 export const useIdeas = () => {
   const [ideas, setIdeas] = useState<Idea[]>([]);

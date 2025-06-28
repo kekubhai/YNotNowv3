@@ -1,4 +1,4 @@
-import type { Idea } from '../pages/Index';
+import type { Idea } from '../pages/IdeasPage';
 
 export const useVotes = (ideas: Idea[], setIdeas: React.Dispatch<React.SetStateAction<Idea[]>>) => {
   const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {

@@ -1,4 +1,4 @@
-import type { Comment, Idea } from '../pages/Index';
+import type { Comment, Idea } from '../pages/IdeasPage';
 
 interface UseCommentsProps {
   ideas: Idea[];
