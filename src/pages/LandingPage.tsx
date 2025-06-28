@@ -38,6 +38,7 @@ import { GlowingEffectDemo } from '../components/glowingdemo';
 import { BoxRevealDemo } from '../components/boxrevealdemo';
 import {Navbar } from '../components/ui/resizable-navbar'
 import { NavbarDemo } from '@/components/NavbarDemo';
+import { FeedbackButton } from '../components/Feedbackform';
 
 
 interface LandingPageProps {
@@ -317,6 +318,9 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     </div>
   </div>
 </section>
+    
+    {/* Floating Feedback Button */}
+    <FeedbackButton />
     </div>
   );
 };

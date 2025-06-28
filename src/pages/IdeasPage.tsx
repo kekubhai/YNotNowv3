@@ -3,6 +3,7 @@ import { Header } from '../components/Header';
 import { IdeaCard } from '../components/IdeaCard';
 import { PostIdeaForm } from '../components/PostIdeaForm';
 import { Leaderboard } from '../components/Leaderboard';
+import { FeedbackButton } from '../components/Feedbackform';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowLeft, 
@@ -273,24 +274,15 @@ const IdeasPage = () => {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 <Leaderboard ideas={ideas} />
-                
-                <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-lg p-4">
-                  <h3 className="text-white font-medium mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
-                    Join Our Community
-                  </h3>
-                  <p className="text-slate-400 text-sm mb-4">
-                    Connect with founders, hackers, and innovators building the next big thing.
-                  </p>
-                  <Button variant="outline" className="w-full border-slate-700 text-slate-300">
-                    Learn More
-                  </Button>
-                </div>
+            
               </div>
             </div>
           </div>
         </main>
       </div>
+      
+      {/* Floating Feedback Button */}
+      <FeedbackButton />
     </div>
   );
 };
