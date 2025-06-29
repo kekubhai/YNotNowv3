@@ -130,6 +130,17 @@ const IdeasPage = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
+
+          {/* Leaderboard navigation button */}
+          <Button
+            onClick={() => navigate('/leaderboard')}
+            variant="secondary"
+            className="mb-6 ml-2 text-purple-400 hover:text-white"
+            size="sm"
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Leaderboard
+          </Button>
           
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <div>

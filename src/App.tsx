@@ -10,6 +10,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ProtectedRoute from './middleware/ProtectedRoute';
+import LeaderboardPage from "./pages/LeaderboardPage"; // Import the new LeaderboardPage component
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/ideas" element={<IdeasPage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/leaderboard" element={<LeaderboardPage />} /> {/* Add the new route here */}
             {/* Example protected route: */}
             {/* <Route path="/protected" element={<ProtectedRoute><ProtectedPage /></ProtectedRoute>} /> */}
             <Route path="*" element={<NotFound />} />
