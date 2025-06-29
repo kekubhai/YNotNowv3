@@ -8,7 +8,13 @@ export const useIdeas = () => {
   const fetchIdeas = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/ideas');
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:3000/ideas', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
       const data = await res.json();
       setIdeas(data.map((idea: any) => ({ ...idea, createdAt: new Date(idea.createdAt) })));
     } catch (error) {

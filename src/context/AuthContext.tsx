@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
 interface AuthContextType {
   user: any;
@@ -18,12 +19,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     if (token) {
-      // Optionally fetch user info from backend
       fetch('http://localhost:3000/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
       })
-        .then(res => res.ok ? res.json() : null)
-        .then(data => setUser(data?.user || null))
+        .then(res => {
+          if (res.status === 404) {
+            // If /auth/me does not exist, decode JWT for user info
+            try {
+              const decoded: any = jwtDecode(token);
+              setUser({ email: decoded.email, id: decoded.id });
+            } catch {
+              setUser(null);
+            }
+            return null;
+          }
+          return res.ok ? res.json() : null;
+        })
+        .then(data => {
+          if (data && data.user) setUser(data.user);
+        })
         .catch(() => setUser(null));
     } else {
       setUser(null);
