@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { PointerHighlight } from '@/components/ui/pointer-highlight';
+import { useAuth } from '../context/AuthContext';
 
 export interface Idea {
   id: string;
@@ -43,6 +44,7 @@ const IdeasPage = () => {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { user } = useAuth();
   
   useEffect(() => {
     fetchIdeas();
@@ -69,11 +71,25 @@ const IdeasPage = () => {
 
   const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote'>) => {
     try {
+      const { user } = useAuth();
+      if (!user?.email) {
+        alert('Please sign in to submit ideas');
+        return;
+      }
+      
+      const token = localStorage.getItem('ynn3_token');
       const res = await fetch('http://localhost:3000/ideas', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newIdea),
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ 
+          ...newIdea, 
+          author: user.email // Always use logged-in user's email
+        }),
       });
+      
       if (!res.ok) throw new Error('Failed to add idea');
       await fetchIdeas();
       setShowPostForm(false);

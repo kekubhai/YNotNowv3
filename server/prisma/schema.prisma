@@ -18,22 +18,16 @@ model User {
 }
 
 model Idea {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   description String
   author      String
-  category    Category
-  votes       Int       @default(0)
-  createdAt   DateTime  @default(now())
-  user        User?     @relation(fields: [author], references: [email])
+  category    String
+  votes       Int      @default(0)
+  createdAt   DateTime @default(now())
+  user        User?    @relation(fields: [author], references: [email])
   comments    Comment[]
   votesList   Vote[]
-}
-
-enum Category {
-  startup
-  hackathon
-  both
 }
 
 model Comment {

@@ -24,7 +24,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       })
         .then(res => {
           if (res.status === 404) {
-            // If /auth/me does not exist, decode JWT for user info
             try {
               const decoded: any = jwtDecode(token);
               setUser({ email: decoded.email, id: decoded.id });
@@ -52,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Sign in failed');
-    localStorage.setItem('ynn3_token', data.token);
+    localStorage.setItem('token', data.token);
     setToken(data.token);
     navigate('/');
   };
