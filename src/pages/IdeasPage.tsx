@@ -45,39 +45,34 @@ const IdeasPage = () => {
   const [showPostForm, setShowPostForm] = useState(false);
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAddButton, setShowAddButton] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
   
   useEffect(() => {
-    // Check if user is logged in, redirect to login if not
+    
+    fetchIdeas();
+    
+    
     const token = localStorage.getItem('ynn3_token');
     if (!token) {
-      navigate('/signin', { state: { from: '/ideas' } });
+      setShowAddButton(false); 
     } else {
-      fetchIdeas();
+      setShowAddButton(true);
     }
   }, [navigate]);
 
   const fetchIdeas = async () => {
     setLoading(true);
     try {
-      // Change this line - use the correct token key
-      const token = localStorage.getItem('ynn3_token');
+     
+      const res = await fetch('http://localhost:3000/ideas');
       
-      const res = await fetch('http://localhost:3000/ideas', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      // Add error handling to prevent map errors
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
       
       const data = await res.json();
-      // Check if data is an array before mapping
       if (Array.isArray(data)) {
         setIdeas(data.map((idea: any) => ({ ...idea, createdAt: new Date(idea.createdAt) })));
       } else {
@@ -137,10 +132,10 @@ const IdeasPage = () => {
   const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {
     try {
       const token = localStorage.getItem('ynn3_token');
-      // Use user.email or a user ID as the identifier
+    
       const userIdentifier = user?.email || 'anonymous_' + Math.random().toString(36).substring(7);
       
-      // Updated to use the correct endpoint and include authentication
+    
       const res = await fetch(`http://localhost:3000/votes/idea/${ideaId}`, {
         method: 'POST',
         headers: { 
@@ -157,7 +152,7 @@ const IdeasPage = () => {
     }
   };
 
-  // Sort ideas by votes (highest first)
+ 
   const sortedIdeas = [...ideas].sort((a, b) => b.votes - a.votes);
   return (
      <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-purple-950/30 py-5 px-4">
@@ -224,14 +219,16 @@ const IdeasPage = () => {
               </p>
             </div>
             
-            <Button 
-              onClick={() => setShowPostForm(true)}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md flex items-center gap-2 transition-all"
-              size="lg"
-            >
-              <Plus className="w-4 h-4" />
-              Submit Your Idea
-            </Button>
+            {showAddButton && (
+              <Button 
+                onClick={() => setShowPostForm(true)}
+                className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md flex items-center gap-2 transition-all"
+                size="lg"
+              >
+                <Plus className="w-4 h-4" />
+                Submit Your Idea
+              </Button>
+            )}
           </div>
 
           {showPostForm && (
@@ -339,7 +336,7 @@ const IdeasPage = () => {
             {/* Sidebar with Leaderboard */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
-                <Leaderboard ideas={ideas} />
+              
             
               </div>
             </div>

@@ -19,11 +19,20 @@ const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 app.use(cors());
 app.use(express.json());
 
-// Middleware: Only allow unauthenticated users to access landing page
+
 app.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.path === '/landing' || req.path === '/auth/login' || req.path === '/auth/register' || req.path.startsWith('/api/feedback')) {
+
+  if (
+    req.path === '/landing' || 
+    req.path === '/auth/login' || 
+    req.path === '/auth/register' || 
+    req.path.startsWith('/api/feedback') ||
+    (req.path === '/ideas' && req.method === 'GET') 
+  ) {
     return next();
   }
+  
+  
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ error: 'Unauthorized' });

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronUp, ChevronDown, MessageCircle, User, Clock, Flame, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,6 +5,8 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import type { Idea } from '../pages/IdeasPage';
+import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface IdeaCardProps {
   idea: Idea;
@@ -14,12 +15,31 @@ interface IdeaCardProps {
 }
 
 export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [commenterName, setCommenterName] = useState('');
 
-  const handleSubmitComment = (e: React.FormEvent) => {
+  const handleVoteClick = (voteType: 'up' | 'down') => {
+    if (!user) {
+      // Show login prompt
+      navigate('/signin', { state: { from: '/ideas' } });
+      return;
+    }
+    
+    onVote(idea.id, voteType);
+  };
+
+  const handleCommentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      // Show login prompt
+      navigate('/signin', { state: { from: '/ideas' } });
+      return;
+    }
+    
     if (newComment.trim() && commenterName.trim()) {
       onAddComment(idea.id, newComment.trim(), commenterName.trim());
       setNewComment('');
@@ -59,18 +79,29 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
       <div className="flex gap-4">
         {/* Vote Section */}
         <div className="flex flex-col items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onVote(idea.id, 'up')}
-            className={`vote-button p-3 rounded-xl transition-all duration-200 ${
-              idea.userVote === 'up' 
-                ? 'bg-green-500/20 text-green-400 border border-green-400/30' 
-                : 'hover:bg-slate-700 text-slate-400 hover:text-green-400'
-            }`}
-          >
-            <ChevronUp className="w-6 h-6" />
-          </Button>
+          {user ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onVote(idea.id, 'up')}
+              className={`vote-button p-3 rounded-xl transition-all duration-200 ${
+                idea.userVote === 'up' 
+                  ? 'bg-green-500/20 text-green-400 border border-green-400/30' 
+                  : 'hover:bg-slate-700 text-slate-400 hover:text-green-400'
+              }`}
+            >
+              <ChevronUp className="w-6 h-6" />
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/signin', { state: { from: '/ideas' } })}
+              className="vote-button p-3 rounded-xl transition-all duration-200 hover:bg-slate-700 text-slate-400"
+            >
+              <ChevronUp className="w-6 h-6" />
+            </Button>
+          )}
           
           <div className="flex flex-col items-center gap-1">
             <span className={`font-bold text-xl ${getVoteColor(idea.votes)}`}>
@@ -82,7 +113,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onVote(idea.id, 'down')}
+            onClick={() => handleVoteClick('down')}
             className={`vote-button p-3 rounded-xl transition-all duration-200 ${
               idea.userVote === 'down' 
                 ? 'bg-red-500/20 text-red-400 border border-red-400/30' 
@@ -152,7 +183,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
                 </div>
               )}
               
-              <form onSubmit={handleSubmitComment} className="space-y-4">
+              <form onSubmit={handleCommentSubmit} className="space-y-4">
                 <div className="flex gap-3">
                   <Input
                     placeholder="Your name"

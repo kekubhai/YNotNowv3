@@ -59,6 +59,7 @@ const LeaderboardPage: React.FC = () => {
 		const fetchIdeas = async () => {
 			setLoading(true);
 			try {
+				// No auth token needed for public viewing
 				const res = await fetch("http://localhost:3000/ideas");
 				const data = await res.json();
 				if (data && data.length > 0) {
