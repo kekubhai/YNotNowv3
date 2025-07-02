@@ -47,23 +47,44 @@ const IdeasPage = () => {
   const { user } = useAuth();
   
   useEffect(() => {
-    fetchIdeas();
-  }, []);
+    // Check if user is logged in, redirect to login if not
+    const token = localStorage.getItem('ynn3_token');
+    if (!token) {
+      navigate('/signin', { state: { from: '/ideas' } });
+    } else {
+      fetchIdeas();
+    }
+  }, [navigate]);
 
   const fetchIdeas = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
+      // Change this line - use the correct token key
+      const token = localStorage.getItem('ynn3_token');
+      
       const res = await fetch('http://localhost:3000/ideas', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      
+      // Add error handling to prevent map errors
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+      
       const data = await res.json();
-      setIdeas(data.map((idea: any) => ({ ...idea, createdAt: new Date(idea.createdAt) })));
+      // Check if data is an array before mapping
+      if (Array.isArray(data)) {
+        setIdeas(data.map((idea: any) => ({ ...idea, createdAt: new Date(idea.createdAt) })));
+      } else {
+        console.error('Expected array but got:', data);
+        setIdeas([]);
+      }
     } catch (error) {
       console.error('Failed to fetch ideas:', error);
+      setIdeas([]);
     } finally {
       setLoading(false);
     }
@@ -71,7 +92,6 @@ const IdeasPage = () => {
 
   const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote'>) => {
     try {
-      const { user } = useAuth();
       if (!user?.email) {
         alert('Please sign in to submit ideas');
         return;
@@ -86,7 +106,7 @@ const IdeasPage = () => {
         },
         body: JSON.stringify({ 
           ...newIdea, 
-          author: user.email // Always use logged-in user's email
+          author: user.email
         }),
       });
       

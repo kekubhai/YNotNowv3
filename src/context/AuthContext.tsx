@@ -51,8 +51,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Sign in failed');
-    localStorage.setItem('token', data.token);
-    setToken(data.token);
+    localStorage.setItem('ynn3_token', data.ynn3_token);
+    setToken(data.ynn3_token);
     navigate('/');
   };
 
@@ -64,8 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Sign up failed');
-    localStorage.setItem('ynn3_token', data.token);
-    setToken(data.token);
+    localStorage.setItem('ynn3_token', data.ynn3_token);
+    setToken(data.ynn3_token);
     navigate('/');
   };
 

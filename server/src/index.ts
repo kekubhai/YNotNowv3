@@ -60,8 +60,8 @@ app.post('/auth/login', async (req, res) => {
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
-  res.json({ token });
+  const ynn3_token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+  res.json({ ynn3_token });
 });
 
 app.use('/ideas', ideasRouter);

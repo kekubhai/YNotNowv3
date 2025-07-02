@@ -64,7 +64,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ ideas }) => {
         </div>
         <div>
           <h2 className="text-xl font-bold text-white">🏆 Leaderboard</h2>
-          <p className="text-sm text-slate-400">Top voted ideas by category</p>
+          <p className="text-sm text-slate-400">Top deas by category</p>
         </div>
       </div>
       <div className="flex gap-2 mb-4">
