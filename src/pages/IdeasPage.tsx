@@ -134,11 +134,20 @@ const IdeasPage = () => {
 
   const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {
     try {
-      const res = await fetch(`http://localhost:3000/ideas/${ideaId}/vote`, {
+      const token = localStorage.getItem('ynn3_token');
+      // Use user.email or a user ID as the identifier
+      const userIdentifier = user?.email || 'anonymous_' + Math.random().toString(36).substring(7);
+      
+      // Updated to use the correct endpoint and include authentication
+      const res = await fetch(`http://localhost:3000/votes/idea/${ideaId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userIdentifier: 'anonymous_user', voteType }),
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ userIdentifier, voteType }),
       });
+      
       if (!res.ok) throw new Error('Failed to vote');
       await fetchIdeas();
     } catch (error) {

@@ -39,6 +39,7 @@ import { BoxRevealDemo } from '../components/boxrevealdemo';
 import {Navbar } from '../components/ui/resizable-navbar'
 import { NavbarDemo } from '@/components/NavbarDemo';
 import { FeedbackButton } from '../components/Feedbackform';
+import { FlowingTweets } from '../components/FlowingTweets';
 
 
 interface LandingPageProps {
@@ -269,6 +270,34 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
 </section>
 
   
+  {/* Flowing Tweets Section */}
+  <section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent mb-4">
+          Real Questions, Real Needs
+        </h2>
+        <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          Founders and hackers everywhere are looking for validation. <span className="text-purple-400">YNotNow</span> is the answer.
+        </p>
+      </div>
+      
+      {/* This component has the flowing tweets animation */}
+      <FlowingTweets />
+      
+      {/* Call to action */}
+      <div className="mt-12 text-center">
+        <Button
+          onClick={() => navigate('/ideas')}
+          className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-4 text-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+        >
+          Start Validating Your Idea
+          <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+        </Button>
+      </div>
+    </div>
+  </section>
+  
       {/* Community Section */}
       <section className="relative z-10 py-20 overflow-hidden">
   {/* Background image with overlay - FIXED PATH AND ADJUSTED OVERLAY */}
@@ -282,6 +311,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-purple-900/30 to-slate-900/60"></div>
   </div>
   
+
   <div className="container mx-auto px-4 relative z-10">
     <div className="max-w-4xl mx-auto text-center">
       {/* More transparent background to show image better */}
