@@ -19,6 +19,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { PointerHighlight } from '@/components/ui/pointer-highlight';
 import { useAuth } from '../context/AuthContext';
+import { GridPattern } from '@/components/magicui/grid-pattern';
+import { cn } from '@/lib/utils';
 
 export interface Idea {
   id: string;
@@ -158,16 +160,18 @@ const IdeasPage = () => {
   // Sort ideas by votes (highest first)
   const sortedIdeas = [...ideas].sort((a, b) => b.votes - a.votes);
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background image with overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/ynn3.png" 
-          alt="YNotNow Background" 
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 to-slate-950/75"></div>
-      </div>
+     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-purple-950/30 py-5 px-4">
+      
+      <GridPattern
+        width={20}
+        height={20}
+        x={-1}
+        y={-1}
+        className={cn(
+          "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] ",
+        )}
+      />
+      
 
       <div className="relative z-10">
         <Header />
