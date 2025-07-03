@@ -9,6 +9,16 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- Main application script with defer to improve load time -->
+  <script type="module" src="/src/main.tsx" defer></script>
+  
+  <!-- Noscript message for users without JavaScript -->
+  <noscript>
+    <div style="padding: 20px; text-align: center; font-family: sans-serif;">
+      <h1>JavaScript Required</h1>
+      <p>YNotNow requires JavaScript to provide you with the best idea validation experience. Please enable JavaScript in your browser settings and reload the page.</p>
+    </div>
+  </noscript>
 </body>
 </html>
