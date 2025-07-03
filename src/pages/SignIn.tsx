@@ -2,21 +2,45 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Lock } from 'lucide-react';
+import { ArrowRight, Mail, Lock, AlertCircle } from 'lucide-react';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    // Basic validation
+    if (!email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+    
+    if (!password.trim()) {
+      setError('Please enter your password');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
     try {
       await login(email, password);
     } catch (err: any) {
-      setError(err.message);
+      // Improved error messages
+      if (err.message.includes('auth/user-not-found') || err.message.includes('auth/wrong-password')) {
+        setError('Invalid email or password. Please try again.');
+      } else if (err.message.includes('auth/too-many-requests')) {
+        setError('Too many failed login attempts. Please try again later or reset your password.');
+      } else {
+        setError(err.message || 'An error occurred during sign in. Please try again.');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -32,7 +56,7 @@ const SignIn: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/60 to-slate-900/80 backdrop-blur-[2px]"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center px-12 text-white">
           <div className="max-w-md">
-            <h1 className="text-4xl font-bold mb-4">Welcome back</h1>
+            <h1 className="text-4xl font-bold mb-4">Welcome back Builder</h1>
             <p className="text-lg opacity-90 mb-6">
               Continue your journey of innovation and idea validation with our community.
             </p>
@@ -60,8 +84,9 @@ const SignIn: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-red-300">
-              {error}
+            <div className="mb-6 p-4 bg-red-900/30 border border-red-700 rounded-lg flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+              <p className="text-red-300 text-sm">{error}</p>
             </div>
           )}
 
@@ -78,10 +103,15 @@ const SignIn: React.FC = () => {
                   placeholder="you@example.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border ${
+                    error && !email.trim() ? 'border-red-500' : 'border-slate-700'
+                  } focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none`}
                   required
                 />
               </div>
+              {error && !email.trim() && (
+                <p className="mt-1 text-xs text-red-400">Please enter your email</p>
+              )}
             </div>
             
             <div className="relative">
@@ -99,18 +129,43 @@ const SignIn: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border ${
+                    error && !password.trim() ? 'border-red-500' : 'border-slate-700'
+                  } focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none`}
                   required
                 />
               </div>
+              {error && !password.trim() && (
+                <p className="mt-1 text-xs text-red-400">Please enter your password</p>
+              )}
+            </div>
+
+            <div className="mt-1 text-xs text-slate-500">
+              <p>Remember: Your password must contain at least:</p>
+              <ul className="list-disc ml-5 mt-1">
+                <li>8 characters</li>
+                <li>One uppercase letter</li>
+                <li>One lowercase letter</li>
+                <li>One number</li>
+              </ul>
             </div>
 
             <Button 
               type="submit" 
               className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-purple-500 hover:from-indigo-700 hover:to-purple-600 text-white rounded-lg flex items-center justify-center group"
+              disabled={isSubmitting}
             >
-              Sign In
-              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+              {isSubmitting ? (
+                <div className="flex items-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </Button>
 
             <div className="mt-6 text-center">

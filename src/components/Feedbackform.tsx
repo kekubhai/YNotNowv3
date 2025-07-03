@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { 
   MessageSquare, 
   Send, 
@@ -19,18 +19,34 @@ interface FeedbackFormData {
 
 export const FeedbackButton: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState(user?.email || '');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const handlePopoverOpen = (open: boolean) => {
+    // If user tries to open popover but isn't authenticated, redirect to signup
+    if (open && !user) {
+      navigate('/signup');
+      return;
+    }
+    setOpen(open);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Safety check - user should be authenticated at this point
+    if (!user) {
+      navigate('/signup');
+      return;
+    }
+    
     setIsSubmitting(true);
 
     const feedbackData: FeedbackFormData = {
-      email: email || user?.email || 'anonymous@example.com',
+      email: user.email,
       message,
     };
 
@@ -53,7 +69,6 @@ export const FeedbackButton: React.FC = () => {
         setIsSubmitted(false);
         setOpen(false);
         setMessage('');
-        if (!user?.email) setEmail('');
       }, 2000);
     } catch (error) {
       console.error('Failed to submit feedback:', error);
@@ -64,7 +79,7 @@ export const FeedbackButton: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={handlePopoverOpen}>
         <PopoverTrigger asChild>
           <Button
             size="lg"
@@ -102,24 +117,11 @@ export const FeedbackButton: React.FC = () => {
                   <X className="w-4 h-4" />
                 </Button>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-slate-300">
-                  Email *
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400 focus:border-orange-400"
-                  required
-                  disabled={!!user?.email}
-                />
-                {user?.email && (
-                  <p className="text-xs text-slate-500">Using your account email</p>
-                )}
+              
+              {/* Display user email but don't allow editing */}
+              <div className="flex items-center gap-2 bg-slate-800/50 rounded-md p-3 border border-slate-700">
+                <span className="text-sm text-slate-400">Submitting as:</span>
+                <span className="text-sm text-white font-medium">{user?.email}</span>
               </div>
 
               <div className="space-y-2">
@@ -138,7 +140,7 @@ export const FeedbackButton: React.FC = () => {
 
               <Button
                 type="submit"
-                disabled={isSubmitting || !message.trim() || !email.trim()}
+                disabled={isSubmitting || !message.trim()}
                 className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium"
               >
                 {isSubmitting ? (

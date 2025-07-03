@@ -5,11 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, 
   Brain,
-  Sparkles, 
-  TrendingUp, 
   Users, 
   Lightbulb, 
-  Star,
+ 
   Zap,
   Target,
   CheckCircle,
@@ -17,27 +15,23 @@ import {
   ArrowUpRight,
 
   Shield,
-  Award,
   MessageSquare,
   ThumbsUp,
   Eye,
-  Clock,
+ 
   Rocket,
   Code,
   BarChart3,
   Bot
 } from 'lucide-react';
 import { TextAnimate } from '../components/magicui/text-animate';
-import { TweetGrid } from '../components/eldoraui/tweetgrid';
-import { TweetGridDemo } from '../components/Tweetdemo';
+
 import { AuroraText } from '../components/magicui/aurora-text';
 import { Globe } from "@/components/magicui/globe";
 import { NumberTicker } from '../components/magicui/number-ticker';
 import { AnimatedGradientText } from '../components/magicui/animated-gradient-text';
 import { GlowingEffectDemo } from '../components/glowingdemo';
 import { BoxRevealDemo } from '../components/boxrevealdemo';
-
-import { NavbarDemo } from '@/components/NavbarDemo';
 import { FeedbackButton } from '../components/Feedbackform';
 import { FlowingTweets } from '../components/FlowingTweets';
 
@@ -286,15 +280,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
       <FlowingTweets />
       
       {/* Call to action */}
-      <div className="mt-12 text-center">
-        <Button
-          onClick={() => navigate('/ideas')}
-          className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-4 text-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
-        >
-          Start Validating Your Idea
-          <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-        </Button>
-      </div>
+      
     </div>
   </section>
   

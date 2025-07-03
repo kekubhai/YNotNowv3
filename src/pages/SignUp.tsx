@@ -1,24 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Lock } from 'lucide-react';
+import { ArrowRight, Mail, Lock, CheckCircle, XCircle } from 'lucide-react';
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { signup } = useAuth();
+  
+  // Password validation states
+  const [passwordValidation, setPasswordValidation] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false
+  });
+  
+  // Update password validation on every password change
+  useEffect(() => {
+    setPasswordValidation({
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /[0-9]/.test(password)
+    });
+  }, [password]);
+  
+  // Check if password meets all requirements
+  const isPasswordValid = Object.values(passwordValidation).every(Boolean);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    // Validate password before submission
+    if (!isPasswordValid) {
+      setError('Please ensure your password meets all requirements');
+      return;
+    }
+    
     try {
       await signup(email, password);
     } catch (err: any) {
       setError(err.message);
     }
   };
+
+  // Helper function to render validation status
+  const ValidationItem = ({ isValid, text }: { isValid: boolean, text: string }) => (
+    <div className="flex items-center gap-2 text-xs">
+      {isValid ? (
+        <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+      ) : (
+        <XCircle className="w-3.5 h-3.5 text-slate-400" />
+      )}
+      <span className={isValid ? "text-green-400" : "text-slate-400"}>
+        {text}
+      </span>
+    </div>
+  );
 
   return (
     <div className="min-h-screen w-full flex bg-gradient-to-br from-slate-950 to-slate-900">
@@ -85,7 +127,14 @@ const SignUp: React.FC = () => {
             </div>
             
             <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">
+                Password
+                {password && (
+                  <span className={`ml-2 text-xs ${isPasswordValid ? 'text-green-400' : 'text-orange-400'}`}>
+                    {isPasswordValid ? '(Valid)' : '(Requirements not met)'}
+                  </span>
+                )}
+              </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                   <Lock size={18} />
@@ -93,19 +142,43 @@ const SignUp: React.FC = () => {
                 <input
                   id="password"
                   type="password"
-                  placeholder="Create a password"
+                  placeholder="Create a secure password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border border-slate-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border ${
+                    password && !isPasswordValid 
+                      ? 'border-orange-500 focus:border-orange-500 focus:ring-orange-500' 
+                      : 'border-slate-700 focus:border-purple-500 focus:ring-purple-500'
+                  } focus:ring-1 focus:outline-none`}
                   required
                 />
               </div>
-              <p className="mt-1 text-xs text-slate-500">Must be at least 8 characters</p>
+              
+              {/* Password requirements */}
+              <div className="mt-2 p-3 bg-slate-800/50 border border-slate-700 rounded-md grid grid-cols-2 gap-2">
+                <ValidationItem 
+                  isValid={passwordValidation.length} 
+                  text="At least 8 characters" 
+                />
+                <ValidationItem 
+                  isValid={passwordValidation.uppercase} 
+                  text="One uppercase letter" 
+                />
+                <ValidationItem 
+                  isValid={passwordValidation.lowercase} 
+                  text="One lowercase letter" 
+                />
+                <ValidationItem 
+                  isValid={passwordValidation.number} 
+                  text="One number" 
+                />
+              </div>
             </div>
 
             <Button 
-              type="submit" 
-              className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-lg flex items-center justify-center group"
+              type="submit"
+              disabled={!email || !isPasswordValid}
+              className="w-full py-2.5 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-lg flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Create Account
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
