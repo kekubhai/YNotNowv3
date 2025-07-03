@@ -93,7 +93,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
             {/* User Info */}
             <div className="flex flex-col items-center md:items-start">
               <h3 className="text-xl font-semibold text-white">
-                {user.displayName || user.email.split('@')[0]}
+                {user.username || user.displayName || user.email.split('@')[0]}
               </h3>
               <p className="text-slate-400 text-sm">{user.email}</p>
             </div>

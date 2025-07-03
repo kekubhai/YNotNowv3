@@ -50,17 +50,19 @@ const IdeasPage = () => {
   const { user } = useAuth();
   
   useEffect(() => {
+    console.log("Current user in IdeasPage:", user);
     
     fetchIdeas();
     
-    
     const token = localStorage.getItem('ynn3_token');
     if (!token) {
+      console.log("No token found, hiding add button");
       setShowAddButton(false); 
     } else {
+      console.log("Token found, showing add button");
       setShowAddButton(true);
     }
-  }, [navigate]);
+  }, [navigate, user]); // Add user as dependency
 
   const fetchIdeas = async () => {
     setLoading(true);
@@ -91,6 +93,7 @@ const IdeasPage = () => {
     try {
       if (!user?.email) {
         alert('Please sign in to submit ideas');
+        navigate('/signin');
         return;
       }
       
@@ -99,11 +102,12 @@ const IdeasPage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ 
-          ...newIdea, 
-          author: user.email
+          ...newIdea,
+          // Use username if available, otherwise use email
+          author: user.username || user.email
         }),
       });
       
@@ -112,6 +116,7 @@ const IdeasPage = () => {
       setShowPostForm(false);
     } catch (error) {
       console.error('Failed to add idea:', error);
+      alert('Failed to add idea. Please try again.');
     }
   };
 

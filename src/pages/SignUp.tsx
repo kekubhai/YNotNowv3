@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Lock, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowRight, Mail, Lock, CheckCircle, XCircle, User } from 'lucide-react';
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { signup } = useAuth();
@@ -42,7 +43,8 @@ const SignUp: React.FC = () => {
     }
     
     try {
-      await signup(email, password);
+      // Pass username as third parameter
+      await signup(email, password, username);
     } catch (err: any) {
       setError(err.message);
     }
@@ -108,6 +110,23 @@ const SignUp: React.FC = () => {
           )}
 
           <form onSubmit={handleSignUp} className="space-y-5">
+                <div className="relative">
+              <label htmlFor="username" className="block text-sm font-medium text-slate-300 mb-1">Username</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                  <User size={18} />
+                </span>
+                <input
+                  id="username"
+                  type="text"
+                  placeholder="Choose a username"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 text-white border border-slate-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
+                />
+              </div>
+              <p className="mt-1 text-xs text-slate-500">This will be displayed publicly</p>
+            </div>
             <div className="relative">
               <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">Email address</label>
               <div className="relative">
@@ -126,6 +145,8 @@ const SignUp: React.FC = () => {
               </div>
             </div>
             
+        
+
             <div className="relative">
               <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1">
                 Password
