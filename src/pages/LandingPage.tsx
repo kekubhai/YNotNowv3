@@ -1,31 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-
 import { 
   ArrowRight, 
   Brain,
   Users, 
-  Lightbulb, 
- 
+  Lightbulb,
   Zap,
   Target,
   CheckCircle,
   Play,
   ArrowUpRight,
-
   Shield,
   MessageSquare,
   ThumbsUp,
   Eye,
- 
   Rocket,
   Code,
   BarChart3,
   Bot
 } from 'lucide-react';
 import { TextAnimate } from '../components/magicui/text-animate';
-
 import { AuroraText } from '../components/magicui/aurora-text';
 import { Globe } from "@/components/magicui/globe";
 import { NumberTicker } from '../components/magicui/number-ticker';
@@ -35,6 +30,9 @@ import { BoxRevealDemo } from '../components/boxrevealdemo';
 import { FeedbackButton } from '../components/Feedbackform';
 import { FlowingTweets } from '../components/FlowingTweets';
 
+// Import all images as variables
+import ynn2Image from '../assets/ynn2.png';
+import ynn4Image from '../assets/ynn4.png';
 
 interface LandingPageProps {
   
@@ -120,13 +118,11 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
       {/* Hero Section with Background Image */}
-
-     
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image with overlay - only for hero section */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/ynn2.png" 
+            src={ynn2Image} 
             alt="AI Idea Validation Platform" 
             className="w-full h-full object-cover object-center scale-150"
           />
@@ -286,10 +282,10 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
   
       {/* Community Section */}
       <section className="relative z-10 py-20 overflow-hidden">
-  {/* Background image with overlay - FIXED PATH AND ADJUSTED OVERLAY */}
+  {/* Background image with overlay - FIXED PATH TO USE VARIABLE */}
   <div className="absolute inset-0 z-0">
     <img 
-      src="/ynn4.png" 
+      src={ynn4Image} 
       alt="Community Background" 
       className="w-full h-full object-cover object-center"
     />

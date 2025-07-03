@@ -14,6 +14,15 @@ import {
 } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
+// Import all images
+import ynn7Image from '../assets/ynn7.jpeg';
+import f1Image from '../assets/f1.jpg';
+import leaderboardImage from '../assets/leaderboard.jpeg';
+import ynn6Image from '../assets/ynn6.jpeg';
+import ynn5Image from '../assets/ynn5.jpeg';
+// For external URLs, we can keep as strings
+const catalystImage = "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1000&auto=format&fit=crop";
+
 export function GlowingEffectDemo() {
   return (
     <div className="py-16 bg-gradient-to-b from-slate-950 via-purple-950/20 to-slate-950">
@@ -43,7 +52,7 @@ export function GlowingEffectDemo() {
           icon={<Brain className="h-6 w-6 text-purple-400" />}
           title="AI-Powered Validation"
           description="Get instant market analysis, competition research, and feasibility scores for your ideas powered by advanced AI models."
-          imageUrl="/f1.jpg"
+          imageUrl={f1Image}
         />
 
         <GridItem
@@ -51,7 +60,7 @@ export function GlowingEffectDemo() {
           icon={<Users className="h-6 w-6 text-fuchsia-400" />}
           title="Community Intelligence"
           description="Tap into our engaged community of developers, designers and entrepreneurs for real feedback and votes on your ideas."
-          imageUrl="./public/ynn7.jpeg"
+          imageUrl={ynn7Image}
        />
 
         <GridItem
@@ -59,7 +68,7 @@ export function GlowingEffectDemo() {
           icon={<Award className="h-6 w-6 text-pink-400" />}
           title="Weekly Leaderboards"
           description="The best ideas rise to the top! Get featured on our weekly leaderboards for maximum exposure and validation from peers."
-          imageUrl="./public/leaderboard.jpeg"
+          imageUrl={leaderboardImage}
         />
 
         <GridItem
@@ -67,7 +76,7 @@ export function GlowingEffectDemo() {
           icon={<MessageSquare className="h-6 w-6 text-purple-400" />}
           title="Peer Review & Comments"
           description="Receive detailed feedback and suggestions to improve your idea from our community of hackers and founders."
-          imageUrl="./public/ynn6.jpeg"
+          imageUrl={ynn6Image}
         />
 
         <GridItem
@@ -75,7 +84,7 @@ export function GlowingEffectDemo() {
           icon={<PenTool className="h-6 w-6 text-fuchsia-400" />}
           title="AI Content Assistance"
           description="Struggling to explain your idea? Our AI helps draft compelling descriptions and pitch content for your innovations."
-          imageUrl="./public/ynn5.jpeg"
+          imageUrl={ynn5Image}
         />
         
         <GridItem
@@ -83,7 +92,7 @@ export function GlowingEffectDemo() {
           icon={<HandCoins className="h-6 w-6 text-pink-400" />}
           title="Catalyst (Coming Soon)"
           description="Connect directly with founders and fundraisers who can provide resources and support to turn your idea into reality."
-          imageUrl="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1000&auto=format&fit=crop"
+          imageUrl={catalystImage}
         />
       </ul>
     </div>
@@ -95,7 +104,7 @@ interface GridItemProps {
   icon: React.ReactNode;
   title: string;
   description: React.ReactNode;
-  imageUrl: string; // Replace bgPattern with direct imageUrl
+  imageUrl: string;
 }
 
 const GridItem = ({ area, icon, title, description, imageUrl }: GridItemProps) => {
@@ -114,9 +123,10 @@ const GridItem = ({ area, icon, title, description, imageUrl }: GridItemProps) =
           <div className="absolute inset-0">
             <img 
               src={imageUrl}
-              className="absolute w-full h-full object-cover " 
+              className="absolute w-full h-full object-cover" 
               style={{ mixBlendMode: 'overlay' }}
               alt={`${title} background`}
+              loading="lazy" // Add lazy loading for performance
             />
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-slate-900/70" />
           </div>
