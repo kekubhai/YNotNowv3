@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Clock, Trophy, ArrowUp } from "lucide-react";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 import { ContainerTextFlip } from "@/components/ui/container-text-flip";
+import { AnimatedCard } from '../components/ui/animated-card';
+import { ScrollReveal } from '../components/ui/scroll-reveal';
 
 const hardcodedIdeas: Idea[] = [
 	{
@@ -163,52 +165,56 @@ const LeaderboardPage: React.FC = () => {
 
 							{/* Ideas list with improved row styling */}
 							{filteredIdeas.map((idea, index) => (
-								<div
-									key={idea.id}
-									className="grid grid-cols-12 gap-4 py-4 border-b border-purple-900/20 hover:bg-gradient-to-r hover:from-purple-900/10 hover:to-fuchsia-900/10 transition-colors rounded-md"
-								>
-									<div className="col-span-1 flex justify-center items-center">
+								<ScrollReveal key={idea.id}>
+									<AnimatedCard>
 										<div
-											className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-												index === 0
-													? "bg-gradient-to-br from-yellow-400/20 to-yellow-600/30 text-yellow-300 border border-yellow-500/50"
-													: index === 1
-													? "bg-gradient-to-br from-slate-300/10 to-slate-400/20 text-slate-300 border border-slate-400/30"
-													: index === 2
-													? "bg-gradient-to-br from-amber-700/10 to-amber-800/20 text-amber-600 border border-amber-700/30"
-													: "bg-gradient-to-br from-purple-900/10 to-purple-950/20 text-slate-400 border border-purple-900/20"
-											}`}
+											key={idea.id}
+											className="grid grid-cols-12 gap-4 py-4 border-b border-purple-900/20 hover:bg-gradient-to-r hover:from-purple-900/10 hover:to-fuchsia-900/10 transition-colors rounded-md"
 										>
-											{index + 1}
-										</div>
-									</div>
+											<div className="col-span-1 flex justify-center items-center">
+												<div
+													className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+														index === 0
+															? "bg-gradient-to-br from-yellow-400/20 to-yellow-600/30 text-yellow-300 border border-yellow-500/50"
+															: index === 1
+															? "bg-gradient-to-br from-slate-300/10 to-slate-400/20 text-slate-300 border border-slate-400/30"
+															: index === 2
+															? "bg-gradient-to-br from-amber-700/10 to-amber-800/20 text-amber-600 border border-amber-700/30"
+															: "bg-gradient-to-br from-purple-900/10 to-purple-950/20 text-slate-400 border border-purple-900/20"
+													}`}
+												>
+													{index + 1}
+												</div>
+											</div>
 
-									<div className="col-span-7 flex items-center">
-										<div>
-											<h3 className="text-white font-medium">
-												{idea.title}
-											</h3>
-											<p className="text-slate-400 text-sm truncate max-w-md">
-												{idea.description}
-											</p>
-										</div>
-									</div>
+											<div className="col-span-7 flex items-center">
+												<div>
+													<h3 className="text-white font-medium">
+														{idea.title}
+													</h3>
+													<p className="text-slate-400 text-sm truncate max-w-md">
+														{idea.description}
+													</p>
+												</div>
+											</div>
 
-									<div className="col-span-2 flex items-center justify-end">
-										<span className="text-purple-300 text-sm">
-											{idea.author}
-										</span>
-									</div>
+											<div className="col-span-2 flex items-center justify-end">
+												<span className="text-purple-300 text-sm">
+													{idea.author}
+												</span>
+											</div>
 
-									<div className="col-span-2 flex items-center justify-end pr-2">
-										<div className="flex items-center bg-gradient-to-r from-purple-900/30 to-fuchsia-900/30 px-3 py-1 rounded-lg border border-purple-500/30">
-											<ArrowUp className="w-4 h-4 text-purple-400 mr-1" />
-											<span className="text-purple-200 font-bold">
-												{idea.votes}
-											</span>
+											<div className="col-span-2 flex items-center justify-end pr-2">
+												<div className="flex items-center bg-gradient-to-r from-purple-900/30 to-fuchsia-900/30 px-3 py-1 rounded-lg border border-purple-500/30">
+													<ArrowUp className="w-4 h-4 text-purple-400 mr-1" />
+													<span className="text-purple-200 font-bold">
+														{idea.votes}
+													</span>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
+									</AnimatedCard>
+								</ScrollReveal>
 							))}
 						</div>
 					)}

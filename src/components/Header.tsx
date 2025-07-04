@@ -5,6 +5,8 @@ import { Zap, Menu, X, Users } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { UserProfileDialog } from './UserProfileDialog';
 import { ExternalLink } from 'lucide-react';
+import { AnimatedButton } from './ui/animated-button';
+import { ScrollReveal } from './ui/scroll-reveal';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <>
+    <ScrollReveal>
       <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-3 sticky top-0 z-50 w-full">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
@@ -180,6 +182,6 @@ export const Header: React.FC = () => {
         isOpen={profileDialogOpen}
         onOpenChange={setProfileDialogOpen}
       />
-    </>
+    </ScrollReveal>
   );
 };

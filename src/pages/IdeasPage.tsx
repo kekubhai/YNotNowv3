@@ -22,6 +22,9 @@ import { useAuth } from '../context/AuthContext';
 import { GridPattern } from '@/components/magicui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { CatalystBanner } from '../components/CatalystBanner';
+import { AnimatedButton } from '../components/ui/animated-button';
+import { AnimatedCard } from '../components/ui/animated-card';
+import { ScrollReveal } from '../components/ui/scroll-reveal';
 
 export interface Idea {
   id: string;

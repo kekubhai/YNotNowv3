@@ -10,6 +10,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Rocket, Mail } from 'lucide-react';
+import { AnimatedButton } from './ui/animated-button';
+import { ScrollReveal } from './ui/scroll-reveal';
 
 interface CatalystModalProps {
   open: boolean;
@@ -63,9 +65,12 @@ export const CatalystModal: React.FC<CatalystModalProps> = ({ open, onOpenChange
                     required
                   />
                 </div>
-                <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
+                <AnimatedButton
+                  type="submit"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg shadow"
+                >
                   Notify Me
-                </Button>
+                </AnimatedButton>
               </div>
             </div>
           </form>
