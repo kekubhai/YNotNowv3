@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Zap, Menu, X } from 'lucide-react';
+import { Zap, Menu, X, Users } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { UserProfileDialog } from './UserProfileDialog';
+import { ExternalLink } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -45,6 +46,17 @@ export const Header: React.FC = () => {
               </a>
               <a href="/about" className="text-slate-400 hover:text-orange-400 transition-colors">
                 About
+              </a>
+              
+              {/* New Menu Item - Find Builders */}
+              <a 
+                href="https://catalystplatform.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-purple-400 transition-colors flex items-center gap-1"
+              >
+                Find Builders
+                <ExternalLink className="w-3 h-3 ml-1" />
               </a>
               
               {!user ? (
@@ -102,6 +114,18 @@ export const Header: React.FC = () => {
             </a>
             <a href="/about" className="text-slate-200 py-2 px-3 hover:bg-slate-800 rounded-md">
               About
+            </a>
+            
+            {/* New Menu Item - Find Builders */}
+            <a 
+              href="https://catalystplatform.com" 
+             
+              rel="noopener noreferrer" 
+              className="text-slate-200 py-2 px-3 hover:bg-slate-800 rounded-md flex items-center gap-2"
+            >
+              <Users className="w-4 h-4" />
+              Find Builders
+              <ExternalLink className="w-3 h-3 ml-1" />
             </a>
             
             {!user ? (

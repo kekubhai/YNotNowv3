@@ -52,46 +52,91 @@ app.get('/landing', (req, res) => {
 });
 
 // Auth routes
-app.post('/auth/register', async (req, res) => {
-  const { email, password, username } = req.body;
-  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
-  
+app.post('/auth/login', async (req, res): Promise<any> => {
   try {
-    // Add username (optional at this stage)
-    const user = await prisma.user.create({ 
-      data: { 
-        email, 
-        password,
-        username: username || email.split('@')[0] // Default to email prefix if no username provided
-      } 
+    const { email, password } = req.body;
+    
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    // Find user
+    const user = await prisma.user.findUnique({ 
+      where: { email: email.toLowerCase() } 
     });
     
-    // Generate token with username included
-    const ynn3_token = jwt.sign({ 
-      userId: user.id, 
-      email: user.email,
-      username: user.username 
-    }, JWT_SECRET, { expiresIn: '7d' });
-    
-    res.json({ ynn3_token });
-  } catch (e) {
-    res.status(400).json({ error: 'User already exists' });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // For development, you might want to hash passwords properly
+    // For now, checking plain text (NOT RECOMMENDED FOR PRODUCTION)
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Create token with all required fields
+    const ynn3_token = jwt.sign(
+      { 
+        userId: user.id, 
+        email: user.email,
+        username: user.username || user.email.split('@')[0]
+      }, 
+      JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+
+    res.json({ ynn3_token, user: { id: user.id, email: user.email, username: user.username } });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-app.post('/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.password !== password) {
-    return res.status(401).json({ error: 'Invalid credentials' });
+app.post('/auth/register', async (req, res): Promise<any> => {
+  try {
+    const { email, password, username } = req.body;
+    
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    // Check if user exists
+    const existingUser = await prisma.user.findUnique({ 
+      where: { email: email.toLowerCase() } 
+    });
+    
+    if (existingUser) {
+      return res.status(409).json({ error: 'User already exists' });
+    }
+
+    // Create user
+    const user = await prisma.user.create({ 
+      data: { 
+        email: email.toLowerCase(), 
+        password, // In production, hash this!
+        username: username || email.split('@')[0]
+      } 
+    });
+
+    // Create token
+    const ynn3_token = jwt.sign(
+      { 
+        userId: user.id, 
+        email: user.email,
+        username: user.username
+      }, 
+      JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+
+    res.json({ ynn3_token, user: { id: user.id, email: user.email, username: user.username } });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  // Include username in token
-  const ynn3_token = jwt.sign({ 
-    userId: user.id, 
-    email: user.email,
-    username: user.username 
-  }, JWT_SECRET, { expiresIn: '7d' });
-  res.json({ ynn3_token });
 });
 
 // Add this to your server/src/index.ts

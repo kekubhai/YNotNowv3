@@ -97,15 +97,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         body: JSON.stringify({ email, password }),
       });
       
+      // Check if response is JSON
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response. Check server logs.');
+      }
+      
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Sign in failed');
+      
+      if (!res.ok) {
+        throw new Error(data.error || `Server error: ${res.status}`);
+      }
+      
+      if (!data.ynn3_token) {
+        throw new Error('No authentication token received');
+      }
       
       localStorage.setItem('ynn3_token', data.ynn3_token);
       setToken(data.ynn3_token);
       navigate('/');
     } catch (error: any) {
       console.error("Login error:", error);
-      throw error;
+      throw new Error(error.message || 'Login failed');
     }
   };
 
@@ -117,15 +130,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         body: JSON.stringify({ email, password, username }),
       });
       
+      // Check if response is JSON
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response. Check server logs.');
+      }
+      
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Sign up failed');
+      
+      if (!res.ok) {
+        throw new Error(data.error || `Server error: ${res.status}`);
+      }
+      
+      if (!data.ynn3_token) {
+        throw new Error('No authentication token received');
+      }
       
       localStorage.setItem('ynn3_token', data.ynn3_token);
       setToken(data.ynn3_token);
       navigate('/');
     } catch (error: any) {
       console.error("Signup error:", error);
-      throw error;
+      throw new Error(error.message || 'Signup failed');
     }
   };
 

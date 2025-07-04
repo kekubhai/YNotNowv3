@@ -21,6 +21,7 @@ import { PointerHighlight } from '@/components/ui/pointer-highlight';
 import { useAuth } from '../context/AuthContext';
 import { GridPattern } from '@/components/magicui/grid-pattern';
 import { cn } from '@/lib/utils';
+import { CatalystBanner } from '../components/CatalystBanner';
 
 export interface Idea {
   id: string;
@@ -317,10 +318,13 @@ const IdeasPage = () => {
                       onVote={handleVote}
                       onAddComment={handleAddComment}
                     />
+                    
                   ))}
+                  
                 </div>
+                
               )}
-
+              
               {sortedIdeas.length === 0 && !loading && (
                 <div className="text-center py-12 bg-slate-900/30 rounded-lg border border-slate-800">
                   <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -337,6 +341,7 @@ const IdeasPage = () => {
                 </div>
               )}
             </div>
+            
 
             {/* Sidebar with Leaderboard */}
             <div className="lg:col-span-1">

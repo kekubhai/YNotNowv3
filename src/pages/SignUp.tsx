@@ -43,10 +43,10 @@ const SignUp: React.FC = () => {
     }
     
     try {
-      // Pass username as third parameter
+      // Pass username to signup function
       await signup(email, password, username);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || 'An error occurred during signup');
     }
   };
 
