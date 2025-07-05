@@ -36,6 +36,7 @@ import { ScrollReveal } from '../components/ui/scroll-reveal';
 // Import all images as variables
 import ynn2Image from '../assets/ynn2.png';
 import ynn4Image from '../assets/ynn4.png';
+import HeroVideoDialog from '@/components/magicui/hero-video-dialog';
 
 interface LandingPageProps {
   
@@ -195,14 +196,8 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
                     Do it Now
                   </AnimatedButton>
 
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300 backdrop-blur-sm"
-                  >
-                    <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Watch Demo
-                  </Button>
+         
+             
                 </div>
 
                 {/* Trust badges */}

@@ -25,6 +25,8 @@ import { CatalystBanner } from '../components/CatalystBanner';
 import { AnimatedButton } from '../components/ui/animated-button';
 import { AnimatedCard } from '../components/ui/animated-card';
 import { ScrollReveal } from '../components/ui/scroll-reveal';
+import { ShimmerButton } from '@/components/magicui/shimmer-button';
+import { AnimatedGradientText } from '@/components/magicui/animated-gradient-text';
 
 export interface Idea {
   id: string;
@@ -36,6 +38,11 @@ export interface Idea {
   comments: Comment[];
   createdAt: Date;
   userVote?: 'up' | 'down' | null;
+  user?: {
+    id: string;
+    email: string;
+    username?: string;
+  };
 }
 
 export interface Comment {
@@ -43,6 +50,11 @@ export interface Comment {
   author: string;
   content: string;
   createdAt: Date;
+  user?: {
+    id: string;
+    email: string;
+    username?: string;
+  };
 }
 
 const IdeasPage = () => {
@@ -93,7 +105,7 @@ const IdeasPage = () => {
     }
   };
 
-  const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote'>) => {
+  const handleAddIdea = async (newIdea: Omit<Idea, 'id' | 'votes' | 'comments' | 'createdAt' | 'userVote' | 'author'>) => {
     try {
       if (!user?.email) {
         alert('Please sign in to submit ideas');
@@ -102,6 +114,8 @@ const IdeasPage = () => {
       }
       
       const token = localStorage.getItem('ynn3_token');
+      console.log('Submitting idea with user:', user);
+      
       const res = await fetch('http://localhost:3000/ideas', {
         method: 'POST',
         headers: {
@@ -110,26 +124,51 @@ const IdeasPage = () => {
         },
         body: JSON.stringify({ 
           ...newIdea,
-          // Use username if available, otherwise use email
-          author: user.username || user.email
+          // Always use email as it's guaranteed to be unique and required
+          author: user.email
         }),
       });
       
-      if (!res.ok) throw new Error('Failed to add idea');
+      // Log response details for debugging
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error('Server response:', res.status, errorData);
+      }
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error('Server error:', errorData);
+        throw new Error(errorData.message || errorData.error || 'Failed to add idea');
+      }
+      
       await fetchIdeas();
       setShowPostForm(false);
     } catch (error) {
       console.error('Failed to add idea:', error);
-      alert('Failed to add idea. Please try again.');
+      alert(`Failed to add idea: ${error.message || 'Please try again.'}`);
     }
   };
 
   const handleAddComment = async (ideaId: string, content: string, author: string) => {
     try {
+      if (!user?.email) {
+        alert('Please sign in to comment');
+        navigate('/signin');
+        return;
+      }
+      
+      const token = localStorage.getItem('ynn3_token');
+      
       const res = await fetch(`http://localhost:3000/comments/idea/${ideaId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ author, content }),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ 
+          author: user.email, // Always use the authenticated user's email
+          content 
+        }),
       });
       if (!res.ok) throw new Error('Failed to add comment');
       await fetchIdeas();
@@ -229,14 +268,14 @@ const IdeasPage = () => {
             </div>
             
             {showAddButton && (
-              <Button 
+              <ShimmerButton 
                 onClick={() => setShowPostForm(true)}
                 className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md flex items-center gap-2 transition-all"
-                size="lg"
+          
               >
                 <Plus className="w-4 h-4" />
                 Submit Your Idea
-              </Button>
+              </ShimmerButton>
             )}
           </div>
 
@@ -255,55 +294,57 @@ const IdeasPage = () => {
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <Rocket className="w-4 h-4" />
-              <span>Startups</span>
+              <AnimatedGradientText className='font-bold text-xl'>Startups</AnimatedGradientText>
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <Code2 className="w-4 h-4" />
-              <span>Hackathons</span>
+              <AnimatedGradientText className='font-bold text-xl text-purple-300 from-current to-red-300'>Hackathons</AnimatedGradientText>
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <Lightbulb className="w-4 h-4" />
-              <span>Most Innovative</span>
+              <AnimatedGradientText className='font-bold text-xl from-yellow-300 to-red-300'>Most Innovative</AnimatedGradientText>
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <TrendingUp className="w-4 h-4" />
-              <span>Trending</span>
+              <AnimatedGradientText className='font-bold text-xl from-red-600 to-green-400'>Trending</AnimatedGradientText>
             </Button>
           </div>
 
           {/* Value proposition */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-lg p-4 flex gap-3 items-start">
-              <div className="bg-blue-500/20 rounded-md p-2">
-                <Lightbulb className="w-5 h-5 text-blue-500" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium text-sm mb-1">Idea Validation</h3>
-                <p className="text-slate-400 text-xs">Get real feedback before investing time and resources</p>
-              </div>
-            </div>
-            
-            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-lg p-4 flex gap-3 items-start">
-              <div className="bg-green-500/20 rounded-md p-2">
-                <Users className="w-5 h-5 text-green-500" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium text-sm mb-1">Diverse Perspectives</h3>
-                <p className="text-slate-400 text-xs">Insights from entrepreneurs, developers, and designers</p>
-              </div>
-            </div>
-            
-            <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-lg p-4 flex gap-3 items-start">
-              <div className="bg-orange-500/20 rounded-md p-2">
-                <BookOpen className="w-5 h-5 text-orange-500" />
-              </div>
-              <div>
-                <h3 className="text-white font-medium text-sm mb-1">Find Collaborators</h3>
-                <p className="text-slate-400 text-xs">Connect with potential team members and advisors</p>
-              </div>
-            </div>
-          </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  {/* Card 1 */}
+  <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-5 flex gap-4 items-start hover:border-blue-500/30 transition-all duration-300 group">
+    <div className="bg-blue-500/10 group-hover:bg-blue-500/20 rounded-lg p-2.5 transition-all duration-300">
+      <Lightbulb className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-all duration-300" />
+    </div>
+    <div>
+      <h3 className="text-white font-medium text-base mb-1.5">Idea Validation</h3>
+      <p className="text-slate-100/80 text-sm leading-snug">Get real feedback before investing time and resources</p>
+    </div>
+  </div>
+  
+  {/* Card 2 */}
+  <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-5 flex gap-4 items-start hover:border-green-500/30 transition-all duration-300 group">
+    <div className="bg-green-500/10 group-hover:bg-green-500/20 rounded-lg p-2.5 transition-all duration-300">
+      <Users className="w-6 h-6 text-green-400 group-hover:text-green-300 transition-all duration-300" />
+    </div>
+    <div>
+      <h3 className="text-white font-medium text-base mb-1.5">Diverse Perspectives</h3>
+      <p className="text-slate-300/80 text-sm leading-snug">Insights from entrepreneurs, developers, and designers</p>
+    </div>
+  </div>
+  
+  {/* Card 3 */}
+  <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-5 flex gap-4 items-start hover:border-orange-500/30 transition-all duration-300 group">
+    <div className="bg-orange-500/10 group-hover:bg-orange-500/20 rounded-lg p-2.5 transition-all duration-300">
+      <BookOpen className="w-6 h-6 text-orange-400 group-hover:text-orange-300 transition-all duration-300" />
+    </div>
+    <div>
+      <h3 className="text-white font-medium text-base mb-1.5">Find Collaborators</h3>
+      <p className="text-slate-300/80 text-sm leading-snug">Connect with potential team members and advisors</p>
+    </div>
+  </div>
+</div>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-3">

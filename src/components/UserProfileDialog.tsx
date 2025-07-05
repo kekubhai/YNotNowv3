@@ -114,14 +114,14 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
             
             {/* Actions */}
             <div className="flex flex-col gap-2 w-full mt-2">
-              <Button variant="outline" size="sm" className="border-slate-700 text-slate-300 hover:text-white w-full justify-start">
+              <Button variant="outline" size="sm" className="border-slate-700 text-slate-800 hover:text-white hover:bg-black w-full justify-start">
                 <Settings className="h-4 w-4 mr-2" />
                 Account Settings
               </Button>
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="border-slate-700 text-slate-300 hover:text-red-400 hover:border-red-900/50 w-full justify-start"
+                className="border-slate-700 text-slate-800 hover:text-red-400 hover:border-red-900/50   hover:bg-black w-full justify-start"
                 onClick={() => {
                   logout();
                   onOpenChange(false);

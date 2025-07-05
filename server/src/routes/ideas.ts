@@ -6,28 +6,97 @@ const prisma = new PrismaClient();
 
 
 router.get('/', async (req, res):Promise<any> => {
-  const ideas = await prisma.idea.findMany({ include: { comments: true, votesList: true } });
-  res.json(ideas);
+  try {
+    const ideas = await prisma.idea.findMany({ 
+      include: { 
+        comments: true, 
+        votesList: true,
+        user: true // Include user details
+      } 
+    });
+    res.json(ideas);
+  } catch (error: any) {
+    console.error('Error fetching ideas:', error);
+    res.status(500).json({ error: 'Failed to fetch ideas', details: error.message });
+  }
 });
 
 
 router.get('/:id', async (req, res):Promise<any> => {
-  const { id } = req.params;
-  const idea = await prisma.idea.findUnique({ where: { id }, include: { comments: true, votesList: true } });
-  if (!idea) return res.status(404).json({ error: 'Idea not found' });
-  res.json(idea);
+  try {
+    const { id } = req.params;
+    const idea = await prisma.idea.findUnique({ 
+      where: { id }, 
+      include: { 
+        comments: true, 
+        votesList: true,
+        user: true // Include user details
+      } 
+    });
+    
+    if (!idea) return res.status(404).json({ error: 'Idea not found' });
+    res.json(idea);
+  } catch (error: any) {
+    console.error('Error fetching idea by ID:', error);
+    res.status(500).json({ error: 'Failed to fetch idea', details: error.message });
+  }
 });
 
 
 router.post('/', async (req, res) :Promise<any>=> {
+  console.log('Creating new idea, received body:', req.body);
   const { title, description, author, category } = req.body;
+  
   if (!title || !description || !author || !category) {
+    console.log('Missing fields:', { title, description, author, category });
     return res.status(400).json({ error: 'Missing required fields' });
   }
-  const idea = await prisma.idea.create({
-    data: { title, description, author, category },
-  });
-  res.json(idea);
+  
+  try {
+    // Check if a user with the given email or username exists
+    const userExists = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: author },
+          { username: author }
+        ]
+      }
+    });
+    
+    if (!userExists) {
+      console.log(`No user found with identifier: ${author}`);
+      return res.status(400).json({ 
+        error: 'User not found', 
+        message: `No user found with email/username: ${author}. User must exist before creating an idea.` 
+      });
+    }
+    
+    console.log('User found:', userExists);
+    
+    // If user exists, create the idea - ensure we use the email for the author field
+    // since our schema connects Idea.author to User.email
+    const userEmail = userExists.email; // Always use the email from the found user
+    
+    console.log('Creating idea with author email:', userEmail);
+    
+    const idea = await prisma.idea.create({
+      data: { 
+        title, 
+        description, 
+        author: userEmail, // Always use email as the foreign key
+        category 
+      },
+      include: {
+        user: true, // Include the related user in the response
+        comments: true
+      }
+    });
+    
+    res.json(idea);
+  } catch (error: any) {
+    console.error('Error creating idea:', error);
+    res.status(500).json({ error: 'Failed to create idea', details: error.message });
+  }
 });
 
 

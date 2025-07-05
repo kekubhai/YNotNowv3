@@ -7,7 +7,7 @@ import { UserProfileDialog } from './UserProfileDialog';
 import { ExternalLink } from 'lucide-react';
 import { AnimatedButton } from './ui/animated-button';
 import { ScrollReveal } from './ui/scroll-reveal';
-
+import logo from '@/assets/logo.png';
 export const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -26,8 +26,8 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 rounded-lg">
-                <Zap className="h-5 w-5 text-white" />
+              <div className=" zoom-in-200 p-2 rounded-lg">
+                <img src={logo} alt="Logo" className="size-10 text-white" />
               </div>
               <div className="flex flex-col">
                 <h1 className="font-bold text-white">

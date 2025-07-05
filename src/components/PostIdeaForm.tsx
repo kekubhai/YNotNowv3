@@ -10,29 +10,26 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 interface PostIdeaFormProps {
-  onSubmit: (idea: { title: string; description: string; author: string, category: 'startup' | 'hackathon' | 'both' }) => void;
+  onSubmit: (idea: { title: string; description: string; category: 'startup' | 'hackathon' | 'both' }) => void;
   onCancel: () => void;
 }
 
 export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [author, setAuthor] = useState('');
   const [category, setCategory] = useState<'startup' | 'hackathon' | 'both'>('startup');
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim() && description.trim() && author.trim()) {
+    if (title.trim() && description.trim()) {
       onSubmit({
         title: title.trim(),
         description: description.trim(),
-        author: author.trim(),
         category,
       });
       setTitle('');
       setDescription('');
-      setAuthor('');
       setCategory('startup');
     }
   };
@@ -98,15 +95,6 @@ Format the output as a single cohesive paragraph without section headers.
       </div>
       <form onSubmit={handleSubmit} className="space-y-5">
         <Input
-          id="author"
-          type="text"
-          placeholder="Your name"
-          value={author}
-          onChange={e => setAuthor(e.target.value)}
-          className="bg-slate-900 border-none text-white placeholder:text-slate-500 focus:ring-2 focus:ring-orange-400"
-          required
-        />
-        <Input
           id="title"
           type="text"
           placeholder="Idea title"
@@ -158,7 +146,7 @@ Format the output as a single cohesive paragraph without section headers.
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
-          disabled={!title.trim() || !description.trim() || !author.trim()}
+          disabled={!title.trim() || !description.trim()}
         >
           <Rocket className="w-4 h-4" />
           Launch Idea
