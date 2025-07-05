@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
+import prisma from './lib/prisma';
 import ideasRouter from './routes/ideas';
 import commentsRouter from './routes/comments';
 import votesRouter from './routes/votes';
@@ -12,7 +12,6 @@ import { mohakApi } from './routes/mohaksapi';
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
@@ -50,7 +49,22 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
 
 
 app.get('/landing', (req, res) => {
-  res.json({ message: 'Welcome to YNotNow Landing Page!' });
+  res.json({ message: 'Welcome to YNotNow Landing Page!', version: '2.0' });
+});
+
+// Test endpoint to verify Prisma works
+app.get('/test', async (req, res) => {
+  try {
+    const count = await prisma.idea.count();
+    res.json({ 
+      message: 'Prisma connection working!', 
+      ideasCount: count,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Test endpoint error:', error);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
 });
 
 // Auth routes
@@ -191,4 +205,17 @@ app.use('/mohakApi', mohakApi());
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('Received SIGINT, shutting down gracefully...');
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('Received SIGTERM, shutting down gracefully...');
+  await prisma.$disconnect();
+  process.exit(0);
 });
