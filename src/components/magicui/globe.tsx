@@ -2,7 +2,7 @@
 
 import createGlobe, { COBEOptions } from "cobe";
 import { useMotionValue, useSpring } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -46,8 +46,10 @@ export function Globe({
   let phi = 0;
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const r = useMotionValue(0);
   const rs = useSpring(r, {
@@ -67,61 +69,97 @@ export function Globe({
     if (pointerInteracting.current !== null) {
       const delta = clientX - pointerInteracting.current;
       pointerInteractionMovement.current = delta;
-      r.set(r.get() + delta / MOVEMENT_DAMPING);
+      // Adjust sensitivity for mobile
+      const dampingFactor = isMobile ? MOVEMENT_DAMPING * 0.6 : MOVEMENT_DAMPING;
+      r.set(r.get() + delta / dampingFactor);
     }
   };
 
   useEffect(() => {
+    // Check if mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const onResize = () => {
-      if (canvasRef.current) {
-        width = canvasRef.current.offsetWidth;
+      if (canvasRef.current && containerRef.current) {
+        // Make sure we're using the container width, not just the canvas
+        width = containerRef.current.offsetWidth;
+        // Update canvas dimensions
+        canvasRef.current.width = width * 2;
+        canvasRef.current.height = width * 2;
       }
     };
 
     window.addEventListener("resize", onResize);
     onResize();
 
-    const globe = createGlobe(canvasRef.current!, {
+    // Mobile devices might need adjusted parameters
+    const mobileAdjustedConfig = {
       ...config,
+      mapSamples: isMobile ? 10000 : config.mapSamples, // Lower for better performance
+      devicePixelRatio: isMobile ? 1.5 : config.devicePixelRatio, // Lower for better performance
+    };
+
+    const globe = createGlobe(canvasRef.current!, {
+      ...mobileAdjustedConfig,
       width: width * 2,
       height: width * 2,
       onRender: (state) => {
-        if (!pointerInteracting.current) phi += 0.005;
+        // Slower rotation on mobile for better performance
+        if (!pointerInteracting.current) phi += isMobile ? 0.003 : 0.005;
         state.phi = phi + rs.get();
         state.width = width * 2;
         state.height = width * 2;
       },
     });
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 0);
+    setTimeout(() => {
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "1";
+      }
+    }, 100);
+    
     return () => {
       globe.destroy();
       window.removeEventListener("resize", onResize);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, [rs, config]);
+  }, [rs, config, isMobile]);
 
   return (
     <div
+      ref={containerRef}
       className={cn(
-        "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]",
+        "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px] md:max-w-[600px]",
+        isMobile ? "max-w-[300px]" : "", // Smaller on mobile
         className,
       )}
     >
       <canvas
         className={cn(
           "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
+          // Better touch handling for mobile
+          isMobile ? "touch-manipulation" : ""
         )}
         ref={canvasRef}
         onPointerDown={(e) => {
+          e.preventDefault(); // Prevent default touch behavior
           pointerInteracting.current = e.clientX;
           updatePointerInteraction(e.clientX);
         }}
         onPointerUp={() => updatePointerInteraction(null)}
         onPointerOut={() => updatePointerInteraction(null)}
         onMouseMove={(e) => updateMovement(e.clientX)}
-        onTouchMove={(e) =>
-          e.touches[0] && updateMovement(e.touches[0].clientX)
-        }
+        onTouchMove={(e) => {
+          if (e.touches[0]) {
+            e.preventDefault(); // Prevent scrolling while manipulating globe
+            updateMovement(e.touches[0].clientX);
+          }
+        }}
       />
     </div>
   );

@@ -20,8 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use((req: Request, res: Response, next: NextFunction):any => {
-
+app.use((req: Request, res: Response, next: NextFunction): void => {
   if (
     req.path === '/landing' || 
     req.path === '/auth/login' || 
@@ -29,14 +28,16 @@ app.use((req: Request, res: Response, next: NextFunction):any => {
     req.path.startsWith('/api/feedback') ||
     (req.path === '/ideas' && req.method === 'GET') 
   ) {
-    return next();
+    next();
+    return;
   }
-  
-  
+
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
   }
+
   const token = authHeader.split(' ')[1];
   try {
     jwt.verify(token, JWT_SECRET);
@@ -46,7 +47,8 @@ app.use((req: Request, res: Response, next: NextFunction):any => {
   }
 });
 
-// Landing page route (public)
+
+
 app.get('/landing', (req, res) => {
   res.json({ message: 'Welcome to YNotNow Landing Page!' });
 });
@@ -58,7 +60,8 @@ app.post('/auth/login', async (req, res): Promise<any> => {
     
     // Validate input
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+       res.status(400).json({ error: 'Email and password are required' });
+       return
     }
 
     // Find user
@@ -67,16 +70,18 @@ app.post('/auth/login', async (req, res): Promise<any> => {
     });
     
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      
+    res.status(401).json({ error: 'Invalid credentials' });
+    return
     }
 
-    // For development, you might want to hash passwords properly
-    // For now, checking plain text (NOT RECOMMENDED FOR PRODUCTION)
+
     if (user.password !== password) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+       res.status(401).json({ error: 'Invalid credentials' });
+       return
     }
 
-    // Create token with all required fields
+ 
     const ynn3_token = jwt.sign(
       { 
         userId: user.id, 
@@ -100,7 +105,8 @@ app.post('/auth/register', async (req, res): Promise<any> => {
     
     // Validate input
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+     res.status(400).json({ error: 'Email and password are required' });
+     return;
     }
 
     // Check if user exists
@@ -109,7 +115,8 @@ app.post('/auth/register', async (req, res): Promise<any> => {
     });
     
     if (existingUser) {
-      return res.status(409).json({ error: 'User already exists' });
+      res.status(409).json({ error: 'User already exists' });
+      return;
     }
 
     // Create user
@@ -143,8 +150,11 @@ app.post('/auth/register', async (req, res): Promise<any> => {
 app.get('/auth/me', async (req: Request, res: Response): Promise<any> => {
   // Verify token
   const authHeader = req.headers.authorization;
-  if (!authHeader) return res.status(401).json({ error: 'Unauthorized' });
-  
+  if (!authHeader) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
   const token = authHeader.split(' ')[1];
   
   try {
@@ -160,7 +170,8 @@ app.get('/auth/me', async (req: Request, res: Response): Promise<any> => {
     });
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
     
     res.json({ user });

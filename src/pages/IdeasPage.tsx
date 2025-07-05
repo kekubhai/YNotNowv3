@@ -27,6 +27,7 @@ import { AnimatedCard } from '../components/ui/animated-card';
 import { ScrollReveal } from '../components/ui/scroll-reveal';
 import { ShimmerButton } from '@/components/magicui/shimmer-button';
 import { AnimatedGradientText } from '@/components/magicui/animated-gradient-text';
+import { NeonGradientCard } from '@/components/magicui/neon-gradient-card';
 
 export interface Idea {
   id: string;
@@ -240,8 +241,8 @@ const IdeasPage = () => {
             Leaderboard
           </Button>
           
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-            <div>
+          <div className="flex flex-col md:flex-row md:items-start justify-between mb-8 gap-4">
+            <div className="md:max-w-2xl">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-orange-500/10 rounded-lg flex items-center justify-center">
                   <Rocket className="w-5 h-5 text-orange-500" />
@@ -262,21 +263,67 @@ const IdeasPage = () => {
                      rectangleClassName="border-white/20 border-2 rounded-md p-1 border-dashed"
         pointerClassName="text-yellow-600"><span className=''>Your Next Big</span> Idea</PointerHighlight>
               </h1>
-              <p className="text-slate-400 text-base">
+              <p className="text-slate-400 text-base mb-4">
                 Share your startup or hackathon concepts and get valuable feedback from the community
               </p>
+              
+              {/* ShimmerButton moved here */}
+              {showAddButton && (
+                <ShimmerButton 
+                  onClick={() => setShowPostForm(true)}
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md flex items-center gap-2 transition-all mt-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Submit Your Idea
+                </ShimmerButton>
+              )}
             </div>
             
-            {showAddButton && (
-              <ShimmerButton 
-                onClick={() => setShowPostForm(true)}
-                className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md flex items-center gap-2 transition-all"
-          
-              >
-                <Plus className="w-4 h-4" />
-                Submit Your Idea
-              </ShimmerButton>
-            )}
+            {/* Saksham AI coming soon card */}
+            <div className="relative w-full md:w-72 bg-gradient-to-br from-purple-900/50 to-indigo-900/40 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-500/20 group">
+              <div className="absolute top-0 left-0 w-full h-full bg-grid-white/[0.05] bg-[length:16px_16px]"></div>
+              <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/4 w-24 h-24 bg-purple-500/30 rounded-full blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/4 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl"></div>
+              
+              <NeonGradientCard className="relative p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-1.5 bg-white/10 rounded-lg">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      className="w-5 h-5 text-black"
+                    >
+                      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"></path>
+                      <path d="M16 12h-3a1 1 0 0 1-1-1V8"></path>
+                      <path d="m9 16 3.5-3.5"></path>
+                      <path d="M16 8h-4"></path>
+                    </svg>
+                  </div>
+                  <span className="bg-gradient-to-r from-purple-200 to-indigo-300 bg-clip-text text-transparent font-bold">Coming Soon</span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-black mb-2 flex items-center">
+                  Saksham AI
+                  <span className="ml-2 bg-purple-400/20 text-purple-300 text-xs px-2 py-0.5 rounded-full">Beta</span>
+                </h3>
+                
+                <p className="text-slate-900/90 text-lg font-bold mb-4">
+                  AI-powered Idea to Deployment , to guide you from concept to launch.
+                </p>
+                
+                <div className="flex items-center">
+                  <div className="relative h-1.5 w-full bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="absolute left-0 top-0 h-full w-3/4 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-purple-300 ml-2 whitespace-nowrap">75%</span>
+                </div>
+              </NeonGradientCard>
+            </div>
           </div>
 
           {showPostForm && (
