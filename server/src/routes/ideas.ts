@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../lib/prisma';
 
 const router = Router();
-const prisma = new PrismaClient();
 
 
 router.get('/', async (req, res):Promise<any> => {
@@ -11,7 +10,14 @@ router.get('/', async (req, res):Promise<any> => {
       include: { 
         comments: true, 
         votesList: true,
-        user: true // Include user details
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            photoURL: true
+          }
+        }
       } 
     });
     res.json(ideas);
@@ -30,7 +36,14 @@ router.get('/:id', async (req, res):Promise<any> => {
       include: { 
         comments: true, 
         votesList: true,
-        user: true // Include user details
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            photoURL: true
+          }
+        }
       } 
     });
     
@@ -87,7 +100,14 @@ router.post('/', async (req, res) :Promise<any>=> {
         category 
       },
       include: {
-        user: true, // Include the related user in the response
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            photoURL: true
+          }
+        },
         comments: true
       }
     });
