@@ -1,7 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../lib/prisma';
 
 export const mohakApi = () => {
   const router = Router();
@@ -10,13 +8,15 @@ export const mohakApi = () => {
 
     try {
       const idea = await prisma.idea.findMany({
-    
         select: {
           id: true,
           title: true,
           description: true,
           user: {
-            select: { email: true }
+            select: { 
+              email: true,
+              username: true 
+            }
           }
         }
       });
