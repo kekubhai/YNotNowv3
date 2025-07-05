@@ -26,7 +26,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
   const [userIdeas, setUserIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const [showIdeaForm, setShowIdeaForm] = useState(false);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Extract initials from user's email for avatar fallback
   const getInitials = (email: string) => {
     const name = email.split('@')[0];
@@ -40,7 +40,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
       
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:3000/ideas');
+        const res = await fetch(`${backendUrl}/ideas`);
         const allIdeas = await res.json();
         
         // Filter ideas by the current user's email
@@ -141,16 +141,17 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
                 <Loader2 className="w-8 h-8 text-purple-400 animate-spin" />
               </div>
             ) : userIdeas.length === 0 ? (
-              <div className="bg-slate-800/30 border border-slate-700 rounded-lg p-6 text-center">
-                <p className="text-slate-400 mb-4">You haven't posted any ideas yet.</p>
-                <Button 
-                  size="sm"
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-                 
-                >
-                  What are you waiting for matcha? Get started with your first idea! 
-                </Button>
-              </div>
+             <div className="max-w-md mx-auto p-6">
+  <div className="bg-slate-800/30 border border-slate-700 rounded-lg text-center p-6">
+    <p className="text-slate-400 mb-4">You haven't posted any ideas yet.</p>
+    <p
+      
+      className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2 rounded-md transition-colors duration-300"
+    >
+      What are you waiting for matcha? Get started with your first idea! 
+    </p>
+  </div>
+</div>
             ) : (
               <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2">
                 {userIdeas.map(idea => (

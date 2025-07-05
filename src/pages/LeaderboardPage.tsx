@@ -8,6 +8,8 @@ import { ContainerTextFlip } from "@/components/ui/container-text-flip";
 import { AnimatedCard } from '../components/ui/animated-card';
 import { ScrollReveal } from '../components/ui/scroll-reveal';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
 const hardcodedIdeas: Idea[] = [
 	{
 		id: "1",
@@ -62,7 +64,7 @@ const LeaderboardPage: React.FC = () => {
 			setLoading(true);
 			try {
 				// No auth token needed for public viewing
-				const res = await fetch("http://localhost:3000/ideas");
+				const res = await fetch(`${backendUrl}/ideas`);
 				const data = await res.json();
 				if (data && data.length > 0) {
 					setIdeas(

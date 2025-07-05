@@ -1,5 +1,7 @@
 import type { Comment, Idea } from '../pages/IdeasPage';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL ;
+
 interface UseCommentsProps {
   ideas: Idea[];
   setIdeas: (ideas: Idea[]) => void;
@@ -14,7 +16,7 @@ export const useComments = ({ ideas, setIdeas }: UseCommentsProps) => {
    */
   const addComment = async (ideaId: string, content: string, author: string): Promise<void> => {
     try {
-      const res = await fetch(`http://localhost:3000/comments/idea/${ideaId}`, {
+      const res = await fetch(`${backendUrl}/comments/idea/${ideaId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ author, content }),

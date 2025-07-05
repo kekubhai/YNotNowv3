@@ -65,7 +65,7 @@ const IdeasPage = () => {
   const [showAddButton, setShowAddButton] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     console.log("Current user in IdeasPage:", user);
     
@@ -84,9 +84,8 @@ const IdeasPage = () => {
   const fetchIdeas = async () => {
     setLoading(true);
     try {
-     
-      const res = await fetch('http://localhost:3000/ideas');
-      
+      const res = await fetch(`${backendUrl}/ideas`);
+
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
@@ -116,8 +115,8 @@ const IdeasPage = () => {
       
       const token = localStorage.getItem('ynn3_token');
       console.log('Submitting idea with user:', user);
-      
-      const res = await fetch('http://localhost:3000/ideas', {
+
+      const res = await fetch(`${backendUrl}/ideas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -159,8 +158,8 @@ const IdeasPage = () => {
       }
       
       const token = localStorage.getItem('ynn3_token');
-      
-      const res = await fetch(`http://localhost:3000/comments/idea/${ideaId}`, {
+
+      const res = await fetch(`${backendUrl}/comments/idea/${ideaId}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -183,9 +182,9 @@ const IdeasPage = () => {
       const token = localStorage.getItem('ynn3_token');
     
       const userIdentifier = user?.email || 'anonymous_' + Math.random().toString(36).substring(7);
-      
-    
-      const res = await fetch(`http://localhost:3000/votes/idea/${ideaId}`, {
+
+
+      const res = await fetch(`${backendUrl}/votes/idea/${ideaId}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

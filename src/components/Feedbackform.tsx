@@ -25,6 +25,8 @@ export const FeedbackButton: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
   const handlePopoverOpen = (open: boolean) => {
     // If user tries to open popover but isn't authenticated, redirect to signup
     if (open && !user) {
@@ -51,7 +53,7 @@ export const FeedbackButton: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/feedback', {
+      const response = await fetch(`${backendUrl}/api/feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

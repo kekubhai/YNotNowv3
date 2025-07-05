@@ -24,6 +24,8 @@ export const mohakApi = () => {
 const result =idea.filter(idea=>idea.user)
 .map(idea=>({
   email:idea.user!.email,
+  username:idea.user!.username,
+  id:idea.id,
   title:idea.title,
   description:idea.description
 }))

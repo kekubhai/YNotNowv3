@@ -1,10 +1,12 @@
+const backendUrl = import.meta.env.VITE_BACKEND_URL ;
+
 import type { Idea } from '../pages/IdeasPage';
 
 export const useVotes = (ideas: Idea[], setIdeas: React.Dispatch<React.SetStateAction<Idea[]>>) => {
   const handleVote = async (ideaId: string, voteType: 'up' | 'down') => {
     const userIdentifier = 'anonymous_user';
     try {
-      const res = await fetch(`http://localhost:3000/ideas/${ideaId}/vote`, {
+      const res = await fetch(`${backendUrl}/ideas/${ideaId}/vote`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userIdentifier, voteType }),

@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL ;
+
 interface AuthContextType {
   user: any;
   token: string | null;
@@ -47,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
         
         // Then fetch complete user details from server
-        fetch('http://localhost:3000/auth/me', {
+        fetch(`${backendUrl}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then(res => {
@@ -91,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await fetch('http://localhost:3000/auth/login', {
+      const res = await fetch(`${backendUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -124,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (email: string, password: string, username?: string) => {
     try {
-      const res = await fetch('http://localhost:3000/auth/register', {
+      const res = await fetch(`${backendUrl}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, username }),
