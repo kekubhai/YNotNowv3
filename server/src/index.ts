@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction):any => {
 
   if (
     req.path === '/landing' || 
@@ -140,7 +140,7 @@ app.post('/auth/register', async (req, res): Promise<any> => {
 });
 
 // Add this to your server/src/index.ts
-app.get('/auth/me', async (req, res) => {
+app.get('/auth/me', async (req: Request, res: Response): Promise<any> => {
   // Verify token
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ error: 'Unauthorized' });

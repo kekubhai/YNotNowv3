@@ -58,7 +58,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
 
   const formatTimeAgo = (date: Date) => {
     const now = new Date();
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
+    const diffInMinutes = Math.floor((now.getTime() ) / (1000 * 60));
     
     if (diffInMinutes < 60) {
       return `${diffInMinutes}m ago`;
@@ -127,17 +127,18 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
 
       {/* Detailed Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="bg-slate-900 border border-slate-700 text-white w-full max-w-4xl">
-          <DialogHeader>
+        <DialogContent className="bg-slate-900 border border-slate-700 text-white max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+          {/* Fixed Header */}
+          <DialogHeader className="border-b border-slate-700 pb-4">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-2xl font-bold">{idea.title}</DialogTitle>
+              <DialogTitle className="text-xl font-bold">{idea.title}</DialogTitle>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-900/30 border border-green-500/30 text-green-400 text-xs font-medium">
                 <Tag className="h-3 w-3" />
                 {idea.category}
               </span>
             </div>
             <DialogDescription className="text-slate-300">
-              <div className="flex items-center gap-4 mt-2 mb-4">
+              <div className="flex items-center gap-4 mt-2">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
                   <span>{idea.user?.username || idea.author}</span>
@@ -150,139 +151,122 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
             </DialogDescription>
           </DialogHeader>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left Column - Description */}
-            <div className="md:col-span-2 bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-              <h3 className="text-lg font-semibold mb-3">Description</h3>
-              <p className="text-slate-300 leading-relaxed">
-                {idea.description}
-              </p>
-            </div>
-            
-            {/* Right Column - Voting and Comments */}
-            <div className="space-y-6">
-              {/* Voting */}
-              <div className="flex flex-col items-center gap-4 bg-slate-800/30 p-4 rounded-xl border border-slate-700">
-                <div className="flex flex-col items-center">
-                  <span className={`font-bold text-3xl ${getVoteColor(idea.votes)}`}>
-                    {idea.votes}
-                  </span>
-                  <span className="text-xs text-slate-400 mb-4">votes</span>
-                </div>
-                
-                <div className="flex gap-4 w-full justify-center">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleVoteClick('up')}
-                    className={`vote-button p-3 rounded-xl transition-all duration-200 ${
-                      idea.userVote === 'up' 
-                        ? 'bg-green-500/20 text-green-400 border border-green-400/30' 
-                        : 'hover:bg-slate-700 text-slate-400 hover:text-green-400'
-                    }`}
-                  >
-                    <ChevronUp className="w-6 h-6" />
-                  </Button>
-                  
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleVoteClick('down')}
-                    className={`vote-button p-3 rounded-xl transition-all duration-200 ${
-                      idea.userVote === 'down' 
-                        ? 'bg-red-500/20 text-red-400 border border-red-400/30' 
-                        : 'hover:bg-slate-700 text-slate-400 hover:text-red-400'
-                    }`}
-                  >
-                    <ChevronDown className="w-6 h-6" />
-                  </Button>
-                </div>
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto py-4 pr-2 custom-scrollbar">
+            <div className="grid grid-cols-1 gap-4">
+              {/* Description */}
+              <div className="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                <h3 className="text-base font-semibold mb-2">Description</h3>
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  {idea.description}
+                </p>
               </div>
               
-              {/* Comments Preview */}
-              <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                <h3 className="text-lg font-semibold mb-3">
-                  Comments ({idea.comments.length})
-                </h3>
-                
-                {idea.comments.length > 0 ? (
-                  <div className="space-y-3 max-h-[200px] overflow-y-auto pr-2">
-                    {idea.comments.slice(0, 3).map((comment) => (
-                      <div key={comment.id} className="bg-slate-800/70 p-3 rounded-lg">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                            <User className="w-3 h-3 text-white" />
-                          </div>
-                          <span className="font-semibold text-sm text-white">
-                            {comment.user?.username || comment.author}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-300 line-clamp-2">{comment.content}</p>
-                      </div>
-                    ))}
-                    {idea.comments.length > 3 && (
-                      <div className="text-center text-xs text-slate-400 mt-2">
-                        +{idea.comments.length - 3} more comments
-                      </div>
-                    )}
+              {/* Voting and Builder Button */}
+              <div className="flex gap-4 items-stretch">
+                {/* Voting */}
+                <div className="flex-1 flex items-center gap-3 bg-slate-800/30 p-3 rounded-xl border border-slate-700">
+                  <div className="flex items-center">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleVoteClick('down')}
+                      className={`h-8 w-8 p-0 rounded-l-md ${
+                        idea.userVote === 'down' 
+                          ? 'bg-red-500/20 text-red-400' 
+                          : 'hover:bg-slate-700 text-slate-400'
+                      }`}
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </Button>
+                    
+                    <span className={`px-3 font-bold text-lg ${getVoteColor(idea.votes)}`}>
+                      {idea.votes}
+                    </span>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleVoteClick('up')}
+                      className={`h-8 w-8 p-0 rounded-r-md ${
+                        idea.userVote === 'up' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'hover:bg-slate-700 text-slate-400'
+                      }`}
+                    >
+                      <ChevronUp className="w-4 h-4" />
+                    </Button>
                   </div>
-                ) : (
-                  <p className="text-sm text-slate-400">No comments yet</p>
-                )}
-              </div>
-            </div>
-          </div>
-          
-          {/* Full Comments Section */}
-          <div className="mt-6 space-y-4">
-            <form onSubmit={handleCommentSubmit} className="space-y-4">
-              <Textarea
-                placeholder="Share your thoughts..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                className="w-full min-h-[100px] bg-slate-800 border-slate-600 text-white focus:border-orange-400"
-              />
-              <div className="flex justify-between items-center">
-                <Button
-                  type="submit"
-                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium"
-                  disabled={!newComment.trim()}
-                >
-                  Post Comment
-                </Button>
+                  
+                  <div className="text-xs text-slate-400 flex-1 text-right">
+                    <div>{idea.votes > 0 ? 'Growing' : 'Needs votes'}</div>
+                  </div>
+                </div>
                 
+                {/* Find Builders Button */}
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => window.open('https://catalystplatform.com', '_blank')}
                   className="text-purple-400 border-purple-500/30 hover:bg-purple-950/30"
                 >
-                  <Users className="w-4 h-4 mr-2" />
+                  <Users className="w-4 h-4 mr-1" />
                   Find Builders
                 </Button>
               </div>
-            </form>
-            
-            {idea.comments.length > 0 && (
-              <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
-                {idea.comments.map((comment) => (
-                  <div key={comment.id} className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                        <User className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="font-semibold text-white">
-                        {comment.user?.username || comment.author}
-                      </span>
-                      <span className="text-xs text-slate-500">
-                        {formatTimeAgo(comment.createdAt)}
-                      </span>
-                    </div>
-                    <p className="text-slate-300 ml-11">{comment.content}</p>
+              
+              {/* Comments Section */}
+              <div className="mt-2 space-y-3">
+                <h3 className="text-base font-semibold">
+                  Comments ({idea.comments.length})
+                </h3>
+                
+                <form onSubmit={handleCommentSubmit} className="bg-slate-800/30 p-3 rounded-xl border border-slate-700">
+                  <Textarea
+                    placeholder="Share your thoughts..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    className="w-full min-h-[80px] bg-slate-800 border-slate-600 text-sm text-white focus:border-orange-400"
+                  />
+                  <div className="flex justify-end mt-2">
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-sm"
+                      disabled={!newComment.trim()}
+                    >
+                      Post Comment
+                    </Button>
                   </div>
-                ))}
+                </form>
+                
+                {idea.comments.length > 0 ? (
+                  <div className="space-y-2">
+                    {idea.comments.map((comment) => (
+                      <div key={comment.id} className="bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <User className="w-3 h-3 text-white" />
+                          </div>
+                          <span className="font-medium text-sm text-white">
+                            {comment.user?.username || comment.author}
+                          </span>
+                          <span className="text-xs text-slate-500">
+                            {formatTimeAgo(comment.createdAt)}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-300 ml-8">{comment.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-6 bg-slate-800/20 rounded-xl border border-dashed border-slate-700">
+                    <MessageCircle className="w-8 h-8 mx-auto mb-2 text-slate-600" />
+                    <p className="text-sm text-slate-400">No comments yet. Be the first to share your thoughts!</p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </DialogContent>
       </Dialog>

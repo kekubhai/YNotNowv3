@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, 
   Brain,
@@ -277,6 +277,81 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     </div>
   </section>
   
+<section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950/90 overflow-hidden">
+  {/* Animated background elements */}
+  <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-900/20 rounded-full filter blur-3xl animate-pulse opacity-20"></div>
+  <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-900/10 rounded-full filter blur-3xl opacity-10"></div>
+  
+  <div className="container mx-auto px-4 relative">
+    <div className="text-center mb-16">
+      <span className="inline-block px-4 py-1.5 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-sm font-medium mb-4 hover:bg-purple-900/60 hover:border-purple-400/40 transition-all duration-300 hover:scale-[1.02]">
+        From Idea to Reality
+      </span>
+      <h2 className="text-4xl md:text-6xl font-bold mb-6">
+        <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent animate-text-shimmer bg-[length:250%_100%]">
+          Partner with Talented Builders
+        </span>
+      </h2>
+      <p className="text-purple-200/80 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed">
+        Validate your idea on YNotNow, then connect with skilled developers, designers, and other creators on Catalyst to bring it to life.
+      </p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {/* Step 1 */}
+      <div className="bg-gradient-to-b from-slate-900/80 to-slate-800/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-900/10">
+        <div className="w-12 h-12 bg-gradient-to-br from-purple-900/40 to-purple-900/20 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+          <span className="text-xl font-bold text-purple-300 group-hover:text-purple-200">1</span>
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-100 transition-colors">Validate Your Idea</h3>
+        <p className="text-slate-300/90 group-hover:text-slate-200 transition-colors">
+          Post your concept on YNotNow and gather feedback from our community of innovators and entrepreneurs.
+        </p>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      
+      {/* Step 2 */}
+      <div className="bg-gradient-to-b from-slate-900/80 to-slate-800/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-900/10 delay-75">
+        <div className="w-12 h-12 bg-gradient-to-br from-purple-900/40 to-purple-900/20 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+          <span className="text-xl font-bold text-purple-300 group-hover:text-purple-200">2</span>
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-100 transition-colors">Find Your Team</h3>
+        <p className="text-slate-300/90 group-hover:text-slate-200 transition-colors">
+          Connect with skilled developers, designers, and product managers on Catalyst who align with your vision.
+        </p>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      
+      {/* Step 3 */}
+      <div className="bg-gradient-to-b from-slate-900/80 to-slate-800/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-900/10 delay-100">
+        <div className="w-12 h-12 bg-gradient-to-br from-purple-900/40 to-purple-900/20 rounded-full flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+          <span className="text-xl font-bold text-purple-300 group-hover:text-purple-200">3</span>
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-100 transition-colors">Build Together</h3>
+        <p className="text-slate-300/90 group-hover:text-slate-200 transition-colors">
+          Collaborate with your chosen team to transform your validated idea into a successful product.
+        </p>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+    </div>
+    
+    <div className="mt-16 text-center">
+      <Button 
+        onClick={() => window.open('https://catalystplatform.com', '_blank')}
+        className="relative bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-10 py-5 text-lg font-medium rounded-xl overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
+      >
+        <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        <ExternalLink className="w-5 h-5 mr-2 inline-block group-hover:translate-x-1 transition-transform" />
+        <span className="relative">Visit Catalyst Platform</span>
+      </Button>
+      
+      <p className="mt-6 text-slate-400 text-sm animate-pulse">
+        Join 1,000+ founders building the next big thing
+      </p>
+    </div>
+  </div>
+</section>
+
       {/* Community Section */}
       <section className="relative z-10 py-20 overflow-hidden">
   {/* Background image with overlay - FIXED PATH TO USE VARIABLE */}
@@ -311,16 +386,26 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
             size="lg"
             className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-semibold px-8 py-6 text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 hover:scale-105"
           >
-            Start Validating
-            <ArrowUpRight className="ml-3 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <Link
+              to="/ideas"
+              className="flex items-center"
+              onClick={handleGetStarted}
+            > Start Validating Ideas
+              <ArrowUpRight className="ml-3 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </Link>
           </Button>
           <Button
             variant="outline"
             size="lg"
             className="group border-purple-500/30 text-purple-300 hover:text-white hover:border-purple-400 rounded-xl px-8 py-6 text-lg transition-all duration-300"
           >
-            Browse Ideas
-            <Eye className="ml-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+            <Link
+              to="/ideas"
+              className="flex items-center"
+            >
+              Browse Ideas
+              <Eye className="ml-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+            </Link>
           </Button>
         </div>
       </div>
@@ -329,68 +414,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
 </section>
     
     {/* New Section: From Idea to Reality */}
-    <section className="relative z-10 py-20 bg-gradient-to-b from-slate-900 to-slate-950 overflow-hidden">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <span className="inline-block px-4 py-1.5 rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-300 text-sm font-medium mb-4">
-        From Idea to Reality
-      </span>
-      <h2 className="text-4xl md:text-5xl font-bold mb-6">
-        <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
-          Partner with Talented Builders
-        </span>
-      </h2>
-      <p className="text-purple-200/80 max-w-3xl mx-auto text-lg">
-        Validate your idea on YNotNow, then connect with skilled developers, designers, and other creators on Catalyst to bring it to life.
-      </p>
-    </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      {/* Step 1 */}
-      <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/30 transition-all duration-300">
-        <div className="w-12 h-12 bg-purple-900/30 rounded-full flex items-center justify-center mb-5 group-hover:bg-purple-900/50 transition-colors">
-          <span className="text-xl font-bold text-purple-400">1</span>
-        </div>
-        <h3 className="text-xl font-bold text-white mb-3">Validate Your Idea</h3>
-        <p className="text-slate-300">
-          Post your concept on YNotNow and gather feedback from our community of innovators and entrepreneurs.
-        </p>
-      </div>
-      
-      {/* Step 2 */}
-      <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/30 transition-all duration-300">
-        <div className="w-12 h-12 bg-purple-900/30 rounded-full flex items-center justify-center mb-5 group-hover:bg-purple-900/50 transition-colors">
-          <span className="text-xl font-bold text-purple-400">2</span>
-        </div>
-        <h3 className="text-xl font-bold text-white mb-3">Find Your Team</h3>
-        <p className="text-slate-300">
-          Connect with skilled developers, designers, and product managers on Catalyst who align with your vision.
-        </p>
-      </div>
-      
-      {/* Step 3 */}
-      <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6 relative group hover:border-purple-500/30 transition-all duration-300">
-        <div className="w-12 h-12 bg-purple-900/30 rounded-full flex items-center justify-center mb-5 group-hover:bg-purple-900/50 transition-colors">
-          <span className="text-xl font-bold text-purple-400">3</span>
-        </div>
-        <h3 className="text-xl font-bold text-white mb-3">Build Together</h3>
-        <p className="text-slate-300">
-          Collaborate with your chosen team to transform your validated idea into a successful product.
-        </p>
-      </div>
-    </div>
-    
-    <div className="mt-12 text-center">
-      <Button 
-        onClick={() => window.open('https://catalystplatform.com', '_blank')}
-        className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-6 text-lg"
-      >
-        <ExternalLink className="w-5 h-5 mr-2" />
-        Visit Catalyst Platform
-      </Button>
-    </div>
-  </div>
-</section>
+
     
     {/* Floating Feedback Button */}
     <FeedbackButton />

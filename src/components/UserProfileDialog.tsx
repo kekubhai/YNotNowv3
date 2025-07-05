@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Idea } from '@/pages/IdeasPage';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Settings, LogOut, Check, ExternalLink } from 'lucide-react';
+import { PostIdeaForm } from './PostIdeaForm';
 
 interface UserProfileDialogProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
   const { user, logout } = useAuth();
   const [userIdeas, setUserIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showIdeaForm, setShowIdeaForm] = useState(false);
 
   // Extract initials from user's email for avatar fallback
   const getInitials = (email: string) => {
@@ -114,10 +116,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
             
             {/* Actions */}
             <div className="flex flex-col gap-2 w-full mt-2">
-              <Button variant="outline" size="sm" className="border-slate-700 text-slate-800 hover:text-white hover:bg-black w-full justify-start">
-                <Settings className="h-4 w-4 mr-2" />
-                Account Settings
-              </Button>
+          
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -147,12 +146,9 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
                 <Button 
                   size="sm"
                   className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-                  onClick={() => {
-                    onOpenChange(false);
-                    window.location.href = '/ideas';
-                  }}
+                 
                 >
-                  Submit Your First Idea
+                  What are you waiting for matcha? Get started with your first idea! 
                 </Button>
               </div>
             ) : (

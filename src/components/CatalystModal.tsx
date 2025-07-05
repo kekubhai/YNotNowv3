@@ -38,7 +38,7 @@ export const CatalystModal: React.FC<CatalystModalProps> = ({ open, onOpenChange
           <div className="mx-auto bg-purple-900/30 w-16 h-16 rounded-full flex items-center justify-center mb-4">
             <Rocket className="h-8 w-8 text-purple-400" />
           </div>
-          <DialogTitle className="text-2xl text-center">Coming Soon to YNotNow</DialogTitle>
+          <DialogTitle className="text-2xl text-center">Here with  YNotNow</DialogTitle>
           <DialogDescription className="text-center text-slate-300">
             We're working with Catalyst to bring you a seamless experience for finding talented builders for your ideas.
           </DialogDescription>
