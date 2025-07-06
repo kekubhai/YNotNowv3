@@ -40,7 +40,7 @@ export const mohakApi = () => {
       }) as IdeaWithUser[];
 
       const result: MohakApiResponse[] = ideas
-        .filter((idea: IdeaWithUser) => idea.user !== null)
+       
         .map((idea: IdeaWithUser) => ({
           email: idea.user!.email,
           username: idea.user!.username,
