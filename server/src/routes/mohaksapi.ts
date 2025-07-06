@@ -26,31 +26,21 @@ export const mohakApi = () => {
   router.get('/mohaksideas/', async (req: Request, res: Response): Promise<any> => {
     try {
       const ideas = await prisma.idea.findMany({
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          user: {
-            select: { 
-              email: true,
-              username: true 
-            }
-          }
-        }
-      }) as IdeaWithUser[];
+     
+      }) 
 
-      const result: MohakApiResponse[] = ideas
+      // const result: MohakApiResponse[] = ideas
        
-        .map((idea: IdeaWithUser) => ({
-          email: idea.user!.email,
-          username: idea.user!.username,
-          id: idea.id,
-          title: idea.title,
-          description: idea.description
-        }));
+      //   .map((idea: IdeaWithUser) => ({
+      //     email: idea.user!.email,
+      //     username: idea.user!.username,
+      //     id: idea.id,
+      //     title: idea.title,
+      //     description: idea.description
+      //   }));
 
       
-      res.json(result);
+      res.json(ideas);
     } catch (error) {
       console.error('MohakAPI Error:', error);
       res.status(500).json({ error: 'Internal server error' });

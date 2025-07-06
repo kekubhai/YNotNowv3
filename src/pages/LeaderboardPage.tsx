@@ -191,25 +191,25 @@ const LeaderboardPage: React.FC = () => {
 
 											<div className="col-span-7 flex items-center">
 												<div>
-													<h3 className="text-white font-medium">
+													<h3 className="text-black font-medium">
 														{idea.title}
 													</h3>
-													<p className="text-slate-400 text-sm truncate max-w-md">
+													<p className="text-slate-900 text-sm truncate max-w-md">
 														{idea.description}
 													</p>
 												</div>
 											</div>
 
 											<div className="col-span-2 flex items-center justify-end">
-												<span className="text-purple-300 text-sm">
-													{idea.author}
+												<span className="text-purple-900 text-lg font-bold">
+													{idea.user.username}
 												</span>
 											</div>
 
 											<div className="col-span-2 flex items-center justify-end pr-2">
 												<div className="flex items-center bg-gradient-to-r from-purple-900/30 to-fuchsia-900/30 px-3 py-1 rounded-lg border border-purple-500/30">
-													<ArrowUp className="w-4 h-4 text-purple-400 mr-1" />
-													<span className="text-purple-200 font-bold">
+													<ArrowUp className="w-4 h-4 text-black mr-1" />
+													<span className="text-purple-900 font-bold">
 														{idea.votes}
 													</span>
 												</div>

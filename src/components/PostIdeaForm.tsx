@@ -43,27 +43,18 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
 
       setIsGenerating(true);
 
-      const prompt = `
-You are a world-class startup pitch coach who has helped founders raise billions in funding.
+const prompt = `
+You are a world-class startup pitch coach who helps validate breakthrough ideas.
 
-Create an exceptionally compelling, investor-ready description for this startup idea:
+Take this startup concept and craft a sharp, compelling, under-150-character pitch that feels like a confident ask for validation—clear, bold, and idea-specific. Avoid generic startup language and jargon. Make it sound like the founder is seeking quick, real-world feedback from an investor or mentor.
 
 IDEA: ${title}
 CATEGORY: ${category}
-${description ? `INITIAL THOUGHTS: ${description}` : ''}
+${description ? `DETAILS: ${description}` : ''}
 
-Your description must follow this precise structure:
-1. PROBLEM (1-2 sentences): Start with a sharp, quantifiable problem statement that shows market pain.
-2. SOLUTION (2-3 sentences): Describe your solution clearly, focusing on its unique approach.
-3. MARKET SIZE (1-2 sentences): Provide specific TAM/SAM figures and growth trajectory.
-4. DIFFERENTIATION (1-2 sentences): Explain why existing alternatives fail and your unfair advantage.
-5. BUSINESS MODEL (1-2 sentences): How you'll make money, with unit economics if possible.
-6. TRACTION/VISION (1-2 sentences): Early validation or clear first steps to market.
-
-Write in a confident, concise voice (250-300 words max). Use specific metrics where possible. Focus on clarity over jargon. Make it compelling enough that an investor would immediately want to schedule a meeting.
-
-Format the output as a single cohesive paragraph without section headers.
+Respond with just one short sentence—make it powerful enough that someone would instantly know if this idea is worth pursuing.
 `;
+
 
       // Use Gemini API to generate content
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -71,7 +62,24 @@ Format the output as a single cohesive paragraph without section headers.
       const response = await result.response;
       const generatedText = response.text();
 
-      setDescription(generatedText.trim());
+      // Clean up the response: remove quotes, markdown characters, and extra whitespace
+      const cleanedText = generatedText
+        .replace(/["*`]/g, '') // Remove quotes and markdown characters
+        .replace(/^["\s]+|["\s]+$/g, '') // Remove quotes and spaces at start/end
+        .trim();
+
+      if (!cleanedText) {
+        throw new Error("AI returned empty response");
+      }
+
+      console.log(`Generated description (${cleanedText.length} chars): ${cleanedText}`);
+
+      // Check if we need to truncate to stay under 150 chars
+      const finalDescription = cleanedText.length > 150 
+        ? cleanedText.substring(0, 147) + '...' 
+        : cleanedText;
+
+      setDescription(finalDescription);
     } catch (err) {
       console.error('Error generating description:', err);
       alert('Failed to generate description. Please check your API key and try again.');
