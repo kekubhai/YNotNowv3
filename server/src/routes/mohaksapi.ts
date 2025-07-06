@@ -22,31 +22,30 @@ interface MohakApiResponse {
 
 export const mohakApi = () => {
   const router = Router();
-router.get('/mohakideas', async (req, res):Promise<any> => {
-  try {
-    const ideas = await prisma.idea.findMany({ 
-      include: { 
-        comments: true, 
-        votesList: true,
-        //@ts-ignore
-        id:true,
-        user: {
-          select: {
-            id: true,
-            email: true,
-            username: true,
-            photoURL: true
-          }
-        }
-      } 
-    });
-    res.json(ideas);
-  } catch (error: any) {
-    console.error('Error fetching ideas:', error);
-    res.status(500).json({ error: 'Failed to fetch ideas', details: error.message });
-  }
-});
 
+  router.get('/mohakideas/', async (req: Request, res: Response): Promise<any> => {
+    try {
+      const ideas = await prisma.idea.findMany({
+     
+      }) 
+
+      // const result: MohakApiResponse[] = ideas
+       
+      //   .map((idea: IdeaWithUser) => ({
+      //     email: idea.user!.email,
+      //     username: idea.user!.username,
+      //     id: idea.id,
+      //     title: idea.title,
+      //     description: idea.description
+      //   }));
+
+      
+      res.json(ideas);
+    } catch (error) {
+      console.error('MohakAPI Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
   return router;
 };
