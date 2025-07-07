@@ -218,11 +218,11 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => window.open('https://catalystplatform.com', '_blank')}
+                  onClick={() => window.open('https://catalyst.ynotnow.pro/builders', '_blank')}
                   className="text-[#bfc4cc] border-slate-700 hover:bg-slate-800/60 font-semibold"
                 >
-                  <Users className="w-4 h-4 mr-1" />
-                  Find Builders
+                  <Users className="w-4 h-4 mr-1 text-black" />
+                  <p className="text-sm text-black">Find Builders</p>
                 </Button>
               </div>
               {/* Comments Section */}
@@ -241,7 +241,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
                     <Button
                       type="submit"
                       size="sm"
-                      className="bg-gradient-to-r from-[#bfc4cc] to-[#e5e7eb] text-slate-900 text-sm font-semibold"
+                      className="bg-neutral-200 text-black text-sm font-semibold"
                       disabled={!newComment.trim()}
                     >
                       Post Comment

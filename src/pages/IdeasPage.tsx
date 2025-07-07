@@ -326,7 +326,7 @@ const IdeasPage = () => {
           </div>
 
           {showPostForm && (
-            <div className="mt-2">
+            <div className="mt-5 mb-8">
               <PostIdeaForm 
                 onSubmit={handleAddIdea}
                 onCancel={() => setShowPostForm(false)}
@@ -344,7 +344,7 @@ const IdeasPage = () => {
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <Code2 className="w-4 h-4" />
-              <AnimatedGradientText className='font-bold text-xl text-purple-300 from-current to-red-300'>Hackathons</AnimatedGradientText>
+              <AnimatedGradientText className='font-bold text-xl text-purple-800 from-current to-red-300'>Hackathons</AnimatedGradientText>
             </Button>
             <Button variant="outline" size="sm" className="rounded-full px-4 flex items-center gap-2 text-slate-400 border-slate-800">
               <Lightbulb className="w-4 h-4" />

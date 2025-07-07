@@ -80,8 +80,8 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     },
     {
       icon: Users,
-      title: 'Community Intelligence',
-      description: 'Tap into the collective wisdom of developers, designers, and entrepreneurs through voting and discussions',
+      title: 'Catalyst is Here ',
+      description: 'Get connected with you fellow devs and builder to bring your idea to life',
       color: 'from-blue-500 to-cyan-500'
     },
     {
@@ -342,7 +342,10 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
       >
         <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
         <ExternalLink className="w-5 h-5 mr-2 inline-block group-hover:translate-x-1 transition-transform" />
-        <span className="relative">Visit Catalyst Platform</span>
+        <span className="relative">
+          <Link to="https://catalyst.ynotnow.pro" className="text-white">
+          Get Catalysed </Link>
+          </span>
       </Button>
       
       <p className="mt-6 text-slate-400 text-sm animate-pulse">

@@ -99,7 +99,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
               <div className="flex-1 bg-gradient-to-r from-orange-800/40 to-slate-800/60 border border-orange-700/30 rounded-xl p-4 text-center shadow">
                 <p className="text-3xl font-extrabold text-orange-300">
                   {userIdeas.reduce((total, idea) => total + idea.votes, 0)}
-                </p>
+                  </p>
                 <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Total Votes</p>
               </div>
             </div>
@@ -115,7 +115,7 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
                 }}
               >
                 <LogOut className="h-5 w-5 mr-2" />
-                Sign Out
+                Sign Out(But Why Man?)
               </Button>
             </div>
           </div>

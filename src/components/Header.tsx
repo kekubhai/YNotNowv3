@@ -41,24 +41,24 @@ export const Header: React.FC = () => {
               
               {/* Desktop Menu */}
               <nav className="hidden md:flex items-center gap-4">
-                <a href="/" className="text-slate-400 hover:text-orange-400 transition-colors flex items-center gap-1 text-sm">
+                <a href="/" className="text-slate-100 hover:text-orange-400 transition-colors flex items-center gap-1 text-md">
                   <Zap className="w-3 h-3" />
                   Ideas
                 </a>
-                <a href="/leaderboard" className="text-slate-400 hover:text-orange-400 transition-colors text-sm">
+                <a href="/leaderboard" className="text-slate-100 hover:text-orange-400 transition-colors text-md">
                   Top Rated
                 </a>
-                <a href="/about" className="text-slate-400 hover:text-orange-400 transition-colors text-sm">
-                  About
+                <a href="https://anirban-three.vercel.app/" className="text-slate-100 hover:text-orange-400 transition-colors text-md">
+                  The Dev
                 </a>
                 
                 <a 
-                  href="https://catalystplatform.com" 
+                  href="https://catalyst.ynotnow.pro" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-purple-400 transition-colors flex items-center gap-1 text-sm"
+                  className="text-slate-100 hover:text-purple-400 transition-colors flex items-center gap-1 text-md"
                 >
-                  Find Builders
+                  Catalyst
                   <ExternalLink className="w-3 h-3 ml-1" />
                 </a>
                 

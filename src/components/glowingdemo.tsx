@@ -58,8 +58,8 @@ export function GlowingEffectDemo() {
         <GridItem
           area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
           icon={<Users className="h-6 w-6 text-fuchsia-400" />}
-          title="Community Intelligence"
-          description="Tap into our engaged community of developers, designers and entrepreneurs for real feedback and votes on your ideas."
+          title="Catalyst is Here"
+          description="Get connected with you fellow devs and builder to bring your idea to life."
           imageUrl={ynn7Image}
        />
 
@@ -90,8 +90,8 @@ export function GlowingEffectDemo() {
         <GridItem
           area="md:[grid-area:3/7/4/13] xl:[grid-area:2/11/3/13]"
           icon={<HandCoins className="h-6 w-6 text-pink-400" />}
-          title="Catalyst (Coming Soon)"
-          description="Connect directly with founders and fundraisers who can provide resources and support to turn your idea into reality."
+          title="Saksham-AI (Coming Soon)"
+          description="Build Your Ideas with the best and appropriate Tech Stack. "
           imageUrl={catalystImage}
         />
       </ul>
