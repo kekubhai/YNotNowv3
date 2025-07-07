@@ -415,7 +415,67 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     
     {/* New Section: From Idea to Reality */}
 
-    
+    {/* FAQ Section */}
+    <section className="relative z-10 py-20 bg-gradient-to-b from-slate-950 to-slate-950/90">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+          <p className="text-slate-400 text-lg">Everything you need to know about validating your ideas on YNotNow.</p>
+        </div>
+        <div className="max-w-2xl mx-auto">
+          <div className="space-y-4">
+            {/* FAQ Accordion */}
+            <details className="group border border-purple-700/30 rounded-xl bg-slate-900/70 p-4 transition-all">
+              <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-300 group-open:text-white">
+                How does Idea validation (Should)work on YNotNow?
+                <span className="ml-2 transition-transform group-open:rotate-90">
+                  ▶
+                </span>
+              </summary>
+              <div className="mt-2 text-slate-300 text-base">
+                Our AI analyzes your idea's description for market potential, uniqueness, and feasibility, providing instant feedback to help you refine your concept.
+                Not to forget Real Humans can comment and vote for your idea!
+              </div>
+            </details>
+            <details className="group border border-purple-700/30 rounded-xl bg-slate-900/70 p-4 transition-all">
+              <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-300 group-open:text-white">
+                Can I submit more than one idea per week?
+                <span className="ml-2 transition-transform group-open:rotate-90">
+                  ▶
+                </span>
+              </summary>
+              <div className="mt-2 text-slate-300 text-base">
+                Each user can submit one idea per week to ensure quality and give everyone a fair chance to get feedback from the community.
+              </div>
+            </details>
+            <details className="group border border-purple-700/30 rounded-xl bg-slate-900/70 p-4 transition-all">
+              <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-300 group-open:text-white">
+                Is YNotNow free to use?
+                <span className="ml-2 transition-transform group-open:rotate-90">
+                  ▶
+                </span>
+              </summary>
+              <div className="mt-2 text-slate-300 text-base">
+                Yes, YNotNow is currently free for all users. You can validate ideas, vote, and comment without any charges.
+              </div>
+            </details>
+            <details className="group border border-purple-700/30 rounded-xl bg-slate-900/70 p-4 transition-all">
+              <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-300 group-open:text-white">
+                How do I get more feedback on my idea?
+                <span className="ml-2 transition-transform group-open:rotate-90">
+                  ▶
+                </span>
+              </summary>
+              <div className="mt-2 text-slate-300 text-base">
+                Bring more users to your idea by sharing it on social media or within your network.
+                Share your idea link with your network and engage with the community by commenting on others’ ideas to encourage reciprocal feedback.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* Floating Feedback Button */}
     <FeedbackButton />
     </div>

@@ -43,21 +43,21 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
 
       setIsGenerating(true);
 
-const prompt = `
-You are a world-class startup pitch coach who helps validate breakthrough ideas.
+      const prompt = `
+I'm a founder working on a bold startup idea and need quick, honest validation.
 
-Take this startup concept and craft a sharp, compelling, under-150-character pitch that feels like a confident ask for validation—clear, bold, and idea-specific. Avoid generic startup language and jargon. Make it sound like the founder is seeking quick, real-world feedback from an investor or mentor.
+Using the concept below, write a sharp, compelling pitch that I could use to describe my idea to an investor or mentor. It should sound confident but open to feedback — no jargon, no fluff, just the essence of what makes this idea worth building.
 
 IDEA: ${title}
 CATEGORY: ${category}
 ${description ? `DETAILS: ${description}` : ''}
 
-Respond with just one short sentence—make it powerful enough that someone would instantly know if this idea is worth pursuing.
+Write 1-2 complete sentences. Each sentence must end with proper punctuation and express a complete thought. The response should make someone immediately say either "tell me more" or provide specific reasons why it won't work.
 `;
 
 
       // Use Gemini API to generate content
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const generatedText = response.text();
@@ -75,10 +75,7 @@ Respond with just one short sentence—make it powerful enough that someone woul
       console.log(`Generated description (${cleanedText.length} chars): ${cleanedText}`);
 
       // Check if we need to truncate to stay under 150 chars
-      const finalDescription = cleanedText.length > 150 
-        ? cleanedText.substring(0, 147) + '...' 
-        : cleanedText;
-
+      const finalDescription = cleanedText;
       setDescription(finalDescription);
     } catch (err) {
       console.error('Error generating description:', err);

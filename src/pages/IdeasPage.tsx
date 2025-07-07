@@ -326,7 +326,7 @@ const IdeasPage = () => {
           </div>
 
           {showPostForm && (
-            <div className="mb-8">
+            <div className="mt-2">
               <PostIdeaForm 
                 onSubmit={handleAddIdea}
                 onCancel={() => setShowPostForm(false)}
@@ -400,7 +400,8 @@ const IdeasPage = () => {
                   <p className="text-slate-400">Loading ideas...</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+              <div className="mx-auto w-full max-w-7xl px-2 sm:px-4">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
                   {sortedIdeas.map((idea) => (
                     <IdeaCard
                       key={idea.id}
@@ -408,11 +409,9 @@ const IdeasPage = () => {
                       onVote={handleVote}
                       onAddComment={handleAddComment}
                     />
-                    
                   ))}
-                  
                 </div>
-                
+                </div>
               )}
               
               {sortedIdeas.length === 0 && !loading && (
