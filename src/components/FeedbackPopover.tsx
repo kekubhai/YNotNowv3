@@ -17,12 +17,12 @@ export const FeedbackPopover: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:3000/api/feedback', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: message.trim(),
-          name: user?.email || 'Anonymous'
+          name: user.username
         }),
       });
 

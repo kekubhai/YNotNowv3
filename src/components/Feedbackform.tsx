@@ -58,7 +58,10 @@ export const FeedbackButton: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(feedbackData),
+        body: JSON.stringify({
+          name: user.username,  // Change from 'email' to 'name'
+          message,
+        }),
       });
 
       if (!response.ok) {
