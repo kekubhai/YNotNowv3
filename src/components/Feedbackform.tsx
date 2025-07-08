@@ -53,7 +53,7 @@ export const FeedbackButton: React.FC = () => {
     };
 
     try {
-      const response = await fetch(`${backendUrl}/api/feedback`, {
+      const response = await fetch(`${backendUrl}/feedback/api/feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

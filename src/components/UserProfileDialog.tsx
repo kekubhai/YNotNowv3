@@ -108,14 +108,14 @@ export const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-purple-700/40 text-white hover:text-red-400 hover:border-red-900/50 hover:bg-black w-full font-semibold transition-all"
+                className="border-purple-700/40 text-black hover:text-red-400 hover:border-red-900/50 hover:bg-black w-full font-semibold transition-all"
                 onClick={() => {
                   logout();
                   onOpenChange(false);
                 }}
               >
                 <LogOut className="h-5 w-5 mr-2" />
-                Sign Out(But Why Man?)
+               <p className=''>  Sign Out (But Why Man)?</p>
               </Button>
             </div>
           </div>

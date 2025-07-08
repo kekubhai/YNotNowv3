@@ -14,7 +14,8 @@ import {
   Plus, 
   Rocket, 
   TrendingUp,
-  Users 
+  Users,
+  Search
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { PointerHighlight } from '@/components/ui/pointer-highlight';
@@ -63,6 +64,7 @@ const IdeasPage = () => {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddButton, setShowAddButton] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const { user } = useAuth();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -200,8 +202,13 @@ const IdeasPage = () => {
     }
   };
 
- 
-  const sortedIdeas = [...ideas].sort((a, b) => b.votes - a.votes);
+  const filteredIdeas = ideas.filter(idea => 
+    idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    idea.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const sortedIdeas = [...filteredIdeas].sort((a, b) => b.votes - a.votes);
+  
   return (
      <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-purple-950/30 py-5 px-4">
       
@@ -356,6 +363,41 @@ const IdeasPage = () => {
             </Button>
           </div>
 
+          {/* Search Bar */}
+          <div className="mb-8">
+  <div className="relative max-w-md mx-auto">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <Search className="h-5 w-5 text-slate-400" />
+    </div>
+    <input
+      type="text"
+      placeholder="Search ideas..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="w-full pl-10 pr-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all duration-200"
+    />
+    {searchTerm && (
+      <button
+        onClick={() => setSearchTerm('')}
+        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors"
+      >
+        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    )}
+  </div>
+  
+  {/* Search Results Counter */}
+  {searchTerm && (
+    <div className="text-center mt-3">
+      <span className="text-sm text-slate-400">
+        {filteredIdeas.length} result{filteredIdeas.length !== 1 ? 's' : ''} found for "{searchTerm}"
+      </span>
+    </div>
+  )}
+</div>
+
           {/* Value proposition */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
   {/* Card 1 */}
@@ -391,7 +433,7 @@ const IdeasPage = () => {
     </div>
   </div>
 </div>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-3">
               {loading ? (
@@ -400,8 +442,8 @@ const IdeasPage = () => {
                   <p className="text-slate-400">Loading ideas...</p>
                 </div>
               ) : (
-              <div className="mx-auto w-full max-w-7xl px-2 sm:px-4">
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+              <div className="  sm:px-4 relative w-full">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-10 relative w-full">
                   {sortedIdeas.map((idea) => (
                     <IdeaCard
                       key={idea.id}
