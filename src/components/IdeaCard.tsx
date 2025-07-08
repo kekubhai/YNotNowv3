@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronUp, ChevronDown, MessageCircle, User, Clock, Flame, Heart, Users,SquareArrowUp,  Tag } from 'lucide-react';
+import { SquareArrowDown, MessageCircle, User, Clock, Flame, Heart, Users,SquareArrowUp,  Tag } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -192,7 +192,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
                           : 'hover:bg-slate-800 text-[#bfc4cc]'
                       }`}
                     >
-                      <ChevronDown className="w-4 h-4" />
+                      <SquareArrowDown className="w-4 h-4 text-red-700" />
                     </Button>
                     <span className={`px-3 font-bold text-lg ${getVoteColor(idea.votes)}`}>
                       {idea.votes}
@@ -207,7 +207,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onVote, onAddComment }
                           : 'hover:bg-slate-800 text-[#bfc4cc]'
                       }`}
                     >
-                      <SquareArrowUp className="w-4 h-4" />
+                      <SquareArrowUp className="w-4 h-4 text-green-500" />
                     </Button>
                   </div>
                   <div className="text-xs text-[#bfc4cc] flex-1 text-right font-mono">

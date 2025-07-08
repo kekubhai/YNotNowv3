@@ -199,7 +199,7 @@ app.use('/comments', commentsRouter);
 app.use('/votes', votesRouter);
 app.use('/users', router);
 
-app.use('/feedback', feedbackRouter);
+app.use('/', feedbackRouter);
 
 app.use('/mohakApi', mohakApi());
 

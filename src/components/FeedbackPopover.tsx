@@ -17,18 +17,24 @@ export const FeedbackPopover: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/feedback/api/feedback`, {
+      // Fix: Remove '/feedback' from the URL since your backend router already handles it
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: message.trim(),
-          name: user.username
+          name: user?.username || user?.email || 'Anonymous'
         }),
       });
 
       if (response.ok) {
         setMessage('');
         setIsOpen(false);
+        // Optional: Show success message
+        console.log('Feedback submitted successfully!');
+      } else {
+        const errorData = await response.json();
+        console.error('Feedback submission failed:', errorData);
       }
     } catch (error) {
       console.error('Failed to submit feedback:', error);

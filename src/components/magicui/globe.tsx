@@ -135,19 +135,18 @@ export function Globe({
       ref={containerRef}
       className={cn(
         "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px] md:max-w-[600px]",
-        isMobile ? "max-w-[300px]" : "", // Smaller on mobile
+        "hidden md:block", // Hide on mobile, show on desktop
         className,
       )}
     >
       <canvas
         className={cn(
           "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
-          // Better touch handling for mobile
           isMobile ? "touch-manipulation" : ""
         )}
         ref={canvasRef}
         onPointerDown={(e) => {
-          e.preventDefault(); // Prevent default touch behavior
+          e.preventDefault();
           pointerInteracting.current = e.clientX;
           updatePointerInteraction(e.clientX);
         }}
@@ -156,7 +155,7 @@ export function Globe({
         onMouseMove={(e) => updateMovement(e.clientX)}
         onTouchMove={(e) => {
           if (e.touches[0]) {
-            e.preventDefault(); // Prevent scrolling while manipulating globe
+            e.preventDefault();
             updateMovement(e.touches[0].clientX);
           }
         }}

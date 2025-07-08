@@ -190,15 +190,14 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
                 {/* CTA Buttons */}
                 <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                   <AnimatedButton
-                    className="mt-8 px-8 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-lg font-semibold rounded-lg shadow-lg"
+                    className="mt-8 px-8 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-lg font-semibold rounded-full shadow-lg"
                     onClick={handleGetStarted}
                   >
                     Do it Now
                   </AnimatedButton>
-
-         
              
                 </div>
+                 
 
                 {/* Trust badges */}
                 <div className={`flex flex-wrap justify-center items-center gap-6 mt-12 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -241,7 +240,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
 <GlowingEffectDemo/>
 
       {/* <TweetGridDemo/> */}
-<section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+<section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950 hidden md:block">
    <div className="container mx-auto px-4">
      <div className="flex flex-col md:flex-row justify-between items-center gap-12">
        <div className="relative flex size-full max-w-md items-center justify-center overflow-hidden rounded-2xl border border-purple-900/30 bg-slate-900 px-20 pb-40 pt-8 md:pb-60 shadow-lg">

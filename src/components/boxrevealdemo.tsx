@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import { ArrowRight, Brain, TrendingUp, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function BoxRevealDemo() {
   return (
@@ -50,9 +51,7 @@ export function BoxRevealDemo() {
             Validate Your Idea
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button variant="outline" className="border-purple-500/30 text-purple-300 hover:text-white hover:bg-purple-950/50">
-            Learn More
-          </Button>
+          
         </div>
       </BoxReveal>
     </div>

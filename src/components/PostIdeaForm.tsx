@@ -22,6 +22,16 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if(localStorage.getItem('SubmitCheck')=='1'){
+      alert('You have already submitted an idea. Please wait for the next submission period.');
+      return; 
+    }
+    else{
+      localStorage.setItem('SubmitCheck', '1'); // Set the flag to prevent further submissions
+      setTimeout(() => {
+        localStorage.removeItem('SubmitCheck'); // Reset after 24 hours
+      }, 24 * 60 * 60 * 1000); 
+    }
     if (title.trim() && description.trim()) {
       onSubmit({
         title: title.trim(),
@@ -33,7 +43,7 @@ export const PostIdeaForm: React.FC<PostIdeaFormProps> = ({ onSubmit, onCancel }
       setCategory('startup');
     }
   };
-
+ 
   const handleGenerateDescription = async () => {
     try {
       if (!import.meta.env.VITE_GEMINI_API_KEY) {
@@ -150,6 +160,7 @@ Write 1-2 complete sentences. Each sentence must end with proper punctuation and
         </select>
         <Button
           type="submit"
+          
           className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
           disabled={!title.trim() || !description.trim()}
         >
