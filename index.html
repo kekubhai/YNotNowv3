@@ -62,6 +62,19 @@
   <!-- Mobile App Capability -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Initialize theme early to avoid FOUC -->
+  <script>
+    (function() {
+      try {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var useDark = stored ? stored === 'dark' : prefersDark;
+        var c = document.documentElement.classList;
+        if (useDark) c.add('dark'); else c.remove('dark');
+      } catch (e) { /* no-op */ }
+    })();
+  </script>
 </head>
 <body>
   <div id="root"></div>

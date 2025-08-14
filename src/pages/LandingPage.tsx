@@ -32,6 +32,7 @@ import { FeedbackButton } from '../components/Feedbackform';
 import { FlowingTweets } from '../components/FlowingTweets';
 import { AnimatedButton } from '../components/ui/animated-button';
 import { ScrollReveal } from '../components/ui/scroll-reveal';
+import ThemeToggle from '@/components/ThemeToggle';
 
 // Import all images as variables
 import ynn2Image from '../assets/ynn2.png';
@@ -123,6 +124,10 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     <div>
       <ScrollReveal>
         <div ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
+          {/* Theme toggle top-right */}
+          <div className="absolute right-4 top-4 z-30">
+            <ThemeToggle />
+          </div>
           {/* Background image with overlay - only for hero section */}
           <div className="absolute inset-0 z-0">
             <img 
