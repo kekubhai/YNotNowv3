@@ -124,18 +124,22 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
     <div>
       <ScrollReveal>
         <div ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-          {/* Theme toggle top-right */}
-          <div className="absolute right-4 top-4 z-30">
-            <ThemeToggle />
+          {/* Enhanced theme toggle with better positioning and backdrop */}
+          <div className="absolute right-4 top-4 z-30 md:right-8 md:top-8">
+            <div className="backdrop-blur-md bg-white/5 dark:bg-slate-900/20 rounded-2xl p-1 border border-white/10 dark:border-purple-500/20">
+              <ThemeToggle />
+            </div>
           </div>
-          {/* Background image with overlay - only for hero section */}
+          {/* Enhanced background with theme-aware overlays */}
           <div className="absolute inset-0 z-0">
             <img 
               src={ynn2Image} 
               alt="AI Idea Validation Platform" 
               className="w-full h-full object-cover object-center scale-150"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-purple-900/40 to-slate-900/90"></div>
+            {/* Theme-aware overlay gradients */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-purple-900/40 to-slate-900/90 dark:from-slate-900/95 dark:via-purple-900/50 dark:to-slate-900/95"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/60 dark:to-slate-950/80"></div>
           </div>
 
           {/* Animated background particles */}
@@ -167,7 +171,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
             <div className="max-w-7xl mx-auto">
               {/* Header Badge */}
               <div className={`flex justify-center mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <AnimatedGradientText className="inline-flex items-center rounded-full border border-neutral-300-500/30 bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-300 shadow-lg">
+                <AnimatedGradientText className="inline-flex items-center rounded-full border border-purple-300/30 dark:border-neutral-500/30 bg-purple-500/10 dark:bg-purple-500/10 backdrop-blur-sm py-3 px-6 text-sm text-purple-200 dark:text-purple-300 shadow-lg">
                   <Bot className="mr-3 h-4 w-4" />
                   <TextAnimate className="mr-2"> AI-Powered Idea Validation Platform</TextAnimate>
                   <span className="ml-2">✨</span>
@@ -177,7 +181,7 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
               {/* Main Hero Content */}
               <div className="text-center space-y-8 mb-16">
                 <h1 className={`text-6xl md:text-8xl font-bold tracking-tight transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                  <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent drop-shadow-lg">
                     Validate Ideas with
                   </span>
                   <br />
@@ -187,52 +191,65 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
                   </span>
                 </h1>
 
-                <p className={`text-xl md:text-2xl text-slate-300 leading-relaxed max-w-4xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <p className={`text-xl md:text-2xl text-slate-200 dark:text-slate-300 leading-relaxed max-w-4xl mx-auto transition-all duration-1000 delay-500 drop-shadow-md ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                   The ultimate platform for hackathon teams and startups to validate ideas through AI analysis and community feedback. 
                   Get instant insights, gather votes, and build what people actually want.
                 </p>
 
-                {/* CTA Buttons */}
+                {/* Enhanced CTA Buttons */}
                 <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                   <AnimatedButton
-                    className="mt-8 px-8 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-lg font-semibold rounded-full shadow-lg"
+                    className="group relative mt-8 px-10 py-4 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white text-lg font-bold rounded-2xl shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden"
                     onClick={handleGetStarted}
                   >
-                    Do it Now
+                    <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span className="relative flex items-center gap-2">
+                      Do it Now
+                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </AnimatedButton>
-             
+
+                  <button
+                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="group mt-8 px-10 py-4 border-2 border-purple-400/50 text-purple-200 hover:text-white hover:border-purple-300 bg-transparent hover:bg-purple-500/10 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm"
+                  >
+                    <span className="flex items-center gap-2">
+                      Learn More
+                      <Eye className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                    </span>
+                  </button>
                 </div>
                  
 
-                {/* Trust badges */}
-                <div className={`flex flex-wrap justify-center items-center gap-6 mt-12 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                  <div className="flex items-center gap-2 text-slate-400">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="text-sm">Free to use(for now)</span>
+                {/* Enhanced trust badges */}
+                <div className={`flex flex-wrap justify-center items-center gap-8 mt-16 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                  <div className="flex items-center gap-3 text-slate-300 dark:text-slate-400 bg-white/5 dark:bg-slate-800/30 px-4 py-2 rounded-xl border border-white/10 dark:border-slate-700/50 backdrop-blur-sm">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="text-sm font-medium">Free to use (for now)</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-400">
-                    <Shield className="h-5 w-5 text-blue-500" />
-                    <span className="text-sm">AI-powered insights</span>
+                  <div className="flex items-center gap-3 text-slate-300 dark:text-slate-400 bg-white/5 dark:bg-slate-800/30 px-4 py-2 rounded-xl border border-white/10 dark:border-slate-700/50 backdrop-blur-sm">
+                    <Shield className="h-5 w-5 text-blue-400" />
+                    <span className="text-sm font-medium">AI-powered insights</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-400">
-                    <Globe className="h-5 w-5 text-purple-500" />
-                    <span className="text-sm">Global community</span>
+                  <div className="flex items-center gap-3 text-slate-300 dark:text-slate-400 bg-white/5 dark:bg-slate-800/30 px-4 py-2 rounded-xl border border-white/10 dark:border-slate-700/50 backdrop-blur-sm">
+                    <Globe className="h-5 w-5 text-purple-400" />
+                    <span className="text-sm font-medium">Global community</span>
                   </div>
                 </div>
               </div>
 
-              {/* Stats Section */}
-              <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              {/* Enhanced Stats Section */}
+              <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 {stats.map((stat, index) => (
                   <div key={index} className="text-center group">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-800/50 to-pink-800/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <stat.icon className="h-8 w-8 text-purple-400" />
+                    <div className="relative w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-cyan-600/20 backdrop-blur-sm rounded-3xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 border border-purple-500/20 hover:border-purple-400/40">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <stat.icon className="h-8 w-8 text-purple-300 relative z-10" />
                     </div>
-                    <div className="text-3xl font-bold text-white mb-2">
-
+                    <div className="text-4xl font-bold text-white mb-3 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-transparent">
                       <NumberTicker value={stat.number}></NumberTicker>
                     </div>
-                    <div className="text-sm text-slate-400">{stat.label}</div>
+                    <div className="text-sm text-slate-300 dark:text-slate-400 font-medium">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -242,18 +259,20 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
       </ScrollReveal>
 
       {/* Use Cases Section */}
+<div id="features">
 <GlowingEffectDemo/>
+</div>
 
       {/* <TweetGridDemo/> */}
-<section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950 hidden md:block">
+<section className="relative z-10 py-24 bg-gradient-to-b from-slate-100 via-purple-50/30 to-slate-200 dark:from-slate-900 dark:to-slate-950 hidden md:block">
    <div className="container mx-auto px-4">
      <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-       <div className="relative flex size-full max-w-md items-center justify-center overflow-hidden rounded-2xl border border-purple-900/30 bg-slate-900 px-20 pb-40 pt-8 md:pb-60 shadow-lg">
-         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-purple-200 to-purple-500/80 bg-clip-text text-center text-7xl font-bold leading-none text-transparent">
+       <div className="relative flex size-full max-w-md items-center justify-center overflow-hidden rounded-2xl border border-purple-200/50 dark:border-purple-900/30 bg-white/80 dark:bg-slate-900 px-20 pb-40 pt-8 md:pb-60 shadow-xl backdrop-blur-sm">
+         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-purple-600 to-purple-800 dark:from-purple-200 dark:to-purple-500/80 bg-clip-text text-center text-7xl font-bold leading-none text-transparent">
            Ideas
          </span>
          <Globe className="top-28 text-purple-600" />
-         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(128,90,213,0.2),rgba(30,27,75,0.3))]" />
+         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(128,90,213,0.15),rgba(255,255,255,0.1))] dark:bg-[radial-gradient(circle_at_50%_200%,rgba(128,90,213,0.2),rgba(30,27,75,0.3))]" />
        </div>
       <BoxRevealDemo/>
      </div>
@@ -261,15 +280,18 @@ export const LandingPage: React.FC<LandingPageProps> = () => {
 </section>
 
   
-  {/* Flowing Tweets Section */}
-  <section className="relative z-10 py-24 bg-gradient-to-b from-slate-900 to-slate-950">
+  {/* Enhanced Flowing Tweets Section */}
+  <section className="relative z-10 py-24 bg-gradient-to-b from-slate-200 via-purple-50/20 to-slate-100 dark:from-slate-900 dark:to-slate-950">
     <div className="container mx-auto px-4">
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent mb-4">
+        <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100/80 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 text-sm font-medium mb-6">
+          Community Insights
+        </span>
+        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-purple-800 to-slate-900 dark:from-white dark:via-purple-200 dark:to-white bg-clip-text text-transparent mb-6">
           Real Questions, Real Needs
         </h2>
-        <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-          Founders and hackers everywhere are looking for validation. <span className="text-purple-400">YNotNow</span> is the answer.
+        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          Founders and hackers everywhere are looking for validation. <span className="text-purple-600 dark:text-purple-400 font-semibold">YNotNow</span> is the answer.
         </p>
       </div>
       
